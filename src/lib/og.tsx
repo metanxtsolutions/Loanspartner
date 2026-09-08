@@ -22,7 +22,7 @@ export function renderOgImage({ eyebrow, title, subtitle }: { eyebrow?: string; 
         </div>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", fontFamily: "Helvetica, Arial, sans-serif", fontSize: 20, color: "rgba(255,255,255,0.6)" }}>
           <div>{siteConfig.url.replace(/^https?:\/\//, "")}</div>
-          <div style={{ display: "flex", gap: 24 }}><span>Zero fee to borrowers</span><span>our lender panel</span><span>RBI-regulated lending only</span></div>
+          <div style={{ display: "flex", gap: 24 }}><span>Zero fee to borrowers</span><span>Banks, HFCs and NBFCs</span><span>RBI-regulated lending only</span></div>
         </div>
       </div>
     ),
