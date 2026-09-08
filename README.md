@@ -1,1 +1,65 @@
-# Loanspartner
+# LoansPartner
+
+Production website for **loanspartner.in**: a loan advisory and distribution (DSA) brand serving borrowers and channel partners across India. Built on Next.js 16 (App Router), React 19, Tailwind CSS v4 and TypeScript, with a data-first SEO architecture.
+
+## Quick start
+
+```bash
+pnpm install
+cp .env.example .env.local   # fill in contact details and lead sinks
+pnpm dev                     # http://localhost:3000
+```
+
+```bash
+pnpm check     # lint + typecheck + copy gate; must pass before shipping
+pnpm build     # production build (prerenders ~270 URLs)
+pnpm start
+```
+
+## What is in the box
+
+| Area | Route(s) | Source of truth |
+|---|---|---|
+| Home | `/` | `src/app/page.tsx` |
+| Loan products (12) | `/loans`, `/loans/[product]` | `src/data/products.ts` |
+| Product × city (5 core × 16 cities) | `/loans/[product]/[city]` | `src/data/cities-batch-*.ts` |
+| City hubs | `/cities`, `/cities/[city]` | `src/data/cities.ts` |
+| Partner programme | `/partner`, `/partner/register`, `/partner/commission`, `/partner/[product]-dsa`, `/partner/for/[audience]` | `src/data/partner.ts`, `products.ts` |
+| Lenders (26) | `/lenders`, `/lenders/[slug]` | `src/data/lenders.ts` |
+| Tools | `/tools/*` (EMI, eligibility, balance transfer, DSA income) | `src/components/tools/*` |
+| Guides (13) | `/guides`, `/guides/[slug]` | `src/data/guides-batch-*.ts` |
+| Glossary (40) | `/glossary`, `/glossary/[term]` | `src/data/glossary.ts` |
+| Rates, FAQs, About, Contact, legal, grievance | top-level routes | page files + `site-config.ts` |
+| Lead capture | `/apply` (2-step), callback and partner forms | `src/actions/leads.ts`, `src/lib/leads/*` |
+| SEO plumbing | `sitemap.xml`, `robots.txt`, `manifest`, OG images, JSON-LD | `src/app/sitemap.ts`, `src/lib/seo.ts`, `src/lib/schema.ts` |
+
+## Before launch: things only the business can fill in
+
+1. **Contact and NAP** in `.env.local` (`NEXT_PUBLIC_PHONE`, `NEXT_PUBLIC_EMAIL`, address, socials). Defaults are placeholders.
+2. **Proof points** in `src/data/site-config.ts` (`proof` array) and `foundedYear`. Only state numbers the business can substantiate.
+3. **Lender list** in `src/data/lenders.ts`: keep aligned with live empanelments. Replace text wordmarks in `LenderMarquee` with approved logo files once agreements are on record.
+4. **Lead sinks** in `.env.local`: at least one of `LEAD_WEBHOOK_URL` (Google Sheet / CRM), or `RESEND_API_KEY` + `LEAD_NOTIFY_EMAIL`. In development leads also append to `.data/leads.jsonl`.
+5. **Analytics**: `NEXT_PUBLIC_GA_MEASUREMENT_ID`, `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION`.
+6. **Named experts** for E-E-A-T: guides currently carry an organisational byline (`siteConfig.editorialTeam`). Add real reviewer names and credentials when available.
+7. **Legal review** of `/privacy-policy`, `/terms`, `/disclaimer`, `/grievance-redressal` and the compliance strings in `site-config.ts`.
+
+## Architecture notes
+
+- **Every entity carries its own `keywords`, `faqs` and `updatedAt`.** Metadata, FAQPage schema and sitemap `lastmod` are pure functions of the data row. Add a city or product and its pages, schema, breadcrumbs and internal links appear with no route changes.
+- **`pageMetadata()`** in `src/lib/seo.ts` sets title, description (clamped to 158 chars), canonical, hreflang, Open Graph and Twitter for every page. Bare titles use the root template; social cards get the expanded title.
+- **`src/lib/schema.ts`** holds pure JSON-LD builders (Organization/FinancialService, WebSite, WebPage, BreadcrumbList, FAQPage, Service + LoanOrCredit, local FinancialService with `areaServed`, Article, HowTo, ItemList, DefinedTerm, WebApplication). One real organisation and address; city pages use `areaServed`, never fabricated branches.
+- **Breadcrumbs emit their own BreadcrumbList schema** from the same array that renders, so markup and structured data cannot drift.
+- **Lead flow is save-first.** Step 1 (product, amount, phone) creates the lead before step 2 qualification, so an abandoned form still yields a contactable lead. Anti-abuse: honeypot, minimum time-on-form, in-memory rate limit. Swap the limiter for Redis on multi-instance hosting.
+- **Copy gate** (`pnpm check:copy`) fails on en/em dashes and warns on filler words, to keep programmatic pages from drifting into template prose.
+- **No fabricated social proof.** There are no testimonials or disbursal totals in the code. Add them only with real, consented data.
+
+## Adding content
+
+- **New city:** append a `City` object to a `cities-batch-*.ts` file (all fields required, including a unique `productNotes` paragraph for each core product). Pages at `/cities/[slug]` and `/loans/[product]/[slug]` build automatically.
+- **New product:** append to `products.ts`. Set `core: true` to generate city pages for it.
+- **New guide:** append to a `guides-batch-*.ts` file. Sections become the table of contents; `faqs` become FAQPage schema.
+- **New glossary term or lender:** append to the respective data file.
+
+## Deployment
+
+Any Node 20+ host. On Vercel, set the environment variables from `.env.example`. Security headers, redirects and image settings live in `next.config.ts`. After DNS cutover: submit `https://loanspartner.in/sitemap.xml` in Search Console, validate a product, a city and a guide page in the Rich Results Test, and confirm `robots.txt` lists the sitemap.
