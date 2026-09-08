@@ -65,7 +65,9 @@ pnpm start
 
 ## Deployment
 
-Live at **https://www.loanspartner.in** (Vercel project `loanspartner.in`, team `metanxt`). Deploy with `npx vercel@latest --prod --yes`; the apex 308-redirects to `www`, and `NEXT_PUBLIC_SITE_URL` is set to the `www` form so canonicals, the sitemap and robots.txt all agree with what is served.
+Live at **https://loanspartner.in**. The apex is the canonical host: canonical tags, the sitemap, `robots.txt` and all JSON-LD emit `https://loanspartner.in`, which is the built-in default, so no `NEXT_PUBLIC_SITE_URL` needs to be set anywhere. In Vercel's domain settings the apex must be the primary domain and `www` must redirect to it. If that is ever reversed, every canonical will point at a redirecting URL.
+
+Deploy with `npx vercel@latest --prod --yes`. Note that two Vercel projects have served this site: the one reachable from this repo's CLI login (team `metanxt`, aliased to `loanspartnerin.vercel.app`) and a second project in another Vercel account that holds the custom domain and builds from GitHub. Pushing to `main` updates the domain; the CLI deploy updates only the `vercel.app` alias.
 
 Every `NEXT_PUBLIC_*` value in `site-config.ts` is read as a literal `process.env.NEXT_PUBLIC_X` property access. Next.js inlines these by textual substitution at build time, so a computed lookup like `process.env[key]` resolves to undefined in the bundle and the override is silently lost. Keep the literal form when adding new ones.
 
