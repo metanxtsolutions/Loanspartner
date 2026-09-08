@@ -8,8 +8,9 @@ import { ApplyForm } from "@/components/forms/apply-form";
 import { TrustNotes } from "@/components/shared/trust-notes";
 import { Steps } from "@/components/shared/steps";
 import { siteConfig } from "@/data/site-config";
+import { cityOptions, productOptions } from "@/data/lite";
 
-const title = "Check Your Loan Eligibility: Free Pre-screen Across 40+ Lenders";
+const title = "Check Your Loan Eligibility: Free Pre-screen";
 const description = "Share your loan requirement in two minutes. LoansPartner pre-screens your profile against lender policies without a bureau enquiry and calls with a shortlist. Zero fee.";
 
 export const metadata: Metadata = pageMetadata({ title, description, path: "/apply", keywords: ["check loan eligibility", "apply for loan online", "loan pre approval", "loan application India"] });
@@ -32,7 +33,7 @@ export default function ApplyPage() {
             <p className="mt-4 text-lg text-mute">Two minutes. No documents yet, no fee, no impact on your credit score.</p>
             <Card className="mt-8 p-6 sm:p-8">
               <Suspense fallback={<div className="h-96 animate-pulse rounded-xl bg-sand" />}>
-                <ApplyForm />
+                <ApplyForm products={productOptions} cities={cityOptions} />
               </Suspense>
             </Card>
           </div>

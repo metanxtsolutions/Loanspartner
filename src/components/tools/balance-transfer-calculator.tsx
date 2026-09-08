@@ -22,17 +22,21 @@ export function BalanceTransferCalculator() {
     const netSaving = grossSaving - costs;
     const monthlySaving = oldEmi - newEmi;
     const breakEven = monthlySaving > 0 ? Math.ceil(costs / monthlySaving) : Infinity;
-    // Keep the same EMI at the new rate: how many months, and interest saved?
+    // Keep the same EMI at the new rate. The final instalment is only the
+    // remaining balance, so interest is accumulated month by month rather
+    // than inferred from a whole number of full payments.
     let sameEmiMonths = 0;
+    let sameEmiInterest = 0;
     let bal = outstanding;
     const mr = newRate / 12 / 100;
     if (oldEmi > bal * mr) {
-      while (bal > 0 && sameEmiMonths < 600) {
-        bal = bal + bal * mr - oldEmi;
+      while (bal > 0.5 && sameEmiMonths < 600) {
+        const monthInterest = bal * mr;
+        sameEmiInterest += monthInterest;
+        bal -= Math.min(oldEmi - monthInterest, bal);
         sameEmiMonths++;
       }
     }
-    const sameEmiInterest = oldEmi * sameEmiMonths - outstanding;
     const sameEmiSaving = oldInterest - sameEmiInterest - costs;
     const worth = netSaving > 0 && breakEven <= months;
     return { oldEmi, newEmi, oldInterest, newInterest, grossSaving, netSaving, monthlySaving, breakEven, sameEmiMonths, sameEmiSaving, worth };
@@ -47,7 +51,7 @@ export function BalanceTransferCalculator() {
         <SliderField label="New interest rate" value={newRate} onChange={setNewRate} min={6} max={16} step={0.05} format={(v) => `${v}%`} suffix="% p.a." />
         <SliderField label="Transfer costs" value={costs} onChange={setCosts} min={0} max={500_000} step={1_000} format={inrCompact} suffix="₹" hint="Processing, legal, technical, stamp" />
       </Panel>
-      <Panel className="flex flex-col">
+      <Panel className="flex flex-col" live>
         <Result label={r.worth ? "Net saving over remaining tenure" : "Net result over remaining tenure"} value={inr(r.netSaving)} big tone={r.worth ? "verdant" : "brass"} />
         <p className="mt-2 text-sm font-semibold text-ink-800">{r.worth ? `Worth doing. You recover the costs in ${r.breakEven} months.` : r.netSaving <= 0 ? "Not worth it at these numbers. Ask your lender to reprice instead." : "Marginal. Check the repricing option with your current lender first."}</p>
         <div className="mt-6 grid grid-cols-2 gap-4">

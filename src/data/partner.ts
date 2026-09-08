@@ -29,13 +29,13 @@ export const partnerEligibility = [
   "Valid PAN and Aadhaar; a bank account in your name or your firm's name",
   "No history of fraud or wilful default; a clean bureau report is preferred",
   "A network of potential borrowers: clients, colleagues, community or business contacts",
-  "Willingness to follow the RBI conduct norms for outsourced sales: no cash handling, honest disclosure, contact only between 9 am and 6 pm",
+  "Willingness to follow our code of conduct, which reflects RBI's fair practice and outsourcing norms: no cash handling, honest disclosure, and customer contact only between 9 am and 6 pm",
 ];
 
 export const partnerDocuments = ["PAN card", "Aadhaar card", "Cancelled cheque or bank statement", "Passport-size photograph", "GST certificate (only if your firm is registered)", "Business proof for firms and companies"];
 
 export const partnerBenefits = [
-  { title: "40+ lenders through one code", text: "Register once. Reach public sector banks, private banks, HFCs and NBFCs without separate empanelments." },
+  { title: "One code, our whole lender panel", text: "Register once. Reach public sector banks, private banks, HFCs and NBFCs without separate empanelments." },
   { title: "Payouts among the best in the market", text: "Transparent slabs by product, published in your agreement. No hidden deductions." },
   { title: "We do the processing", text: "You bring the lead; our credit desk handles lender selection, documentation and lender follow-up." },
   { title: "Zero investment", text: "No joining fee, no deposit, no target pressure. Earn on what you disburse." },
@@ -47,7 +47,7 @@ export const partnerFaqs: Faq[] = [
   { question: "What is a loan DSA and how does it earn?", answer: "A Direct Selling Agent sources loan customers for banks and NBFCs. When a sourced loan is disbursed, the lender pays a commission, typically 0.25% to 3% of the loan amount depending on the product. LoansPartner is empanelled with many lenders, so partners work under our code and earn a share of every disbursal they source." },
   { question: "Is there any fee to become a LoansPartner channel partner?", answer: "No. Registration, training and the partner portal are free. We earn only when loans disburse, and so do you." },
   { question: "Do I need finance experience or a qualification?", answer: "No. Many of our best partners are insurance advisors, property consultants, chartered accountants and working professionals. We train you on products and lender policies; your job is to bring genuine borrowers and help collect documents." },
-  { question: "How and when are payouts made?", answer: "Payouts are calculated on the disbursed loan amount at the slab in your agreement and released monthly for all files disbursed in the previous month, after the lender's own payout to us. You receive a statement showing each file, amount and payout." },
+  { question: "How and when are payouts made?", answer: "Payouts are calculated on the disbursed loan amount at the slab in your agreement and released monthly for all files disbursed in the previous month, after the lender's own payout to us. In practice that is 30 to 60 days from disbursal. You receive a statement showing each file, amount and payout." },
   { question: "Can I work with LoansPartner alongside my existing business?", answer: "Yes. Most partners run this alongside an existing practice or job. There are no minimum targets, though active partners naturally earn more." },
   { question: "Can I register as a company or firm?", answer: "Yes. Individuals, proprietorships, partnerships, LLPs and companies can all register. Firms need their entity PAN, GST where applicable and business proof." },
   { question: "What are my obligations under RBI rules?", answer: "Never collect cash or any fee from borrowers, never promise approval, disclose that the lender decides the loan and its terms, contact customers only between 9 am and 6 pm, and protect customer data. These are written into the partner code of conduct and we train you on them." },

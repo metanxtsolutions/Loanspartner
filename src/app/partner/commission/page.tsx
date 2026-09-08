@@ -12,7 +12,7 @@ import { ButtonLink } from "@/components/shared/button";
 import { products } from "@/data/products";
 import { formatINR } from "@/lib/utils";
 
-const title = "Loan DSA Commission Structure 2026: Payout by Product";
+const title = "Loan DSA Commission Structure 2026";
 const description = "Indicative DSA commission slabs for personal loans, home loans, business loans, loan against property, car loans and more. How payouts are calculated, when they are paid, and what affects them.";
 
 export const metadata: Metadata = pageMetadata({ title, description, path: "/partner/commission", keywords: ["DSA commission", "loan DSA commission structure", "DSA payout", "personal loan DSA commission", "home loan DSA commission", "business loan DSA payout"] });
@@ -39,8 +39,9 @@ export default function CommissionPage() {
       <Section tone="cream">
         <div className="overflow-x-auto rounded-card border border-line bg-white shadow-soft" data-reveal>
           <table className="w-full min-w-[760px] text-sm">
+            <caption className="sr-only">Indicative partner payout, typical ticket size and audience for each loan product</caption>
             <thead className="bg-cream text-left text-xs uppercase tracking-wide text-mute">
-              <tr><th className="px-5 py-3 font-bold">Product</th><th className="px-5 py-3 font-bold">Indicative payout</th><th className="px-5 py-3 font-bold">Typical ticket</th><th className="px-5 py-3 font-bold">Payout on a typical file</th><th className="px-5 py-3 font-bold">Sells to</th></tr>
+              <tr><th scope="col" className="px-5 py-3 font-bold">Product</th><th scope="col" className="px-5 py-3 font-bold">Indicative payout</th><th scope="col" className="px-5 py-3 font-bold">Typical ticket</th><th scope="col" className="px-5 py-3 font-bold">Payout on a typical file</th><th scope="col" className="px-5 py-3 font-bold">Sells to</th></tr>
             </thead>
             <tbody className="tnum">
               {products.map((p) => {
@@ -48,7 +49,7 @@ export default function CommissionPage() {
                 const mid = (p.dsa.payoutFrom + p.dsa.payoutTo) / 2;
                 return (
                   <tr key={p.slug} className="border-t border-line align-top">
-                    <td className="px-5 py-4 font-bold text-ink-900"><Link href={`/partner/${p.slug}-dsa`} className="hover:text-verdant-700">{p.name}</Link></td>
+                    <th scope="row" className="px-5 py-4 text-left font-bold text-ink-900"><Link href={`/partner/${p.slug}-dsa`} className="hover:text-verdant-700">{p.name}</Link></th>
                     <td className="px-5 py-4 text-ink-800">{p.dsa.payoutFrom}% to {p.dsa.payoutTo}%</td>
                     <td className="px-5 py-4 text-ink-800">{p.dsa.ticketSize}</td>
                     <td className="px-5 py-4 font-bold text-verdant-700">about ₹{formatINR(Math.round((ticket * mid) / 100 / 500) * 500)}</td>

@@ -165,7 +165,10 @@ export function loanProductSchema(input: {
           minValue: input.amountMin,
           maxValue: input.amountMax,
         },
-        annualPercentageRate: {
+        // The published range is the nominal reducing-balance rate. APR also
+        // includes fees and is disclosed per borrower in the lender's Key Fact
+        // Statement, so it is not asserted here.
+        interestRate: {
           "@type": "QuantitativeValue",
           minValue: input.rateFrom,
           maxValue: input.rateTo,

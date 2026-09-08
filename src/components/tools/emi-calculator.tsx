@@ -37,7 +37,7 @@ export function EmiCalculator({ defaultAmount = 1_000_000, defaultRate = 10.5, d
         <SliderField label="Interest rate" value={rate} onChange={setRate} min={5} max={36} step={0.05} format={(v) => `${v}%`} suffix="% p.a." />
         <SliderField label="Tenure" value={months} onChange={setMonths} min={6} max={maxMonths} step={1} format={(v) => (v >= 12 ? `${Math.round(v / 12)} yr` : `${v} mo`)} suffix="months" hint={`${(months / 12).toFixed(1)} years`} />
       </Panel>
-      <Panel className="flex flex-col">
+      <Panel className="flex flex-col" live>
         <Result label="Monthly EMI" value={inr(r.emi)} big tone="verdant" />
         <div className="mt-6 grid grid-cols-2 gap-4">
           <Result label="Total interest" value={inr(r.interest)} tone="brass" />
@@ -54,8 +54,8 @@ export function EmiCalculator({ defaultAmount = 1_000_000, defaultRate = 10.5, d
           <summary className="cursor-pointer text-sm font-bold text-ink-900">Year-wise repayment schedule</summary>
           <div className="mt-3 max-h-72 overflow-auto rounded-xl border border-line">
             <table className="tnum w-full text-xs">
-              <thead className="sticky top-0 bg-cream text-left text-mute"><tr><th className="px-3 py-2">Year</th><th className="px-3 py-2">Principal</th><th className="px-3 py-2">Interest</th><th className="px-3 py-2">Balance</th></tr></thead>
-              <tbody>{r.schedule.map((s) => (<tr key={s.year} className="border-t border-line"><td className="px-3 py-1.5">{s.year}</td><td className="px-3 py-1.5">₹{formatINR(Math.round(s.principal))}</td><td className="px-3 py-1.5">₹{formatINR(Math.round(s.interest))}</td><td className="px-3 py-1.5">₹{formatINR(Math.round(s.balance))}</td></tr>))}</tbody>
+              <thead className="sticky top-0 bg-cream text-left text-mute"><tr><th scope="col" className="px-3 py-2">Year</th><th scope="col" className="px-3 py-2">Principal</th><th scope="col" className="px-3 py-2">Interest</th><th scope="col" className="px-3 py-2">Balance</th></tr></thead>
+              <tbody>{r.schedule.map((s) => (<tr key={s.year} className="border-t border-line"><th scope="row" className="px-3 py-1.5 text-left font-semibold">{s.year}</th><td className="px-3 py-1.5">₹{formatINR(Math.round(s.principal))}</td><td className="px-3 py-1.5">₹{formatINR(Math.round(s.interest))}</td><td className="px-3 py-1.5">₹{formatINR(Math.round(s.balance))}</td></tr>))}</tbody>
             </table>
           </div>
         </details>

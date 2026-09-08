@@ -17,6 +17,7 @@ import { Steps } from "@/components/shared/steps";
 import { TrustNotes } from "@/components/shared/trust-notes";
 import { CtaBand } from "@/components/shared/cta-band";
 import { coreProducts, getProduct } from "@/data/products";
+import { productOptions } from "@/data/lite";
 import { cities, getCity, type CoreProductSlug } from "@/data/cities";
 import { lendersForProduct } from "@/data/lenders";
 import { siteConfig } from "@/data/site-config";
@@ -40,8 +41,8 @@ export async function generateMetadata({ params }: PageProps<"/loans/[product]/[
   if (!data) return {};
   const { p, c } = data;
   return pageMetadata({
-    title: `${p.name} in ${c.name}: Rates from ${p.rate.from.toFixed(2)}%, Eligibility and Local Lenders`,
-    description: `Get a ${p.name.toLowerCase()} in ${c.name} from 40+ banks and NBFCs. ${c.tagline} Zero fee, local documentation support, lender shortlist within one working day.`,
+    title: `${p.name} in ${c.name}: Rates and Eligibility`,
+    description: `Get a ${p.name.toLowerCase()} in ${c.name} from banks and NBFCs on our panel. ${c.tagline} Zero fee, local documentation support, lender shortlist within one working day.`,
     path: `/loans/${p.slug}/${c.slug}`,
     keywords: [`${p.name.toLowerCase()} in ${c.name}`, `${p.name.toLowerCase()} ${c.name}`, `best ${p.name.toLowerCase()} ${c.name}`, `${p.name.toLowerCase()} agent ${c.name}`, ...p.keywords.slice(0, 3), ...c.keywords.slice(0, 2)],
   });
@@ -67,7 +68,7 @@ export default async function ProductCityPage({ params }: PageProps<"/loans/[pro
         webPageSchema({ name: `${title} | ${siteConfig.name}`, description, path, dateModified: c.updatedAt > p.updatedAt ? c.updatedAt : p.updatedAt }),
         loanProductSchema({ name: title, description, path, rateFrom: p.rate.from, rateTo: p.rate.to, amountMin: p.amount.min, amountMax: p.amount.max, tenureMaxMonths: p.tenure.maxMonths, areaServedName: c.name }),
         localServiceSchema({ name: `${siteConfig.name} ${c.name}`, description: `${p.name} advisory and distribution in ${c.name}, ${c.state}.`, path, areaServedName: c.name }),
-        faqPageSchema(faqs),
+        faqPageSchema(c.faqs),
       ]} />
       <PageHero
         crumbs={[{ name: "Loans", path: "/loans" }, { name: p.name, path: `/loans/${p.slug}` }, { name: c.name, path }]}
@@ -78,7 +79,7 @@ export default async function ProductCityPage({ params }: PageProps<"/loans/[pro
           <div className="rounded-panel border border-line bg-white p-6 shadow-lift">
             <p className="font-display text-2xl">Check eligibility in {c.name}</p>
             <p className="mt-1 text-sm text-mute">Our {c.name} desk pre-screens your profile across the lender panel. No fee, no bureau enquiry.</p>
-            <div className="mt-5"><HeroForm defaultProduct={p.slug} source={`city:${c.slug}:${p.slug}`} /></div>
+            <div className="mt-5"><HeroForm products={productOptions} defaultProduct={p.slug} source={`city:${c.slug}:${p.slug}`} /></div>
           </div>
         }
       >

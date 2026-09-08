@@ -10,7 +10,7 @@ import { globalFaqs } from "@/data/faqs";
 import { partnerFaqs } from "@/data/partner";
 import { products } from "@/data/products";
 
-const title = "Frequently Asked Questions: Borrowing and Partnering with LoansPartner";
+const title = "Frequently Asked Questions";
 const description = "Answers on how LoansPartner works, fees, credit score impact, timelines, data protection, each loan product and the channel partner programme.";
 
 export const metadata: Metadata = pageMetadata({ title, description, path: "/faqs", keywords: ["loan FAQs", "loan DSA FAQ", "how does a loan DSA work", "loan advisory questions"] });

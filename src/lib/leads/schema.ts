@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { products } from "@/data/products";
+import { cibilBands, employmentTypes } from "@/lib/leads/options";
 
 export const INDIAN_MOBILE = /^(\+?91[-\s]?)?[6-9]\d{9}$/;
 
@@ -13,8 +14,8 @@ const phone = z
 
 const productSlug = z.enum(products.map((p) => p.slug) as [string, ...string[]]);
 
-export const employmentTypes = ["salaried", "self-employed-professional", "self-employed-business", "other"] as const;
-export const cibilBands = ["750+", "700-749", "650-699", "below-650", "unknown"] as const;
+// Re-exported for server code; client components import "./options" directly.
+export { employmentTypes, cibilBands } from "@/lib/leads/options";
 
 /** Step 1: the minimum we need to help. */
 export const leadStep1Schema = z.object({

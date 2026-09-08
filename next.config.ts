@@ -36,6 +36,8 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     return [
+      // Browsers and crawlers still probe /favicon.ico by convention.
+      { source: "/favicon.ico", destination: "/icon.svg", permanent: true },
       // Common legacy or guessed URLs collapse to canonical routes.
       { source: "/personal-loan", destination: "/loans/personal-loan", permanent: true },
       { source: "/home-loan", destination: "/loans/home-loan", permanent: true },

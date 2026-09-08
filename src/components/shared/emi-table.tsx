@@ -12,14 +12,14 @@ export function EmiTable({ product, amounts }: { product: LoanProduct; amounts?:
         <caption className="px-4 py-3 text-left text-xs text-mute">Indicative EMIs at {rate.toFixed(2)}% p.a., the lowest rate in this product&rsquo;s range. Your rate depends on lender and profile.</caption>
         <thead className="bg-cream text-left text-xs uppercase tracking-wide text-mute">
           <tr>
-            <th className="px-4 py-3 font-bold">Loan amount</th>
-            {tenures.map((t) => (<th key={t} className="px-4 py-3 font-bold">{t >= 12 ? `${t / 12} yr` : `${t} mo`}</th>))}
+            <th scope="col" className="px-4 py-3 font-bold">Loan amount</th>
+            {tenures.map((t) => (<th key={t} scope="col" className="px-4 py-3 font-bold">{t >= 12 ? `${t / 12} yr` : `${t} mo`}</th>))}
           </tr>
         </thead>
         <tbody className="tnum">
           {rows.map((a) => (
             <tr key={a} className="border-t border-line">
-              <td className="px-4 py-3 font-bold text-ink-900">₹{formatINR(a)}</td>
+              <th scope="row" className="px-4 py-3 text-left font-bold text-ink-900">₹{formatINR(a)}</th>
               {tenures.map((t) => (<td key={t} className="px-4 py-3 text-ink-800">₹{formatINR(Math.round(calcEMI(a, rate, t)))}</td>))}
             </tr>
           ))}

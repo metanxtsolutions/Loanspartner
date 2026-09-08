@@ -9,8 +9,9 @@ import { CheckList } from "@/components/shared/checklist";
 import { Steps } from "@/components/shared/steps";
 import { partnerDocuments, partnerSteps } from "@/data/partner";
 import { siteConfig } from "@/data/site-config";
+import { audienceOptions, cityOptions, productOptions } from "@/data/lite";
 
-const title = "Register as a Loan DSA Partner: Free Online Application";
+const title = "Register as a Loan DSA Partner";
 const description = "Apply to become a LoansPartner channel partner in two minutes. Free registration, verification within one working day, training and partner code within a week.";
 
 export const metadata: Metadata = pageMetadata({ title, description, path: "/partner/register", keywords: ["DSA registration online", "loan DSA registration", "register as loan agent", "DSA apply online"] });
@@ -26,7 +27,7 @@ export default function PartnerRegisterPage() {
             <p className="eyebrow text-verdant-600">Partner application</p>
             <h1 className="display mt-3 text-4xl text-ink-950 sm:text-5xl">Register as a channel partner</h1>
             <p className="mt-4 text-lg text-mute">Free, with no obligation. A partner manager calls within one working day to walk you through the programme.</p>
-            <Card className="mt-8 p-6 sm:p-8"><PartnerForm /></Card>
+            <Card className="mt-8 p-6 sm:p-8"><PartnerForm products={productOptions} audiences={audienceOptions} cities={cityOptions} /></Card>
           </div>
           <aside className="space-y-6 lg:sticky lg:top-28 lg:self-start">
             <Card className="p-6">

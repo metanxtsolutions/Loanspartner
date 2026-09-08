@@ -11,7 +11,7 @@ import { CtaBand } from "@/components/shared/cta-band";
 import { cities } from "@/data/cities";
 import { coreProducts } from "@/data/products";
 
-const title = "Cities We Serve: Loan Advisory Desks Across India";
+const title = "Cities We Serve Across India";
 const description = "LoansPartner arranges personal, home, business and property loans in Mumbai, Delhi NCR, Bengaluru, Hyderabad, Chennai, Kolkata, Pune, Ahmedabad and more, with city desks that know local property rules and lender appetite.";
 
 export const metadata: Metadata = pageMetadata({ title, description, path: "/cities", keywords: ["loan in Mumbai", "loan in Delhi", "loan in Bangalore", "loan agent near me", "loan DSA city", "loans by city India"] });

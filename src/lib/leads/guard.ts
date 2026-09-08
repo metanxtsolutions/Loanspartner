@@ -34,11 +34,18 @@ export function rateLimited(ip: string) {
   return false;
 }
 
-/** Returns a reason string when the submission looks automated, else null. */
+/**
+ * Returns a reason string when the submission looks automated, else null.
+ * `_elapsed` is measured on the client (mount to submit), so no server clock
+ * is involved and clock skew cannot reject a real person. A missing value
+ * means the form was submitted before hydration; the honeypot still applies.
+ */
 export function botCheck(form: FormData): string | null {
   const honey = String(form.get("website") ?? "");
   if (honey.trim() !== "") return "honeypot";
-  const started = Number(form.get("_t") ?? 0);
-  if (!started || Date.now() - started < MIN_FORM_SECONDS * 1000) return "too-fast";
+  const raw = form.get("_elapsed");
+  if (raw === null) return null;
+  const elapsed = Number(raw);
+  if (Number.isFinite(elapsed) && elapsed > 0 && elapsed < MIN_FORM_SECONDS * 1000) return "too-fast";
   return null;
 }

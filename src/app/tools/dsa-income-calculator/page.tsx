@@ -2,12 +2,13 @@ import type { Metadata } from "next";
 import { pageMetadata } from "@/lib/seo";
 import { ToolPage } from "@/components/tools/tool-page";
 import { DsaIncomeCalculator } from "@/components/tools/dsa-income-calculator";
+import { productOptions } from "@/data/lite";
 
 const name = "DSA Income Calculator";
 const path = "/tools/dsa-income-calculator";
 const description = "Model your monthly and annual income as a loan DSA channel partner: files per month, average ticket size and payout percentage by product, using indicative 2026 slabs.";
 
-export const metadata: Metadata = pageMetadata({ title: "DSA Income Calculator: Estimate Loan Agent Earnings by Product", description, path, keywords: ["DSA income calculator", "loan agent income calculator", "DSA commission calculator", "how much do loan DSAs earn", "DSA earnings estimate"] });
+export const metadata: Metadata = pageMetadata({ title: "DSA Income Calculator for Loan Agents", description, path, keywords: ["DSA income calculator", "loan agent income calculator", "DSA commission calculator", "how much do loan DSAs earn", "DSA earnings estimate"] });
 
 const faqs = [
   { question: "Are the payout percentages accurate?", answer: "They are mid-points of indicative 2026 ranges for LoansPartner channel partners. Your agreement states your slab per product, which depends on volume and whether you or our desk processes files. Edit the percentage column to model your own slab." },
@@ -24,7 +25,7 @@ export default function Page() {
       title="DSA income calculator"
       lede="Enter how many files you expect to close each month, the average ticket and your payout slab for each product. The table totals your estimated gross monthly and annual payout."
       description={description}
-      calculator={<DsaIncomeCalculator />}
+      calculator={<DsaIncomeCalculator products={productOptions} />}
       explainer={
         <>
           <h2>How partner payouts work</h2>

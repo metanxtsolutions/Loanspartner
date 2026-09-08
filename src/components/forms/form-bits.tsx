@@ -1,31 +1,36 @@
 "use client";
 
-import { startTransition, useCallback, useEffect, useRef, type FormEvent } from "react";
+import { startTransition, useCallback, useEffect, useId, useRef, type FormEvent } from "react";
 import { CheckCircle2, Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 /**
- * Dispatches a server action manually from onSubmit. React only resets a
- * form when it is submitted through the native `action` prop, so this keeps
- * user input on validation errors and lets us stamp the time-on-form.
+ * Dispatches the server action from onSubmit rather than the `action` prop.
+ * React resets an uncontrolled form when it is submitted through `action`,
+ * which would wipe a borrower's input on a validation error. Forms also carry
+ * method="post" so that a submit before hydration cannot put a phone number
+ * into the URL as a query string.
+ *
+ * `_elapsed` is milliseconds since the form mounted, measured entirely on the
+ * client, so the server never compares two different clocks.
  */
 export function useGuardedAction(action: (fd: FormData) => void) {
   const mountedAt = useRef(0);
   useEffect(() => {
-    mountedAt.current = Date.now();
+    mountedAt.current = performance.now();
   }, []);
   return useCallback(
     (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       const fd = new FormData(e.currentTarget);
-      fd.set("_t", String(mountedAt.current));
+      fd.set("_elapsed", String(mountedAt.current ? Math.round(performance.now() - mountedAt.current) : 0));
       startTransition(() => action(fd));
     },
     [action],
   );
 }
 
-/** Honeypot field: hidden from people, filled by bots. */
+/** Hidden from people, filled by bots. */
 export function Honeypot() {
   return (
     <div className="absolute -left-[9999px] top-0 h-0 w-0 overflow-hidden" aria-hidden>
@@ -34,13 +39,36 @@ export function Honeypot() {
   );
 }
 
-export function Field({ label, name, error, hint, children, className }: { label: string; name: string; error?: string; hint?: string; children: React.ReactNode; className?: string }) {
+/**
+ * Wires label, hint and error to the control. Children receive the id and the
+ * aria attributes so screen readers announce the error with the field.
+ */
+export function Field({
+  label,
+  name,
+  error,
+  hint,
+  children,
+  className,
+}: {
+  label: string;
+  name: string;
+  error?: string;
+  hint?: string;
+  children: (props: { id: string; "aria-invalid": boolean | undefined; "aria-describedby": string | undefined }) => React.ReactNode;
+  className?: string;
+}) {
+  const uid = useId();
+  const id = `${name}-${uid}`;
+  const hintId = `${id}-hint`;
+  const errorId = `${id}-error`;
+  const describedBy = error ? errorId : hint ? hintId : undefined;
   return (
     <div className={className}>
-      <label htmlFor={name} className="label">{label}</label>
-      {children}
-      {hint && !error && <p className="hint">{hint}</p>}
-      {error && <p className="error" role="alert">{error}</p>}
+      <label htmlFor={id} className="label">{label}</label>
+      {children({ id, "aria-invalid": error ? true : undefined, "aria-describedby": describedBy })}
+      {hint && !error && <p id={hintId} className="hint">{hint}</p>}
+      {error && <p id={errorId} className="error" role="alert">{error}</p>}
     </div>
   );
 }

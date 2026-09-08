@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import { ArrowRight } from "lucide-react";
 import { pageMetadata } from "@/lib/seo";
 import { JsonLd } from "@/components/shared/json-ld";
-import { faqPageSchema, howToSchema, webPageSchema } from "@/lib/schema";
+import { faqPageSchema, webPageSchema } from "@/lib/schema";
 import { PageHero } from "@/components/shared/page-hero";
 import { Section, SectionHeader, Card } from "@/components/shared/section";
 import { Steps } from "@/components/shared/steps";
@@ -16,6 +16,7 @@ import { ButtonLink } from "@/components/shared/button";
 import { PartnerForm } from "@/components/forms/partner-form";
 import { products, getProduct } from "@/data/products";
 import { partnerFaqs, partnerSteps, partnerEligibility } from "@/data/partner";
+import { audienceOptions, cityOptions, productOptions } from "@/data/lite";
 import { formatINR } from "@/lib/utils";
 
 export const dynamicParams = false;
@@ -31,8 +32,8 @@ export async function generateMetadata({ params }: PageProps<"/partner/[slug]">)
   const p = fromSlug(slug);
   if (!p) return {};
   return pageMetadata({
-    title: `${p.name} DSA: Earn ${p.dsa.payoutFrom}% to ${p.dsa.payoutTo}% on Every Disbursal`,
-    description: `Become a ${p.name.toLowerCase()} DSA with LoansPartner. Distribute ${p.name.toLowerCase()}s from 40+ lenders, typical tickets of ${p.dsa.ticketSize}, payouts of ${p.dsa.payoutFrom}% to ${p.dsa.payoutTo}%, processing handled by our credit desk. Free registration.`,
+    title: `${p.name} DSA: Payouts and Registration`,
+    description: `Become a ${p.name.toLowerCase()} DSA with LoansPartner. Distribute ${p.name.toLowerCase()}s from our lender panel, typical tickets of ${p.dsa.ticketSize}, payouts of ${p.dsa.payoutFrom}% to ${p.dsa.payoutTo}%, processing handled by our credit desk. Free registration.`,
     path: `/partner/${slug}`,
     keywords: [`${p.name.toLowerCase()} DSA`, `${p.name.toLowerCase()} DSA registration`, `${p.name.toLowerCase()} DSA commission`, `${p.name.toLowerCase()} agent`, "loan DSA", "DSA partner program"],
   });
@@ -44,7 +45,7 @@ export default async function ProductDsaPage({ params }: PageProps<"/partner/[sl
   if (!p) notFound();
   const path = `/partner/${slug}`;
   const title = `${p.name} DSA programme`;
-  const description = `Distribute ${p.name.toLowerCase()}s from 40+ lenders and earn ${p.dsa.payoutFrom}% to ${p.dsa.payoutTo}% of every disbursal.`;
+  const description = `Distribute ${p.name.toLowerCase()}s from our lender panel and earn ${p.dsa.payoutFrom}% to ${p.dsa.payoutTo}% of every disbursal.`;
   const faqs = [
     { question: `How much does a ${p.name.toLowerCase()} DSA earn per file?`, answer: `Indicatively ${p.dsa.payoutFrom}% to ${p.dsa.payoutTo}% of the disbursed amount. On a typical ticket of ${p.dsa.ticketSize}, that is a meaningful payout per file. Your slab is stated in your agreement and reviewed quarterly.` },
     { question: `Who are the best prospects for ${p.name.toLowerCase()}s?`, answer: p.dsa.sellsTo.join("; ") + "." },
@@ -56,7 +57,6 @@ export default async function ProductDsaPage({ params }: PageProps<"/partner/[sl
     <>
       <JsonLd data={[
         webPageSchema({ name: title, description, path, dateModified: p.updatedAt }),
-        howToSchema({ name: `How to become a ${p.name.toLowerCase()} DSA`, description, path, steps: partnerSteps }),
         faqPageSchema(faqs),
       ]} />
       <PageHero
@@ -117,7 +117,7 @@ export default async function ProductDsaPage({ params }: PageProps<"/partner/[sl
         <div className="grid gap-10 lg:grid-cols-[1fr_0.8fr]">
           <div>
             <SectionHeader eyebrow="Apply" title={`Register as a ${p.name.toLowerCase()} DSA`} lede="Free, with no obligation. Pick the products you want to distribute; you can add more later." />
-            <Card className="mt-8 p-6 sm:p-8"><PartnerForm source={`partner:${p.slug}-dsa`} /></Card>
+            <Card className="mt-8 p-6 sm:p-8"><PartnerForm products={productOptions} audiences={audienceOptions} cities={cityOptions} source={`partner:${p.slug}-dsa`} /></Card>
           </div>
           <div className="space-y-6 lg:sticky lg:top-28 lg:self-start">
             <div>
@@ -129,7 +129,7 @@ export default async function ProductDsaPage({ params }: PageProps<"/partner/[sl
         </div>
       </Section>
 
-      <CtaBand title={`Start distributing ${p.name.toLowerCase()}s.`} lede="Free registration, one code for 40+ lenders, and a credit desk that processes every file." primary={{ label: "Register as a partner", href: "/partner/register" }} secondary={{ label: "Commission slabs", href: "/partner/commission" }} />
+      <CtaBand title={`Start distributing ${p.name.toLowerCase()}s.`} lede="Free registration, one code for our whole lender panel, and a credit desk that processes every file." primary={{ label: "Register as a partner", href: "/partner/register" }} secondary={{ label: "Commission slabs", href: "/partner/commission" }} />
     </>
   );
 }

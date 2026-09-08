@@ -36,8 +36,8 @@ pnpm start
 ## Before launch: things only the business can fill in
 
 1. **Contact and NAP** in `.env.local` (`NEXT_PUBLIC_PHONE`, `NEXT_PUBLIC_EMAIL`, address, socials). Defaults are placeholders.
-2. **Proof points** in `src/data/site-config.ts` (`proof` array) and `foundedYear`. Only state numbers the business can substantiate.
-3. **Lender list** in `src/data/lenders.ts`: keep aligned with live empanelments. Replace text wordmarks in `LenderMarquee` with approved logo files once agreements are on record.
+2. **`foundedYear`** in `src/data/site-config.ts`, used on the About page. The headline proof numbers are counted from the data at build time in `ProofStrip`, so they cannot overstate what the site publishes; the only hard-coded one is the zero-fee claim.
+3. **Lender list** in `src/data/lenders.ts`: keep aligned with live empanelments. The published partner count on the home page is `lenders.length`, so adding or removing a row moves the number on the page. Replace text wordmarks in `LenderMarquee` with approved logo files once agreements are on record.
 4. **Lead sinks** in `.env.local`: at least one of `LEAD_WEBHOOK_URL` (Google Sheet / CRM), or `RESEND_API_KEY` + `LEAD_NOTIFY_EMAIL`. In development leads also append to `.data/leads.jsonl`.
 5. **Analytics**: `NEXT_PUBLIC_GA_MEASUREMENT_ID`, `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION`.
 6. **Named experts** for E-E-A-T: guides currently carry an organisational byline (`siteConfig.editorialTeam`). Add real reviewer names and credentials when available.
@@ -45,13 +45,16 @@ pnpm start
 
 ## Architecture notes
 
-- **Every entity carries its own `keywords`, `faqs` and `updatedAt`.** Metadata, FAQPage schema and sitemap `lastmod` are pure functions of the data row. Add a city or product and its pages, schema, breadcrumbs and internal links appear with no route changes.
+- **Every entity carries its own `keywords`, `faqs` and `updatedAt`.** Metadata, FAQPage schema and internal links are pure functions of the data row. Add a city or product and its pages, schema, breadcrumbs and internal links appear with no route changes.
+- **The server/client boundary is guarded by `src/data/lite.ts`.** Data files hold long-form copy, so a `"use client"` component that imported one would ship every city profile and product description to the browser. Client components take small `ProductLite` / `CityLite` / `AudienceLite` props (types in `src/data/lite-types.ts`, which has no runtime imports) built server-side in `lite.ts`. Same reason `src/lib/leads/options.ts` exists: it holds the plain option arrays so a form never pulls in the zod schema, which imports the product data. Keeping this discipline is worth roughly 450KB of client JavaScript.
+- **Sitemap `lastmod` is the last git commit date of the file a URL's content comes from**, not the build time, so rebuilding does not re-date unchanged pages and editing one city file moves only that city's URLs. It falls back to the declared `updatedAt` when git history is unavailable.
 - **`pageMetadata()`** in `src/lib/seo.ts` sets title, description (clamped to 158 chars), canonical, hreflang, Open Graph and Twitter for every page. Bare titles use the root template; social cards get the expanded title.
 - **`src/lib/schema.ts`** holds pure JSON-LD builders (Organization/FinancialService, WebSite, WebPage, BreadcrumbList, FAQPage, Service + LoanOrCredit, local FinancialService with `areaServed`, Article, HowTo, ItemList, DefinedTerm, WebApplication). One real organisation and address; city pages use `areaServed`, never fabricated branches.
 - **Breadcrumbs emit their own BreadcrumbList schema** from the same array that renders, so markup and structured data cannot drift.
 - **Lead flow is save-first.** Step 1 (product, amount, phone) creates the lead before step 2 qualification, so an abandoned form still yields a contactable lead. Anti-abuse: honeypot, minimum time-on-form, in-memory rate limit. Swap the limiter for Redis on multi-instance hosting.
 - **Copy gate** (`pnpm check:copy`) fails on en/em dashes and warns on filler words, to keep programmatic pages from drifting into template prose.
-- **No fabricated social proof.** There are no testimonials or disbursal totals in the code. Add them only with real, consented data.
+- **No fabricated social proof.** There are no testimonials or disbursal totals in the code. Add them only with real, consented data. Regulatory statements (RBI pre-payment and gold lending directions, the Key Fact Statement, the DPDP Act, income-tax section numbering) are deliberately hedged and dated; re-check them before each content refresh rather than restating them as settled fact.
+- **Accessibility choices that are easy to undo by accident:** form controls use `--color-line-strong` for a 3:1 boundary, the duplicated half of the lender marquee is `aria-hidden` and non-focusable, icon-only comparison cells carry `sr-only` text, and data tables use `scope` on row and column headers.
 
 ## Adding content
 

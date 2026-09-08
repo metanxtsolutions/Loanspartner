@@ -7,7 +7,7 @@ const name = "EMI Calculator";
 const path = "/tools/emi-calculator";
 const description = "Free EMI calculator for personal, home, business and car loans. See your monthly instalment, total interest, principal split and a year-wise repayment schedule using the reducing-balance formula lenders use.";
 
-export const metadata: Metadata = pageMetadata({ title: "EMI Calculator: Monthly Instalment, Interest and Amortisation Schedule", description, path, keywords: ["EMI calculator", "loan EMI calculator", "home loan EMI calculator", "personal loan EMI calculator", "car loan EMI calculator", "EMI formula"] });
+export const metadata: Metadata = pageMetadata({ title: "EMI Calculator with Amortisation Schedule", description, path, keywords: ["EMI calculator", "loan EMI calculator", "home loan EMI calculator", "personal loan EMI calculator", "car loan EMI calculator", "EMI formula"] });
 
 const faqs = [
   { question: "How is EMI calculated?", answer: "EMI = P × r × (1 + r)^n ÷ ((1 + r)^n − 1), where P is the loan amount, r the monthly interest rate (annual rate ÷ 12 ÷ 100) and n the number of months. This is the reducing-balance method used by all banks and NBFCs." },

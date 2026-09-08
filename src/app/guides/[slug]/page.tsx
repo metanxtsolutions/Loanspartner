@@ -52,7 +52,7 @@ export default async function GuidePage({ params }: PageProps<"/guides/[slug]">)
         <header className="relative overflow-hidden bg-paper">
           <div className="grid-fade absolute inset-0" aria-hidden />
           <div className="container-x relative pb-12 pt-10 lg:pt-14">
-            <Breadcrumbs items={[{ name: "Guides", path: "/guides" }, { name: g.category, path: `/guides#${g.category.toLowerCase().replace(/\s+/g, "-")}` }, { name: g.title, path }]} className="mb-8" />
+            <Breadcrumbs items={[{ name: "Guides", path: "/guides" }, { name: g.title, path }]} className="mb-8" />
             <div className="max-w-3xl" data-reveal>
               <div className="flex flex-wrap items-center gap-3"><Pill tone="verdant">{g.category}</Pill><span className="flex items-center gap-1 text-xs text-mute"><Clock className="size-3.5" /> {g.readTime}</span></div>
               <h1 className="display mt-5 text-4xl text-ink-950 sm:text-5xl">{g.title}</h1>
@@ -105,7 +105,7 @@ export default async function GuidePage({ params }: PageProps<"/guides/[slug]">)
                 {isPartner ? (
                   <>
                     <p className="font-display text-xl">Become a partner</p>
-                    <p className="mt-1 text-sm text-mute">Free registration, one code for 40+ lenders, processing handled.</p>
+                    <p className="mt-1 text-sm text-mute">Free registration, one code for our whole lender panel, processing handled.</p>
                     <Link href="/partner/register" className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-full bg-verdant-600 px-5 py-3 text-sm font-bold text-white hover:bg-verdant-700">Register free <ArrowRight className="size-4" /></Link>
                   </>
                 ) : (

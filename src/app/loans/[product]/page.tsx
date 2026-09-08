@@ -21,6 +21,7 @@ import { Toc } from "@/components/shared/toc";
 import { CtaBand } from "@/components/shared/cta-band";
 import { ButtonLink } from "@/components/shared/button";
 import { products, getProduct, productCategories } from "@/data/products";
+import { productOptions } from "@/data/lite";
 import { cities } from "@/data/cities";
 import { lendersForProduct } from "@/data/lenders";
 import { guidesForProduct } from "@/data/guides";
@@ -38,8 +39,8 @@ export async function generateMetadata({ params }: PageProps<"/loans/[product]">
   const p = getProduct(product);
   if (!p) return {};
   return pageMetadata({
-    title: `${p.name}: Interest Rates from ${p.rate.from.toFixed(2)}%, Eligibility and Documents`,
-    description: `${p.summary} Compare ${p.name.toLowerCase()} offers from 40+ lenders with LoansPartner. Zero fee to borrowers.`,
+    title: `${p.name}: Rates from ${p.rate.from.toFixed(2)}%, Eligibility`,
+    description: `${p.summary} Compare ${p.name.toLowerCase()} offers from our lender panel with LoansPartner. Zero fee to borrowers.`,
     path: `/loans/${p.slug}`,
     keywords: p.keywords,
   });
@@ -84,7 +85,7 @@ export default async function ProductPage({ params }: PageProps<"/loans/[product
           <div className="rounded-panel border border-line bg-white p-6 shadow-lift">
             <p className="font-display text-2xl">Check {p.shortName.toLowerCase()} loan eligibility</p>
             <p className="mt-1 text-sm text-mute">Free pre-screen across our lender panel. No bureau enquiry.</p>
-            <div className="mt-5"><HeroForm defaultProduct={p.slug} source={`product:${p.slug}`} /></div>
+            <div className="mt-5"><HeroForm products={productOptions} defaultProduct={p.slug} source={`product:${p.slug}`} /></div>
           </div>
         }
       >

@@ -13,8 +13,8 @@ import { CtaBand } from "@/components/shared/cta-band";
 import { ButtonLink } from "@/components/shared/button";
 import { siteConfig } from "@/data/site-config";
 
-const title = "About LoansPartner: An Independent Loan Advisory and Distribution Partner";
-const description = "LoansPartner is a loan advisory and distribution partner working with 40+ banks, HFCs and NBFCs across India. Former credit professionals, zero fee to borrowers, RBI-aligned conduct, and a channel partner programme.";
+const title = "About LoansPartner";
+const description = "LoansPartner is a loan advisory and distribution partner working with banks, HFCs and NBFCs across India. Former credit professionals, zero fee to borrowers, RBI-aligned conduct, and a channel partner programme.";
 
 export const metadata: Metadata = pageMetadata({ title, description, path: "/about", keywords: ["about LoansPartner", "loan advisory company India", "loan distribution company", "loan DSA company"] });
 

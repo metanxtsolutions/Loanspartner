@@ -18,8 +18,8 @@ import { products } from "@/data/products";
 import { guidesByCategory } from "@/data/guides";
 import { siteConfig } from "@/data/site-config";
 
-const title = "Become a Loan DSA Channel Partner: 40+ Lenders, One Code, Zero Investment";
-const description = "Join the LoansPartner channel partner programme. Distribute personal, home, business and property loans from 40+ banks and NBFCs, earn on every disbursal, with processing and compliance handled by our credit desk. Free registration.";
+const title = "Become a Loan DSA Channel Partner in India";
+const description = "Join the LoansPartner channel partner programme. Distribute personal, home, business and property loans from banks and NBFCs on our panel, earn on every disbursal, with processing and compliance handled by our credit desk. Free registration.";
 
 export const metadata: Metadata = pageMetadata({ title, description, path: "/partner", keywords: ["loan DSA", "become loan DSA", "DSA partner program", "loan channel partner", "DSA registration", "loan agent", "DSA commission", "loan distribution partner"] });
 
@@ -36,7 +36,7 @@ export default function PartnerPage() {
         tone="verdant"
         crumbs={[{ name: "Partner programme", path: "/partner" }]}
         eyebrow="Channel partner programme"
-        title={<>Distribute loans from 40+ lenders. We process, you earn.</>}
+        title={<>One partner code, our whole lender panel. We process, you earn.</>}
         lede="A single partner code gives you every product on our panel, a credit desk that runs the file, and payouts that are published in your agreement. No joining fee, no deposit, no targets."
         aside={
           <div className="rounded-panel bg-white p-6 text-ink-900 shadow-lift">
@@ -75,7 +75,7 @@ export default function PartnerPage() {
       <Section tone="paper">
         <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr]">
           <div className="lg:sticky lg:top-28 lg:self-start">
-            <SectionHeader eyebrow="How it works" title="From application to first payout in under two weeks." />
+            <SectionHeader eyebrow="How it works" title="From application to your partner code in about a week." />
             <Card className="mt-8 p-6">
               <p className="eyebrow text-mute">Who can join</p>
               <CheckList items={partnerEligibility} className="mt-4 text-sm" />

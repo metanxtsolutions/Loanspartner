@@ -2,8 +2,9 @@ import { ArrowRight, Check } from "lucide-react";
 import { HeroForm } from "@/components/forms/hero-form";
 import { ButtonLink } from "@/components/shared/button";
 import { LenderMarquee } from "@/components/shared/lender-marquee";
+import { productOptions } from "@/data/lite";
 
-const bullets = ["Zero fee to borrowers, paid by lenders", "40+ banks, HFCs and NBFCs on one application", "A named credit manager from enquiry to disbursal"];
+const bullets = ["Zero fee to borrowers, paid by lenders", "Banks, HFCs and NBFCs on one application", "A named credit manager from enquiry to disbursal"];
 
 export function Hero() {
   return (
@@ -42,7 +43,7 @@ export function Hero() {
               <span className="rounded-full bg-verdant-100 px-2.5 py-1 text-[11px] font-bold text-verdant-700">Free</span>
             </div>
             <p className="mt-1 text-sm text-mute">Two minutes. A call back with a lender shortlist within one working day.</p>
-            <div className="mt-5"><HeroForm /></div>
+            <div className="mt-5"><HeroForm products={productOptions} /></div>
           </div>
         </div>
       </div>

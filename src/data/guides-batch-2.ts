@@ -171,7 +171,7 @@ export const guidesBatch2: Guide[] = [
   },
   {
     slug: "understanding-your-cibil-score",
-    title: "Understanding Your CIBIL Score: Ranges, What Moves It, and How to Improve It",
+    title: "Understanding Your CIBIL Score and How to Improve It",
     category: "Credit and scores",
     excerpt: "How the score is built, what each range means to a lender, the five factors that move it, common myths, and a 90-day improvement plan.",
     readTime: "8 min read",
@@ -324,7 +324,7 @@ export const guidesBatch2: Guide[] = [
   },
   {
     slug: "personal-loan-for-self-employed",
-    title: "Personal Loan for Self-Employed: Documents, Eligibility and How to Get Approved",
+    title: "Personal Loan for Self-Employed: Documents and Eligibility",
     category: "Borrowing basics",
     excerpt: "Why self-employed applicants face more scrutiny, the documents that prove income, banking-based programmes when ITR understates earnings, and alternatives that are cheaper.",
     readTime: "7 min read",
@@ -403,7 +403,7 @@ export const guidesBatch2: Guide[] = [
   },
   {
     slug: "how-to-spot-loan-fraud",
-    title: "How to Spot a Loan Scam: Fake Agents, Advance Fees and Unregulated Apps",
+    title: "How to Spot a Loan Scam: Fake Agents and Advance Fees",
     category: "Safety and compliance",
     excerpt: "The patterns behind India's most common loan frauds, the checks that take two minutes, and what to do if you have already paid.",
     readTime: "6 min read",

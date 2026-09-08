@@ -3,7 +3,7 @@ import type { Guide } from "@/data/guide-types";
 export const guidesBatch1: Guide[] = [
   {
     slug: "how-to-become-a-loan-dsa-in-india",
-    title: "How to Become a Loan DSA in India: Registration, Documents and Earnings (2026 Guide)",
+    title: "How to Become a Loan DSA in India (2026 Guide)",
     category: "Partner programme",
     excerpt: "A practical guide to becoming a Direct Selling Agent for loans: who qualifies, how registration works, what you earn per product, and the RBI rules you must follow.",
     readTime: "9 min read",
@@ -43,7 +43,7 @@ export const guidesBatch1: Guide[] = [
         table: {
           headers: ["", "Direct with lender", "Through LoansPartner"],
           rows: [
-            ["Lenders reachable", "One", "40+ banks, HFCs and NBFCs"],
+            ["Lenders reachable", "One", "banks, HFCs and NBFCs"],
             ["Empanelment time", "Weeks; volume expectations", "3 to 5 working days"],
             ["Who processes the file", "You", "Our credit desk"],
             ["Training and compliance support", "Varies", "Included"],
@@ -110,7 +110,7 @@ export const guidesBatch1: Guide[] = [
   },
   {
     slug: "loan-dsa-commission-structure-explained",
-    title: "Loan DSA Commission Structure Explained: How Much Loan Agents Really Earn",
+    title: "Loan DSA Commission: How Much Agents Really Earn",
     category: "Partner programme",
     excerpt: "How DSA payouts are calculated, why percentages differ by product, what a realistic monthly income looks like, and the clawbacks and deductions to watch for.",
     readTime: "8 min read",
@@ -263,7 +263,7 @@ export const guidesBatch1: Guide[] = [
   },
   {
     slug: "personal-loan-eligibility-how-lenders-decide",
-    title: "Personal Loan Eligibility: How Banks Actually Decide, and How to Improve Your Odds",
+    title: "Personal Loan Eligibility: How Banks Actually Decide",
     category: "Borrowing basics",
     excerpt: "The five inputs behind every personal loan decision: income, FOIR, credit report, employer profile and stability, with worked examples and practical fixes.",
     readTime: "8 min read",

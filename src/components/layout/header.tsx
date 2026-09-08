@@ -2,15 +2,12 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useId, useRef, useState } from "react";
 import { ArrowRight, ChevronDown, Menu, Phone, X } from "lucide-react";
 import { Logo } from "@/components/shared/logo";
 import { ButtonLink } from "@/components/shared/button";
 import { ProductIcon } from "@/components/shared/product-icon";
-import { products, productCategories } from "@/data/products";
-import { cities } from "@/data/cities";
-import { partnerAudiences } from "@/data/partner";
-import { siteConfig } from "@/data/site-config";
+import type { AudienceLite, CategoryLite, CityLite, NavData, ProductLite } from "@/data/lite-types";
 import { cn } from "@/lib/utils";
 
 const tools = [
@@ -28,12 +25,18 @@ const partnerLinks = [
   { label: "Register as a partner", href: "/partner/register", description: "Two-minute application, free onboarding." },
 ];
 
-export function Header() {
+type MenuKey = "loans" | "partner" | "tools";
+
+export function Header({ nav, phone, phoneDisplay }: { nav: NavData; phone: string; phoneDisplay: string }) {
   const pathname = usePathname();
-  const [open, setOpen] = useState<string | null>(null);
+  const [open, setOpen] = useState<MenuKey | null>(null);
   const [mobile, setMobile] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const menuId = useId();
+  const drawerId = `${menuId}-drawer`;
+  const toggleRef = useRef<HTMLButtonElement>(null);
 
+  // Close everything when the route changes, without an effect-driven re-render.
   const [seenPath, setSeenPath] = useState(pathname);
   if (seenPath !== pathname) {
     setSeenPath(pathname);
@@ -55,6 +58,20 @@ export function Header() {
     };
   }, [mobile]);
 
+  const closeAll = useCallback(() => {
+    setOpen(null);
+    setMobile(false);
+    toggleRef.current?.focus();
+  }, []);
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && (open || mobile)) closeAll();
+    };
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, [open, mobile, closeAll]);
+
   const isActive = (href: string) => pathname === href || pathname.startsWith(`${href}/`);
 
   return (
@@ -65,62 +82,69 @@ export function Header() {
           scrolled ? "border-line bg-paper/85 backdrop-blur-xl" : "border-transparent bg-paper/60 backdrop-blur-md",
         )}
       >
-      <div className="container-x flex h-[var(--header-h)] items-center justify-between gap-6">
-        <Logo />
+        <div className="container-x flex h-[var(--header-h)] items-center justify-between gap-6">
+          <Logo />
 
-        <nav className="hidden items-center gap-1 lg:flex" aria-label="Primary">
-          <MenuButton label="Loans" active={isActive("/loans") || open === "loans"} onHover={() => setOpen("loans")} onClick={() => setOpen(open === "loans" ? null : "loans")} expanded={open === "loans"} />
-          <MenuButton label="Partner with us" active={isActive("/partner") || open === "partner"} onHover={() => setOpen("partner")} onClick={() => setOpen(open === "partner" ? null : "partner")} expanded={open === "partner"} />
-          <MenuButton label="Tools" active={isActive("/tools") || open === "tools"} onHover={() => setOpen("tools")} onClick={() => setOpen(open === "tools" ? null : "tools")} expanded={open === "tools"} />
-          <NavLink href="/guides" active={isActive("/guides")} onHover={() => setOpen(null)}>Guides</NavLink>
-          <NavLink href="/about" active={isActive("/about")} onHover={() => setOpen(null)}>About</NavLink>
-        </nav>
+          <nav className="hidden items-center gap-1 lg:flex" aria-label="Primary">
+            <MenuButton label="Loans" menu="loans" open={open} setOpen={setOpen} active={isActive("/loans")} panelId={`${menuId}-loans`} />
+            <MenuButton label="Partner with us" menu="partner" open={open} setOpen={setOpen} active={isActive("/partner")} panelId={`${menuId}-partner`} />
+            <MenuButton label="Tools" menu="tools" open={open} setOpen={setOpen} active={isActive("/tools")} panelId={`${menuId}-tools`} />
+            <NavLink href="/guides" active={isActive("/guides")} onHover={() => setOpen(null)}>Guides</NavLink>
+            <NavLink href="/about" active={isActive("/about")} onHover={() => setOpen(null)}>About</NavLink>
+          </nav>
 
-        <div className="hidden items-center gap-3 lg:flex">
-          <a href={`tel:${siteConfig.contact.phone}`} className="inline-flex items-center gap-2 text-sm font-bold text-ink-900 hover:text-verdant-700">
-            <Phone className="size-4" aria-hidden />
-            {siteConfig.contact.phoneDisplay}
-          </a>
-          <ButtonLink href="/apply" size="md">
-            Check eligibility
-            <ArrowRight className="size-4" aria-hidden />
-          </ButtonLink>
+          <div className="hidden items-center gap-3 lg:flex">
+            <a href={`tel:${phone}`} className="inline-flex items-center gap-2 text-sm font-bold text-ink-900 hover:text-verdant-700">
+              <Phone className="size-4" aria-hidden />
+              {phoneDisplay}
+            </a>
+            <ButtonLink href="/apply" size="md">
+              Check eligibility
+              <ArrowRight className="size-4" aria-hidden />
+            </ButtonLink>
+          </div>
+
+          <button
+            ref={toggleRef}
+            type="button"
+            className="inline-flex size-11 items-center justify-center rounded-full border border-line bg-white lg:hidden"
+            aria-label={mobile ? "Close menu" : "Open menu"}
+            aria-expanded={mobile}
+            aria-controls={drawerId}
+            onClick={() => setMobile((v) => !v)}
+          >
+            {mobile ? <X className="size-5" aria-hidden /> : <Menu className="size-5" aria-hidden />}
+          </button>
         </div>
-
-        <button
-          type="button"
-          className="inline-flex size-11 items-center justify-center rounded-full border border-line bg-white lg:hidden"
-          aria-label={mobile ? "Close menu" : "Open menu"}
-          aria-expanded={mobile}
-          onClick={() => setMobile((v) => !v)}
-        >
-          {mobile ? <X className="size-5" /> : <Menu className="size-5" />}
-        </button>
-      </div>
       </div>
 
       {/* Desktop mega menus */}
       <div
+        id={open ? `${menuId}-${open}` : undefined}
         className={cn(
           "absolute inset-x-0 top-full hidden origin-top border-b border-line bg-cream shadow-lift transition-all duration-200 lg:block",
           open ? "visible translate-y-0 opacity-100" : "invisible -translate-y-1 opacity-0",
         )}
-        aria-hidden={!open}
+        hidden={!open}
       >
         <div className="container-x py-8">
-          {open === "loans" && <LoansMenu />}
-          {open === "partner" && <PartnerMenu />}
+          {open === "loans" && <LoansMenu products={nav.products} categories={nav.categories} cities={nav.cities} />}
+          {open === "partner" && <PartnerMenu audiences={nav.audiences} />}
           {open === "tools" && <ToolsMenu />}
         </div>
       </div>
 
       {/* Mobile drawer */}
-      <div className={cn("fixed inset-x-0 bottom-0 top-[var(--header-h)] z-40 overflow-y-auto bg-paper lg:hidden", mobile ? "block" : "hidden")}>
+      <div
+        id={drawerId}
+        hidden={!mobile}
+        className="fixed inset-x-0 bottom-0 top-[var(--header-h)] z-40 overflow-y-auto bg-paper lg:hidden"
+      >
         <div className="container-x py-6">
           <MobileGroup title="Loans">
-            {products.map((p) => (
+            {nav.products.map((p) => (
               <Link key={p.slug} href={`/loans/${p.slug}`} className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-[15px] font-semibold hover:bg-sand">
-                <ProductIcon icon={p.icon} className="size-4 text-verdant-600" />
+                <ProductIcon icon={p.icon} className="size-4 text-verdant-600" aria-hidden />
                 {p.name}
               </Link>
             ))}
@@ -130,7 +154,7 @@ export function Header() {
             {partnerLinks.map((l) => (
               <Link key={l.href} href={l.href} className="block rounded-xl px-3 py-2.5 text-[15px] font-semibold hover:bg-sand">{l.label}</Link>
             ))}
-            {partnerAudiences.map((a) => (
+            {nav.audiences.map((a) => (
               <Link key={a.slug} href={`/partner/for/${a.slug}`} className="block rounded-xl px-3 py-2 text-sm text-mute hover:bg-sand">For {a.name.toLowerCase()}</Link>
             ))}
           </MobileGroup>
@@ -147,8 +171,8 @@ export function Header() {
             <Link href="/contact" className="block rounded-xl px-3 py-2.5 text-[15px] font-semibold hover:bg-sand">Contact</Link>
           </MobileGroup>
           <div className="mt-6 flex flex-col gap-3">
-            <ButtonLink href="/apply" size="lg">Check eligibility <ArrowRight className="size-4" /></ButtonLink>
-            <ButtonLink href={`tel:${siteConfig.contact.phone}`} variant="light" size="lg"><Phone className="size-4" /> {siteConfig.contact.phoneDisplay}</ButtonLink>
+            <ButtonLink href="/apply" size="lg">Check eligibility <ArrowRight className="size-4" aria-hidden /></ButtonLink>
+            <ButtonLink href={`tel:${phone}`} variant="light" size="lg"><Phone className="size-4" aria-hidden /> {phoneDisplay}</ButtonLink>
           </div>
         </div>
       </div>
@@ -156,15 +180,17 @@ export function Header() {
   );
 }
 
-function MenuButton({ label, active, expanded, onHover, onClick }: { label: string; active: boolean; expanded: boolean; onHover: () => void; onClick: () => void }) {
+function MenuButton({ label, menu, open, setOpen, active, panelId }: { label: string; menu: MenuKey; open: MenuKey | null; setOpen: (m: MenuKey | null) => void; active: boolean; panelId: string }) {
+  const expanded = open === menu;
   return (
     <button
       type="button"
-      onMouseEnter={onHover}
-      onFocus={onHover}
-      onClick={onClick}
+      onMouseEnter={() => setOpen(menu)}
+      onFocus={() => setOpen(menu)}
+      onClick={() => setOpen(expanded ? null : menu)}
       aria-expanded={expanded}
-      className={cn("inline-flex h-10 items-center gap-1 rounded-full px-4 text-sm font-bold transition-colors", active ? "bg-ink-100 text-ink-900" : "text-ink-800 hover:bg-ink-100")}
+      aria-controls={panelId}
+      className={cn("inline-flex h-10 items-center gap-1 rounded-full px-4 text-sm font-bold transition-colors", active || expanded ? "bg-ink-100 text-ink-900" : "text-ink-800 hover:bg-ink-100")}
     >
       {label}
       <ChevronDown className={cn("size-3.5 transition-transform", expanded && "rotate-180")} aria-hidden />
@@ -180,12 +206,11 @@ function NavLink({ href, active, children, onHover }: { href: string; active: bo
   );
 }
 
-function LoansMenu() {
-  const featuredCities = cities.slice(0, 8);
+function LoansMenu({ products, categories, cities }: { products: ProductLite[]; categories: CategoryLite[]; cities: CityLite[] }) {
   return (
     <div className="grid grid-cols-12 gap-8">
       <div className="col-span-9 grid grid-cols-3 gap-x-8 gap-y-6">
-        {productCategories.map((cat) => (
+        {categories.map((cat) => (
           <div key={cat.key}>
             <p className="eyebrow mb-3 text-mute">{cat.label}</p>
             <ul className="space-y-1">
@@ -193,11 +218,11 @@ function LoansMenu() {
                 <li key={p.slug}>
                   <Link href={`/loans/${p.slug}`} className="group flex items-start gap-3 rounded-xl p-2 -mx-2 hover:bg-white">
                     <span className="mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-lg bg-verdant-50 text-verdant-700 group-hover:bg-verdant-100">
-                      <ProductIcon icon={p.icon} className="size-4" />
+                      <ProductIcon icon={p.icon} className="size-4" aria-hidden />
                     </span>
                     <span>
                       <span className="block text-sm font-bold text-ink-900">{p.name}</span>
-                      <span className="block text-xs text-mute">From {p.rate.from.toFixed(2)}% p.a.</span>
+                      <span className="block text-xs text-mute">From {p.rateFrom.toFixed(2)}% p.a.</span>
                     </span>
                   </Link>
                 </li>
@@ -209,21 +234,21 @@ function LoansMenu() {
       <div className="col-span-3 rounded-card bg-ink-900 p-5 text-white">
         <p className="eyebrow text-verdant-400">Loans by city</p>
         <ul className="mt-3 grid grid-cols-2 gap-x-3 gap-y-1.5 text-sm">
-          {featuredCities.map((c) => (
+          {cities.slice(0, 8).map((c) => (
             <li key={c.slug}><Link href={`/cities/${c.slug}`} className="text-white/80 hover:text-white">{c.name}</Link></li>
           ))}
         </ul>
         <Link href="/cities" className="mt-3 inline-block text-sm font-bold text-verdant-400 hover:text-verdant-300">All cities</Link>
         <div className="mt-6 border-t border-white/10 pt-5">
           <p className="text-sm text-white/70">Not sure which loan fits? Our credit desk will tell you in one call.</p>
-          <ButtonLink href="/apply" size="sm" className="mt-3">Check eligibility <ArrowRight className="size-3.5" /></ButtonLink>
+          <ButtonLink href="/apply" size="sm" className="mt-3">Check eligibility <ArrowRight className="size-3.5" aria-hidden /></ButtonLink>
         </div>
       </div>
     </div>
   );
 }
 
-function PartnerMenu() {
+function PartnerMenu({ audiences }: { audiences: AudienceLite[] }) {
   return (
     <div className="grid grid-cols-12 gap-8">
       <div className="col-span-4">
@@ -242,7 +267,7 @@ function PartnerMenu() {
       <div className="col-span-5">
         <p className="eyebrow mb-3 text-mute">Built for your profession</p>
         <ul className="grid grid-cols-2 gap-1">
-          {partnerAudiences.map((a) => (
+          {audiences.map((a) => (
             <li key={a.slug}>
               <Link href={`/partner/for/${a.slug}`} className="block rounded-xl p-2 -mx-2 hover:bg-white">
                 <span className="block text-sm font-bold text-ink-900">{a.name}</span>
@@ -254,8 +279,8 @@ function PartnerMenu() {
       </div>
       <div className="col-span-3 rounded-card bg-verdant-600 p-5 text-white">
         <p className="eyebrow text-white/70">Earn on every disbursal</p>
-        <p className="mt-2 font-display text-2xl leading-tight">One code. 40+ lenders. Zero investment.</p>
-        <ButtonLink href="/partner/register" variant="light" size="sm" className="mt-4">Register free <ArrowRight className="size-3.5" /></ButtonLink>
+        <p className="mt-2 font-display text-2xl leading-tight">One code. Every lender on our panel. Zero investment.</p>
+        <ButtonLink href="/partner/register" variant="light" size="sm" className="mt-4">Register free <ArrowRight className="size-3.5" aria-hidden /></ButtonLink>
       </div>
     </div>
   );
@@ -275,7 +300,7 @@ function ToolsMenu() {
       <div className="col-span-4 rounded-card border border-line bg-white p-5">
         <p className="eyebrow text-mute">Guides</p>
         <p className="mt-2 text-sm text-ink-800">Plain-language guides on eligibility, credit scores, balance transfers, business loan documents and staying safe from loan fraud, reviewed by our credit desk.</p>
-        <Link href="/guides" className="mt-3 inline-flex items-center gap-1 text-sm font-bold text-verdant-700 hover:text-verdant-600">Browse guides <ArrowRight className="size-3.5" /></Link>
+        <Link href="/guides" className="mt-3 inline-flex items-center gap-1 text-sm font-bold text-verdant-700 hover:text-verdant-600">Browse guides <ArrowRight className="size-3.5" aria-hidden /></Link>
       </div>
     </div>
   );
@@ -283,7 +308,7 @@ function ToolsMenu() {
 
 function MobileGroup({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <details className="group border-b border-line py-2" open={false}>
+    <details className="group border-b border-line py-2">
       <summary className="flex cursor-pointer list-none items-center justify-between py-3 text-base font-bold text-ink-900">
         {title}
         <ChevronDown className="size-4 transition-transform group-open:rotate-180" aria-hidden />

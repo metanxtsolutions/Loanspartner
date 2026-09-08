@@ -1,5 +1,5 @@
 import { Briefcase, Building2, Car, CarFront, Cog, Coins, GraduationCap, Home, RefreshCw, Stethoscope, User, Wallet, type LucideProps } from "lucide-react";
-import type { LoanProduct } from "@/data/products";
+import type { IconName } from "@/data/lite-types";
 
 const icons = {
   user: User,
@@ -16,7 +16,7 @@ const icons = {
   wallet: Wallet,
 } as const;
 
-export function ProductIcon({ icon, ...props }: { icon: LoanProduct["icon"] } & LucideProps) {
+export function ProductIcon({ icon, ...props }: { icon: IconName } & LucideProps) {
   const Icon = icons[icon];
   return <Icon {...props} />;
 }

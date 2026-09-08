@@ -7,7 +7,7 @@ const name = "Home Loan Balance Transfer Calculator";
 const path = "/tools/balance-transfer-calculator";
 const description = "Find out whether transferring your home loan to a lower rate saves money after costs. See the new EMI, monthly saving, interest saved, break-even month and the keep-your-EMI option.";
 
-export const metadata: Metadata = pageMetadata({ title: "Home Loan Balance Transfer Calculator: Savings, Break-even and Costs", description, path, keywords: ["home loan balance transfer calculator", "balance transfer savings calculator", "should I transfer my home loan", "home loan refinance calculator", "loan transfer break even"] });
+export const metadata: Metadata = pageMetadata({ title: "Home Loan Balance Transfer Calculator", description, path, keywords: ["home loan balance transfer calculator", "balance transfer savings calculator", "should I transfer my home loan", "home loan refinance calculator", "loan transfer break even"] });
 
 const faqs = [
   { question: "What costs should I include?", answer: "Processing fee (often waived in campaigns), legal and technical charges of ₹5,000 to ₹15,000, and stamp duty on the new mortgage deed in states that levy it. There is no foreclosure charge on floating-rate home loans to individuals." },

@@ -8,7 +8,7 @@ import { Steps } from "@/components/shared/steps";
 import { ContactForm } from "@/components/forms/contact-form";
 import { siteConfig } from "@/data/site-config";
 
-const title = "Grievance Redressal: How to Raise and Escalate a Complaint";
+const title = "Grievance Redressal";
 const description = "LoansPartner's complaint process: acknowledgement within 2 working days, resolution within 15, escalation to the lender's grievance officer and the RBI Integrated Ombudsman Scheme.";
 
 export const metadata: Metadata = pageMetadata({ title, description, path: "/grievance-redressal", keywords: ["grievance redressal loan", "complaint loan agent", "RBI ombudsman complaint", "DSA complaint"] });

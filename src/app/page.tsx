@@ -113,7 +113,7 @@ export default function HomePage() {
       <Section tone="cream">
         <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
           <div>
-            <SectionHeader eyebrow="Partner programme" title="Distribute loans from 40+ lenders under one code. We process, you earn." lede="Chartered accountants, insurance advisors, property consultants, former bankers and working professionals earn on every disbursal they refer. Free to join, no targets, full compliance cover." />
+            <SectionHeader eyebrow="Partner programme" title="One partner code, our whole lender panel. We process, you earn." lede="Chartered accountants, insurance advisors, property consultants, former bankers and working professionals earn on every disbursal they refer. Free to join, no targets, full compliance cover." />
             <div className="mt-8 flex flex-wrap gap-3">
               <ButtonLink href="/partner/register">Register free <ArrowRight className="size-4" /></ButtonLink>
               <ButtonLink href="/partner/commission" variant="ghost">See commission slabs</ButtonLink>

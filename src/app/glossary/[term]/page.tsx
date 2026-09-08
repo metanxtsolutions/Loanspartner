@@ -23,7 +23,7 @@ export async function generateMetadata({ params }: PageProps<"/glossary/[term]">
   const { term } = await params;
   const t = getTerm(term);
   if (!t) return {};
-  return pageMetadata({ title: `${t.term}: Meaning and Why It Matters for Your Loan`, description: `${t.short} ${t.definition[0]}`, path: `/glossary/${t.slug}`, keywords: [`what is ${t.term.toLowerCase()}`, `${t.term.toLowerCase()} meaning`, `${t.term.toLowerCase()} loan`, "loan glossary"] });
+  return pageMetadata({ title: `${t.term} Explained`, description: `${t.short} ${t.definition[0]}`, path: `/glossary/${t.slug}`, keywords: [`what is ${t.term.toLowerCase()}`, `${t.term.toLowerCase()} meaning`, `${t.term.toLowerCase()} loan`, "loan glossary"] });
 }
 
 export default async function TermPage({ params }: PageProps<"/glossary/[term]">) {

@@ -9,7 +9,7 @@ import { ContactForm } from "@/components/forms/contact-form";
 import { siteConfig, whatsappUrl } from "@/data/site-config";
 import Link from "next/link";
 
-const title = "Contact LoansPartner: Call, WhatsApp or Message the Credit Desk";
+const title = "Contact LoansPartner";
 const description = "Reach the LoansPartner credit desk and partner team by phone, WhatsApp, email or the contact form. Working hours Monday to Saturday, 9:30 am to 6 pm IST.";
 
 export const metadata: Metadata = pageMetadata({ title, description, path: "/contact", keywords: ["contact LoansPartner", "loan advisor contact", "loan DSA contact"] });

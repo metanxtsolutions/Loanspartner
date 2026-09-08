@@ -10,6 +10,7 @@ import { JsonLd } from "@/components/shared/json-ld";
 import { organizationSchema, webSiteSchema } from "@/lib/schema";
 import { siteConfig } from "@/data/site-config";
 import { cityNames } from "@/data/cities";
+import { navData } from "@/data/lite";
 
 const manrope = Manrope({ subsets: ["latin"], variable: "--font-manrope", display: "swap" });
 const fraunces = Fraunces({ subsets: ["latin"], variable: "--font-fraunces", display: "swap", axes: ["opsz", "SOFT"] });
@@ -17,7 +18,7 @@ const fraunces = Fraunces({ subsets: ["latin"], variable: "--font-fraunces", dis
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
-    default: `${siteConfig.name}: Loan Advisory and DSA Partner for Personal, Home and Business Loans`,
+    default: `${siteConfig.name}: Loan Advisory and DSA Partner in India`,
     template: `%s | ${siteConfig.name}`,
   },
   description: siteConfig.metaDescription,
@@ -26,7 +27,7 @@ export const metadata: Metadata = {
   creator: siteConfig.name,
   publisher: siteConfig.legalName,
   keywords: ["loan advisory India", "loan DSA", "personal loan", "home loan", "business loan", "loan against property", "become loan DSA", "loan channel partner"],
-  alternates: { canonical: siteConfig.url },
+  alternates: { canonical: siteConfig.url, languages: { "en-IN": siteConfig.url } },
   openGraph: {
     type: "website",
     locale: siteConfig.locale,
@@ -50,11 +51,11 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en-IN" className={`${manrope.variable} ${fraunces.variable} h-full antialiased`}>
+    <html lang="en-IN" data-scroll-behavior="smooth" className={`${manrope.variable} ${fraunces.variable} h-full antialiased`}>
       <body className="flex min-h-full flex-col pb-[4.5rem] lg:pb-0">
         <JsonLd data={[organizationSchema({ cities: cityNames }), webSiteSchema()]} />
         <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-ink-900 focus:px-4 focus:py-2 focus:text-white">Skip to content</a>
-        <Header />
+        <Header nav={navData} phone={siteConfig.contact.phone} phoneDisplay={siteConfig.contact.phoneDisplay} />
         <main id="main" className="flex-1">{children}</main>
         <Footer />
         <MobileCta />

@@ -2,12 +2,13 @@ import type { Metadata } from "next";
 import { pageMetadata } from "@/lib/seo";
 import { ToolPage } from "@/components/tools/tool-page";
 import { EligibilityCalculator } from "@/components/tools/eligibility-calculator";
+import { productOptions } from "@/data/lite";
 
 const name = "Loan Eligibility Calculator";
 const path = "/tools/eligibility-calculator";
 const description = "Estimate how much personal, home, business or car loan you can get on your income and existing EMIs. Uses the FOIR method lenders apply, with product-specific rates and tenures.";
 
-export const metadata: Metadata = pageMetadata({ title: "Loan Eligibility Calculator: How Much Can You Borrow on Your Income?", description, path, keywords: ["loan eligibility calculator", "personal loan eligibility calculator", "home loan eligibility calculator", "how much loan can I get", "FOIR calculator"] });
+export const metadata: Metadata = pageMetadata({ title: "Loan Eligibility Calculator", description, path, keywords: ["loan eligibility calculator", "personal loan eligibility calculator", "home loan eligibility calculator", "how much loan can I get", "FOIR calculator"] });
 
 const faqs = [
   { question: "How do lenders calculate loan eligibility?", answer: "They cap your total monthly EMIs, including the new loan, at a share of net income (the FOIR), typically 50% to 65% depending on income level and product. The affordable EMI is converted into a loan amount at the offered rate and tenure. For secured loans, the asset's value caps the amount too." },
@@ -24,7 +25,7 @@ export default function Page() {
       title="Loan eligibility calculator"
       lede="Pick a product, enter your income and existing EMIs, and see an indicative eligible amount using the FOIR method lenders use."
       description={description}
-      calculator={<EligibilityCalculator />}
+      calculator={<EligibilityCalculator products={productOptions.filter((p) => ["personal-loan", "home-loan", "business-loan", "loan-against-property", "car-loan", "professional-loan", "education-loan", "used-car-loan"].includes(p.slug))} />}
       explainer={
         <>
           <h2>How eligibility is estimated</h2>

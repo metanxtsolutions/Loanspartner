@@ -15,8 +15,8 @@ import { cities } from "@/data/cities";
 import { globalFaqs } from "@/data/faqs";
 import { formatINR } from "@/lib/utils";
 
-const title = "Loan Products: Personal, Home, Business, Property and Vehicle Loans";
-const description = "Compare 12 loan products from 40+ banks and NBFCs with LoansPartner: personal loans from 10.25%, home loans from 7.35%, business loans, loan against property, car and education loans. Zero fee to borrowers.";
+const title = "Loan Products: Personal, Home, Business and Property";
+const description = "Compare 12 loan products from banks and NBFCs on our panel with LoansPartner: personal loans from 10.25%, home loans from 7.35%, business loans, loan against property, car and education loans. Zero fee to borrowers.";
 
 export const metadata: Metadata = pageMetadata({ title, description, path: "/loans", keywords: ["loan products India", "types of loans", "compare loans", "personal loan", "home loan", "business loan", "loan against property"] });
 
@@ -52,12 +52,12 @@ export default function LoansHubPage() {
           <table className="w-full min-w-[720px] text-sm">
             <caption className="pb-4 text-left font-display text-2xl text-white">At a glance</caption>
             <thead className="text-left text-xs uppercase tracking-wide text-white/50">
-              <tr><th className="py-2 pr-4 font-bold">Product</th><th className="py-2 pr-4 font-bold">Indicative rate</th><th className="py-2 pr-4 font-bold">Amount</th><th className="py-2 pr-4 font-bold">Max tenure</th><th className="py-2 font-bold">Processing fee</th></tr>
+              <tr><th scope="col" className="py-2 pr-4 font-bold">Product</th><th scope="col" className="py-2 pr-4 font-bold">Indicative rate</th><th scope="col" className="py-2 pr-4 font-bold">Amount</th><th scope="col" className="py-2 pr-4 font-bold">Max tenure</th><th scope="col" className="py-2 font-bold">Processing fee</th></tr>
             </thead>
             <tbody className="tnum">
               {products.map((p) => (
                 <tr key={p.slug} className="border-t border-white/10">
-                  <td className="py-3 pr-4 font-bold text-white"><Link href={`/loans/${p.slug}`} className="hover:text-verdant-400">{p.name}</Link></td>
+                  <th scope="row" className="py-3 pr-4 text-left font-bold text-white"><Link href={`/loans/${p.slug}`} className="hover:text-verdant-400">{p.name}</Link></th>
                   <td className="py-3 pr-4 text-white/80">{p.rate.from.toFixed(2)}% to {p.rate.to.toFixed(2)}%</td>
                   <td className="py-3 pr-4 text-white/80">₹{formatINR(p.amount.min, { compact: true })} to ₹{formatINR(p.amount.max, { compact: true })}</td>
                   <td className="py-3 pr-4 text-white/80">{Math.round(p.tenure.maxMonths / 12)} years</td>

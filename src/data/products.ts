@@ -1,3 +1,5 @@
+import type { IconName } from "@/data/lite-types";
+
 export type ProductCategory = "personal" | "property" | "business" | "vehicle" | "education" | "specialty";
 
 export type Faq = { question: string; answer: string };
@@ -7,7 +9,7 @@ export type LoanProduct = {
   name: string;
   shortName: string;
   category: ProductCategory;
-  icon: "user" | "home" | "briefcase" | "building" | "car" | "car-used" | "graduation" | "coins" | "stethoscope" | "refresh" | "cog" | "wallet";
+  icon: IconName;
   tagline: string;
   summary: string;
   intro: string[];
@@ -93,7 +95,7 @@ export const products: LoanProduct[] = [
       { question: "What CIBIL score do I need for a personal loan?", answer: "Most banks look for 700 or above. Scores between 650 and 699 can still get approved with select lenders, usually at a higher rate and a lower amount. Below 650, approval odds drop sharply and a secured option such as a gold loan or loan against property is usually cheaper." },
       { question: "How much personal loan can I get on my salary?", answer: "Lenders cap your total EMIs, including the new loan, at roughly 50% to 60% of your net monthly income. On a ₹60,000 salary with no other EMIs, that supports an EMI of about ₹30,000, which is roughly ₹12 to ₹13 lakh over five years at 12% p.a. Use our eligibility calculator for your numbers." },
       { question: "Does applying through LoansPartner affect my credit score?", answer: "We do a soft pre-screen that does not touch your bureau report. A hard enquiry happens only when you choose a lender and the formal application is submitted, which is one enquiry rather than the four or five people often rack up by applying everywhere." },
-      { question: "Can I prepay or foreclose a personal loan?", answer: "Yes. Under RBI directions, floating-rate personal loans to individuals cannot carry prepayment charges. Most personal loans are fixed-rate, where lenders may charge 2% to 5% of the outstanding amount after a lock-in of 6 to 12 months. We flag this in the lender comparison before you decide." },
+      { question: "Can I prepay or foreclose a personal loan?", answer: "Yes. Under RBI's directions on pre-payment charges, floating-rate loans to individual borrowers, and to micro and small enterprises within the prescribed limits, cannot carry foreclosure or pre-payment charges. Most personal loans are fixed-rate, where lenders may charge 2% to 5% of the outstanding amount after a lock-in of 6 to 12 months. We flag this in the lender comparison before you decide." },
       { question: "Is a personal loan better than a credit card EMI or a top-up on my home loan?", answer: "It depends on cost and speed. A home loan top-up at around 8% to 9% is far cheaper but takes longer and needs an existing home loan. A personal loan at 11% to 14% beats a credit card EMI at 15% to 24% and is quicker than a top-up. We compare all three when you have the option." },
       { question: "How long does disbursal take?", answer: "With complete documents, most banks sanction within 1 to 3 working days and disburse within a day of sanction. Pre-approved offers for existing bank customers can be same-day." },
     ],
@@ -136,7 +138,7 @@ export const products: LoanProduct[] = [
     },
     benefits: [
       { title: "Lowest effective rate, not lowest headline rate", text: "We compare spreads over the repo rate, reset frequency and fee structure, which is what you actually pay." },
-      { title: "Tax benefits up to ₹3.5 lakh a year", text: "Principal under Section 80C and interest under Section 24(b) of the Income Tax Act, subject to the tax regime you choose." },
+      { title: "Tax deductions on principal and interest", text: "A self-occupied home attracts deductions on both, subject to the tax regime you choose. Section numbering changed with the Income-tax Act, 2025, so confirm the current limits with your tax adviser." },
       { title: "Up to 90% funding", text: "Keep more of your savings for interiors and contingencies." },
       { title: "Builder and project tie-ups", text: "For approved projects, lenders skip repeated legal checks and sanction faster." },
       { title: "Balance transfer and top-up", text: "Move an old, expensive loan to a lower rate and raise extra funds against the same property." },
@@ -334,7 +336,7 @@ export const products: LoanProduct[] = [
       { question: "When does a home loan balance transfer make sense?", answer: "As a rule of thumb, when the rate difference is 0.5% or more, at least 8 to 10 years of tenure remain, and the outstanding balance is ₹25 lakh or more. Our balance transfer calculator shows the exact break-even including fees." },
       { question: "What does a balance transfer cost?", answer: "Processing fee (often waived), legal and technical charges of ₹5,000 to ₹15,000, and stamp duty on the new mortgage deed in some states. There is no foreclosure charge on floating-rate home loans." },
       { question: "Can I get a top-up with the transfer?", answer: "Yes. Most lenders offer a top-up of up to the eligible loan-to-value on the property, priced at or just above the home loan rate, disbursed along with the transfer." },
-      { question: "Will my tax benefits continue?", answer: "Yes. Interest and principal repaid on the new loan continue to qualify under Sections 24(b) and 80C for a self-occupied property, subject to the tax regime you follow." },
+      { question: "Will my tax benefits continue?", answer: "Yes. Interest and principal repaid on the new loan continue to qualify for the same deductions on a self-occupied property, subject to the tax regime you follow and to the provisions in force for that year." },
     ],
     keywords: ["home loan balance transfer", "home loan transfer", "switch home loan", "home loan top up", "reduce home loan interest", "home loan refinance India"],
     related: ["home-loan", "loan-against-property", "personal-loan"],
@@ -482,7 +484,7 @@ export const products: LoanProduct[] = [
     },
     benefits: [
       { title: "Moratorium during the course", text: "Repayment starts 6 to 12 months after course completion." },
-      { title: "Section 80E tax deduction", text: "Interest paid is fully deductible for up to 8 years under the old tax regime." },
+      { title: "Section 80E tax deduction", text: "Interest paid on an education loan is deductible for up to 8 years under the old tax regime. Section numbering changed with the Income-tax Act, 2025, so confirm the current provision with your tax adviser." },
       { title: "Covers the full cost", text: "Tuition, hostel, living expenses, travel, laptop, insurance and exam fees." },
       { title: "Collateral-free options", text: "Up to ₹75 lakh or more for premier institutions with specialist lenders." },
       { title: "Forex and remittance support", text: "Lenders remit fees directly to overseas institutions." },
@@ -524,7 +526,7 @@ export const products: LoanProduct[] = [
     tenure: { minMonths: 3, maxMonths: 36 },
     amount: { min: 10_000, max: 1 * CR },
     processingFee: "Nil to 1% of the loan amount; valuation charges may apply.",
-    ltv: "Up to 75% of the value of gold content, as per RBI norms.",
+    ltv: "Up to 75% of the value of the gold content on larger loans. RBI's 2025 gold lending directions set the limit by ticket size and allow a higher ratio on smaller consumption loans, so your lender will confirm what applies to you.",
     eligibility: {
       age: "18 to 75 years",
       income: "No income proof required",
@@ -551,7 +553,7 @@ export const products: LoanProduct[] = [
       "Repay on the chosen schedule and collect the gold; we help with renewals if needed.",
     ],
     faqs: [
-      { question: "How much gold loan can I get per gram?", answer: "Lenders fund up to 75% of the value of the gold content, based on the previous 30-day average price of 22-karat gold. Ornaments with stones are valued on gold weight alone." },
+      { question: "How much gold loan can I get per gram?", answer: "Lenders fund a percentage of the value of the gold content, based on the previous 30-day average price of 22-karat gold, with the limit set by ticket size under RBI's 2025 gold lending directions. Ornaments with stones are valued on gold weight alone." },
       { question: "Is my gold safe with the lender?", answer: "Regulated banks and NBFCs store pledged gold in insured vaults and issue a detailed pledge receipt. We work only with regulated lenders with transparent auction and grievance policies." },
       { question: "What happens if I cannot repay on time?", answer: "Lenders issue notices and allow renewal or part payment before any auction. RBI norms require advance notice and refund of any surplus from an auction. Talk to us early if repayment looks difficult." },
     ],

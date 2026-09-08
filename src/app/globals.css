@@ -22,8 +22,10 @@
   --color-cream: #fcfbf7;
   --color-sand: #ece7db;
   --color-line: #e2ddd1;
+  /* Boundary of an interactive control needs 3:1 against white (WCAG 1.4.11). */
+  --color-line-strong: #8a8474;
   --color-mute: #5b6473;
-  --color-mute-2: #8a919c;
+  --color-mute-2: #6f7681;
 
   /* Verdant: approvals, trust, primary action */
   --color-verdant-700: #0a5c43;
@@ -34,7 +36,7 @@
   --color-verdant-50: #f0f9f4;
 
   /* Brass: premium highlights, sparingly */
-  --color-brass-600: #9a7628;
+  --color-brass-600: #7d5f1d;
   --color-brass-500: #b8923c;
   --color-brass-400: #cfae5e;
   --color-brass-300: #e3cb8a;
@@ -83,6 +85,13 @@
 html {
   scroll-behavior: smooth;
   scroll-padding-top: calc(var(--header-h) + 1rem);
+}
+
+/* The fixed action bar would otherwise sit on top of a focused control. */
+@media (max-width: 1023px) {
+  html {
+    scroll-padding-bottom: 6rem;
+  }
 }
 
 body {
@@ -217,7 +226,7 @@ body {
 .field {
   width: 100%;
   border-radius: 0.875rem;
-  border: 1px solid var(--color-line);
+  border: 1px solid var(--color-line-strong);
   background: white;
   padding: 0.8rem 1rem;
   font-size: 0.95rem;

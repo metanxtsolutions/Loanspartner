@@ -11,27 +11,34 @@ const rows: { label: string; branch: 0 | 1 | 2; portal: 0 | 1 | 2; us: 0 | 1 | 2
 ];
 
 function Mark({ v }: { v: 0 | 1 | 2 }) {
-  if (v === 2) return <span className="inline-flex size-7 items-center justify-center rounded-full bg-verdant-100 text-verdant-700"><Check className="size-4" strokeWidth={3} /></span>;
-  if (v === 1) return <span className="inline-flex size-7 items-center justify-center rounded-full bg-brass-100 text-brass-600"><Minus className="size-4" strokeWidth={3} /></span>;
-  return <span className="inline-flex size-7 items-center justify-center rounded-full bg-sand text-mute"><X className="size-4" strokeWidth={3} /></span>;
+  const labels = ["No", "Sometimes", "Yes"] as const;
+  const styles = ["bg-sand text-mute", "bg-brass-100 text-brass-600", "bg-verdant-100 text-verdant-700"] as const;
+  const Icon = [X, Minus, Check][v];
+  return (
+    <span className={`inline-flex size-7 items-center justify-center rounded-full ${styles[v]}`}>
+      <Icon className="size-4" strokeWidth={3} aria-hidden />
+      <span className="sr-only">{labels[v]}</span>
+    </span>
+  );
 }
 
 export function CompareTable() {
   return (
     <div className="overflow-x-auto rounded-card border border-line bg-white shadow-soft" data-reveal>
       <table className="w-full min-w-[640px] text-sm">
+        <caption className="sr-only">What a bank branch, an aggregator portal and LoansPartner each give you</caption>
         <thead>
           <tr className="border-b border-line text-left">
-            <th className="px-5 py-4 font-bold text-mute">What you get</th>
-            <th className="px-5 py-4 text-center font-bold text-ink-800">Your bank branch</th>
-            <th className="px-5 py-4 text-center font-bold text-ink-800">Aggregator portal</th>
-            <th className="rounded-t-xl bg-ink-900 px-5 py-4 text-center font-bold text-white">LoansPartner</th>
+            <th scope="col" className="px-5 py-4 font-bold text-mute">What you get</th>
+            <th scope="col" className="px-5 py-4 text-center font-bold text-ink-800">Your bank branch</th>
+            <th scope="col" className="px-5 py-4 text-center font-bold text-ink-800">Aggregator portal</th>
+            <th scope="col" className="rounded-t-xl bg-ink-900 px-5 py-4 text-center font-bold text-white">LoansPartner</th>
           </tr>
         </thead>
         <tbody>
           {rows.map((r, i) => (
             <tr key={r.label} className={i < rows.length - 1 ? "border-b border-line" : ""}>
-              <td className="px-5 py-3.5 font-semibold text-ink-900">{r.label}</td>
+              <th scope="row" className="px-5 py-3.5 text-left font-semibold text-ink-900">{r.label}</th>
               <td className="px-5 py-3.5 text-center"><Mark v={r.branch} /></td>
               <td className="px-5 py-3.5 text-center"><Mark v={r.portal} /></td>
               <td className="bg-ink-50 px-5 py-3.5 text-center"><Mark v={r.us} /></td>

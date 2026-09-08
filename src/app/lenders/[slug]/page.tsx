@@ -14,6 +14,7 @@ import { CtaBand } from "@/components/shared/cta-band";
 import { HeroForm } from "@/components/forms/hero-form";
 import { lenders, getLender } from "@/data/lenders";
 import { getProduct } from "@/data/products";
+import { productOptions } from "@/data/lite";
 import { siteConfig } from "@/data/site-config";
 
 export const dynamicParams = false;
@@ -27,7 +28,7 @@ export async function generateMetadata({ params }: PageProps<"/lenders/[slug]">)
   const l = getLender(slug);
   if (!l) return {};
   return pageMetadata({
-    title: `${l.name} Loans through LoansPartner: Products, Strengths and How to Apply`,
+    title: `${l.name} Loans: Products and How to Apply`,
     description: `${l.summary} Apply for ${l.name} loans through LoansPartner with pre-screening across the panel and zero fee to borrowers.`,
     path: `/lenders/${l.slug}`,
     keywords: [`${l.name} loan`, `${l.name} personal loan`, `${l.name} home loan`, `${l.name} DSA`, `${l.name} loan apply`],
@@ -53,7 +54,7 @@ export default async function LenderPage({ params }: PageProps<"/lenders/[slug]"
           <div className="rounded-panel border border-line bg-white p-6 shadow-lift">
             <p className="font-display text-2xl">Apply with pre-screening</p>
             <p className="mt-1 text-sm text-mute">We check your profile against {l.shortName}'s policy and others on the panel before any application.</p>
-            <div className="mt-5"><HeroForm defaultProduct={l.products[0]} source={`lender:${l.slug}`} /></div>
+            <div className="mt-5"><HeroForm products={productOptions} defaultProduct={l.products[0]} source={`lender:${l.slug}`} /></div>
           </div>
         }
       >

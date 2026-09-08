@@ -1,68 +1,102 @@
+import { execSync } from "node:child_process";
 import type { MetadataRoute } from "next";
 import { siteConfig } from "@/data/site-config";
 import { products, coreProducts } from "@/data/products";
-import { cities } from "@/data/cities";
-import { guides } from "@/data/guides";
+import { cities, citySourceFile } from "@/data/cities";
+import { guides, guideSourceFile } from "@/data/guides";
 import { glossary } from "@/data/glossary";
 import { lenders } from "@/data/lenders";
 import { partnerAudiences } from "@/data/partner";
 
 type Entry = MetadataRoute.Sitemap[number];
-const url = (path: string) => `${siteConfig.url}${path}`;
-const d = (s: string) => new Date(s);
-const latest = (...dates: string[]) => new Date(Math.max(...dates.map((x) => d(x).getTime())));
+const url = (path: string) => (path === "/" ? siteConfig.url : `${siteConfig.url}${path}`);
 
 /**
- * lastModified comes from each entity's own `updatedAt`, never the build
- * time, so a rebuild does not falsely re-date hundreds of unchanged URLs.
- * Static pages carry an explicit date map; bump it when the page changes.
+ * lastModified is the last commit date of the file a URL's content actually
+ * comes from, so a rebuild never re-dates hundreds of unchanged pages and
+ * editing one city file moves only that city's URLs. Falls back to the
+ * entity's declared `updatedAt` when git history is unavailable, as in a
+ * shallow CI clone.
  */
-const staticPages: { path: string; updated: string; priority: number; changeFrequency: Entry["changeFrequency"] }[] = [
-  { path: "/", updated: "2026-09-01", priority: 1, changeFrequency: "weekly" },
-  { path: "/loans", updated: "2026-09-01", priority: 0.9, changeFrequency: "weekly" },
-  { path: "/apply", updated: "2026-09-01", priority: 0.9, changeFrequency: "monthly" },
-  { path: "/partner", updated: "2026-09-01", priority: 0.9, changeFrequency: "weekly" },
-  { path: "/partner/register", updated: "2026-09-01", priority: 0.8, changeFrequency: "monthly" },
-  { path: "/partner/commission", updated: "2026-09-01", priority: 0.8, changeFrequency: "monthly" },
-  { path: "/cities", updated: "2026-09-01", priority: 0.8, changeFrequency: "monthly" },
-  { path: "/tools", updated: "2026-09-01", priority: 0.7, changeFrequency: "monthly" },
-  { path: "/tools/emi-calculator", updated: "2026-09-01", priority: 0.8, changeFrequency: "monthly" },
-  { path: "/tools/eligibility-calculator", updated: "2026-09-01", priority: 0.8, changeFrequency: "monthly" },
-  { path: "/tools/balance-transfer-calculator", updated: "2026-09-01", priority: 0.7, changeFrequency: "monthly" },
-  { path: "/tools/dsa-income-calculator", updated: "2026-09-01", priority: 0.7, changeFrequency: "monthly" },
-  { path: "/interest-rates", updated: "2026-09-01", priority: 0.8, changeFrequency: "monthly" },
-  { path: "/guides", updated: "2026-09-01", priority: 0.8, changeFrequency: "weekly" },
-  { path: "/glossary", updated: "2026-09-01", priority: 0.6, changeFrequency: "monthly" },
-  { path: "/lenders", updated: "2026-09-01", priority: 0.6, changeFrequency: "monthly" },
-  { path: "/faqs", updated: "2026-09-01", priority: 0.6, changeFrequency: "monthly" },
-  { path: "/about", updated: "2026-09-01", priority: 0.6, changeFrequency: "monthly" },
-  { path: "/contact", updated: "2026-09-01", priority: 0.5, changeFrequency: "yearly" },
-  { path: "/grievance-redressal", updated: "2026-09-01", priority: 0.4, changeFrequency: "yearly" },
-  { path: "/privacy-policy", updated: "2026-09-01", priority: 0.3, changeFrequency: "yearly" },
-  { path: "/terms", updated: "2026-09-01", priority: 0.3, changeFrequency: "yearly" },
-  { path: "/disclaimer", updated: "2026-09-01", priority: 0.3, changeFrequency: "yearly" },
+const gitDateCache = new Map<string, Date>();
+
+function lastModified(file: string, fallback: string): Date {
+  const cached = gitDateCache.get(file);
+  if (cached) return cached;
+  let result = new Date(fallback);
+  try {
+    const out = execSync(`git log -1 --format=%aI -- "${file}"`, {
+      cwd: process.cwd(),
+      encoding: "utf-8",
+      stdio: ["ignore", "pipe", "ignore"],
+    }).trim();
+    if (out) result = new Date(out);
+  } catch {
+    // No git, or a shallow clone: the declared date stands.
+  }
+  gitDateCache.set(file, result);
+  return result;
+}
+
+const PRODUCT_FILE = "src/data/products.ts";
+const GLOSSARY_FILE = "src/data/glossary.ts";
+const LENDER_FILE = "src/data/lenders.ts";
+const PARTNER_FILE = "src/data/partner.ts";
+const staticPages: { path: string; file: string; updated: string; priority: number; changeFrequency: Entry["changeFrequency"] }[] = [
+  { path: "/", file: "src/app/page.tsx", updated: "2026-09-01", priority: 1, changeFrequency: "weekly" },
+  { path: "/loans", file: "src/app/loans/page.tsx", updated: "2026-09-01", priority: 0.9, changeFrequency: "weekly" },
+  { path: "/apply", file: "src/app/apply/page.tsx", updated: "2026-09-01", priority: 0.9, changeFrequency: "monthly" },
+  { path: "/partner", file: "src/app/partner/page.tsx", updated: "2026-09-01", priority: 0.9, changeFrequency: "weekly" },
+  { path: "/partner/register", file: "src/app/partner/register/page.tsx", updated: "2026-09-01", priority: 0.8, changeFrequency: "monthly" },
+  { path: "/partner/commission", file: "src/app/partner/commission/page.tsx", updated: "2026-09-01", priority: 0.8, changeFrequency: "monthly" },
+  { path: "/cities", file: "src/app/cities/page.tsx", updated: "2026-09-01", priority: 0.8, changeFrequency: "monthly" },
+  { path: "/tools", file: "src/app/tools/page.tsx", updated: "2026-09-01", priority: 0.7, changeFrequency: "monthly" },
+  { path: "/tools/emi-calculator", file: "src/app/tools/emi-calculator/page.tsx", updated: "2026-09-01", priority: 0.8, changeFrequency: "monthly" },
+  { path: "/tools/eligibility-calculator", file: "src/app/tools/eligibility-calculator/page.tsx", updated: "2026-09-01", priority: 0.8, changeFrequency: "monthly" },
+  { path: "/tools/balance-transfer-calculator", file: "src/app/tools/balance-transfer-calculator/page.tsx", updated: "2026-09-01", priority: 0.7, changeFrequency: "monthly" },
+  { path: "/tools/dsa-income-calculator", file: "src/app/tools/dsa-income-calculator/page.tsx", updated: "2026-09-01", priority: 0.7, changeFrequency: "monthly" },
+  { path: "/interest-rates", file: "src/app/interest-rates/page.tsx", updated: "2026-09-01", priority: 0.8, changeFrequency: "monthly" },
+  { path: "/guides", file: "src/app/guides/page.tsx", updated: "2026-09-01", priority: 0.8, changeFrequency: "weekly" },
+  { path: "/glossary", file: "src/app/glossary/page.tsx", updated: "2026-09-01", priority: 0.6, changeFrequency: "monthly" },
+  { path: "/lenders", file: "src/app/lenders/page.tsx", updated: "2026-09-01", priority: 0.6, changeFrequency: "monthly" },
+  { path: "/faqs", file: "src/app/faqs/page.tsx", updated: "2026-09-01", priority: 0.6, changeFrequency: "monthly" },
+  { path: "/about", file: "src/app/about/page.tsx", updated: "2026-09-01", priority: 0.6, changeFrequency: "monthly" },
+  { path: "/contact", file: "src/app/contact/page.tsx", updated: "2026-09-01", priority: 0.5, changeFrequency: "yearly" },
+  { path: "/grievance-redressal", file: "src/app/grievance-redressal/page.tsx", updated: "2026-09-01", priority: 0.4, changeFrequency: "yearly" },
+  { path: "/privacy-policy", file: "src/app/privacy-policy/page.tsx", updated: "2026-09-01", priority: 0.3, changeFrequency: "yearly" },
+  { path: "/terms", file: "src/app/terms/page.tsx", updated: "2026-09-01", priority: 0.3, changeFrequency: "yearly" },
+  { path: "/disclaimer", file: "src/app/disclaimer/page.tsx", updated: "2026-09-01", priority: 0.3, changeFrequency: "yearly" },
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const statics: Entry[] = staticPages.map((s) => ({ url: url(s.path), lastModified: d(s.updated), changeFrequency: s.changeFrequency, priority: s.priority }));
+  const statics: Entry[] = staticPages.map((s) => ({ url: url(s.path), lastModified: lastModified(s.file, s.updated), changeFrequency: s.changeFrequency, priority: s.priority }));
 
-  const productPages: Entry[] = products.map((p) => ({ url: url(`/loans/${p.slug}`), lastModified: d(p.updatedAt), changeFrequency: "monthly", priority: p.popular ? 0.9 : 0.8 }));
+  const productPages: Entry[] = products.map((p) => ({ url: url(`/loans/${p.slug}`), lastModified: lastModified(PRODUCT_FILE, p.updatedAt), changeFrequency: "monthly", priority: p.popular ? 0.9 : 0.8 }));
 
   const productCityPages: Entry[] = coreProducts.flatMap((p) =>
-    cities.map((c) => ({ url: url(`/loans/${p.slug}/${c.slug}`), lastModified: latest(p.updatedAt, c.updatedAt), changeFrequency: "monthly" as const, priority: 0.6 })),
+    cities.map((c) => {
+      const product = lastModified(PRODUCT_FILE, p.updatedAt);
+      const city = lastModified(citySourceFile(c.slug), c.updatedAt);
+      return {
+        url: url(`/loans/${p.slug}/${c.slug}`),
+        lastModified: product > city ? product : city,
+        changeFrequency: "monthly" as const,
+        priority: 0.6,
+      };
+    }),
   );
 
-  const cityPages: Entry[] = cities.map((c) => ({ url: url(`/cities/${c.slug}`), lastModified: d(c.updatedAt), changeFrequency: "monthly", priority: 0.7 }));
+  const cityPages: Entry[] = cities.map((c) => ({ url: url(`/cities/${c.slug}`), lastModified: lastModified(citySourceFile(c.slug), c.updatedAt), changeFrequency: "monthly", priority: 0.7 }));
 
-  const partnerProductPages: Entry[] = products.map((p) => ({ url: url(`/partner/${p.slug}-dsa`), lastModified: d(p.updatedAt), changeFrequency: "monthly", priority: 0.7 }));
+  const partnerProductPages: Entry[] = products.map((p) => ({ url: url(`/partner/${p.slug}-dsa`), lastModified: lastModified(PRODUCT_FILE, p.updatedAt), changeFrequency: "monthly", priority: 0.7 }));
 
-  const audiencePages: Entry[] = partnerAudiences.map((a) => ({ url: url(`/partner/for/${a.slug}`), lastModified: d(a.updatedAt), changeFrequency: "monthly", priority: 0.7 }));
+  const audiencePages: Entry[] = partnerAudiences.map((a) => ({ url: url(`/partner/for/${a.slug}`), lastModified: lastModified(PARTNER_FILE, a.updatedAt), changeFrequency: "monthly", priority: 0.7 }));
 
-  const lenderPages: Entry[] = lenders.map((l) => ({ url: url(`/lenders/${l.slug}`), lastModified: d(l.updatedAt), changeFrequency: "monthly", priority: 0.5 }));
+  const lenderPages: Entry[] = lenders.map((l) => ({ url: url(`/lenders/${l.slug}`), lastModified: lastModified(LENDER_FILE, l.updatedAt), changeFrequency: "monthly", priority: 0.5 }));
 
-  const guidePages: Entry[] = guides.map((g) => ({ url: url(`/guides/${g.slug}`), lastModified: d(g.updatedDate), changeFrequency: "monthly", priority: g.featured ? 0.8 : 0.7 }));
+  const guidePages: Entry[] = guides.map((g) => ({ url: url(`/guides/${g.slug}`), lastModified: lastModified(guideSourceFile(g.slug), g.updatedDate), changeFrequency: "monthly", priority: g.featured ? 0.8 : 0.7 }));
 
-  const glossaryPages: Entry[] = glossary.map((t) => ({ url: url(`/glossary/${t.slug}`), lastModified: d(t.updatedAt), changeFrequency: "yearly", priority: 0.4 }));
+  const glossaryPages: Entry[] = glossary.map((t) => ({ url: url(`/glossary/${t.slug}`), lastModified: lastModified(GLOSSARY_FILE, t.updatedAt), changeFrequency: "yearly", priority: 0.4 }));
 
   return [...statics, ...productPages, ...cityPages, ...productCityPages, ...partnerProductPages, ...audiencePages, ...guidePages, ...lenderPages, ...glossaryPages];
 }

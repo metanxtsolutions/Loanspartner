@@ -44,15 +44,11 @@ export const siteConfig = {
     x: env("NEXT_PUBLIC_X", ""),
   },
   /**
-   * Headline proof points. Keep these truthful; they render on the home page,
-   * the About page and in the Organization schema description.
+   * The only hard-coded proof point is the one we control absolutely. The
+   * rest are counted from the data files at build time in <ProofStrip />,
+   * so a claim can never drift from what the site actually publishes.
    */
-  proof: [
-    { value: "40+", label: "Bank and NBFC lending partners" },
-    { value: "12", label: "Loan products under one roof" },
-    { value: "₹0", label: "Fees charged to borrowers, ever" },
-    { value: "48h", label: "Typical time to a lender decision" },
-  ],
+  feeProof: { value: "₹0", label: "Fees charged to borrowers, ever" },
   editorialTeam: {
     name: "LoansPartner Credit Desk",
     description:
@@ -80,6 +76,7 @@ export const mainNav: { label: string; href: string; children?: NavItem[] }[] = 
 ];
 
 export const SITE_URL = siteConfig.url;
-export const absoluteUrl = (path: string) => `${SITE_URL}${path.startsWith("/") ? path : `/${path}`}`;
+/** The root is written without a trailing slash so canonicals, breadcrumbs and the sitemap agree. */
+export const absoluteUrl = (path: string) => (path === "/" ? SITE_URL : `${SITE_URL}${path.startsWith("/") ? path : `/${path}`}`);
 export const whatsappUrl = (text?: string) =>
   `https://wa.me/${siteConfig.contact.whatsapp}${text ? `?text=${encodeURIComponent(text)}` : ""}`;

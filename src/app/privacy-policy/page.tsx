@@ -11,7 +11,7 @@ export default function Page() {
   const c = siteConfig.contact;
   return (
     <LegalPage title={title} description={description} path="/privacy-policy" updated="2026-09-01">
-      <p>{siteConfig.legalName} (&ldquo;LoansPartner&rdquo;, &ldquo;we&rdquo;) is a loan advisory and distribution partner. This policy explains what personal data we collect, why, who we share it with and the rights you have under the Digital Personal Data Protection Act, 2023 and its rules.</p>
+      <p>{siteConfig.legalName} (&ldquo;LoansPartner&rdquo;, &ldquo;we&rdquo;) is a loan advisory and distribution partner. This policy explains what personal data we collect, why, who we share it with and the rights you have under the Digital Personal Data Protection Act, 2023 and its rules as they come into force.</p>
       <h2>What we collect</h2>
       <ul>
         <li><strong>Enquiry data:</strong> name, mobile number, email, city, loan product and amount, employment type, income and existing obligations, credit score band as stated by you.</li>

@@ -9,7 +9,7 @@ import { CtaBand } from "@/components/shared/cta-band";
 import { lenders, lenderTypes } from "@/data/lenders";
 import { siteConfig } from "@/data/site-config";
 
-const title = "Lending Partners: Banks, Housing Finance Companies and NBFCs";
+const title = "Lending Partners: Banks, HFCs and NBFCs";
 const description = "LoansPartner places loan applications with public sector banks, private banks, housing finance companies, NBFCs and small finance banks across India. See which lenders serve which products.";
 
 export const metadata: Metadata = pageMetadata({ title, description, path: "/lenders", keywords: ["loan lending partners", "banks and NBFCs for loans", "which bank for personal loan", "which bank for home loan", "NBFC loan partners"] });

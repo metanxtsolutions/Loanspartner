@@ -15,7 +15,7 @@ export const citiesBatch1: City[] = [
     economy:
       "The Mumbai Metropolitan Region combines the corporate corridors of Nariman Point, Bandra Kurla Complex, Lower Parel and Andheri with the industrial belts of Thane, Navi Mumbai and Bhiwandi. Banking, capital markets, insurance, entertainment, pharmaceuticals, diamonds and textiles all cluster here, producing a deep pool of salaried borrowers and a large base of family-run trading and manufacturing businesses.",
     propertyMarket:
-      "Mumbai has the highest residential prices in India, with strong demand in the western suburbs, central Mumbai's redeveloped mill land, Navi Mumbai and Thane. Stamp duty in Mumbai is 5% plus a 1% metro cess, with a 1% concession for women buyers, and registration is capped at ₹30,000. Lenders scrutinise society NOCs, occupancy certificates and redevelopment agreements closely, and many older buildings need additional legal work.",
+      "Mumbai has the highest residential prices in India, with strong demand in the western suburbs, central Mumbai's redeveloped mill land, Navi Mumbai and Thane. Stamp duty in Mumbai is 5% plus a 1% metro cess, with a concession for women buyers, and registration is capped at ₹30,000. Verify the current schedule with the state before you transact. Lenders scrutinise society NOCs, occupancy certificates and redevelopment agreements closely, and many older buildings need additional legal work.",
     lenderPresence:
       "Every major bank, housing finance company and NBFC operates full retail and SME credit teams in Mumbai, and many decisions are taken locally rather than at a regional hub. This depth means we can place unusual cases, such as loans on old buildings, pagdi-to-ownership conversions or surrogate-income business files, with a lender that has seen them before.",
     localNotes: [
@@ -273,7 +273,7 @@ export const citiesBatch1: City[] = [
     economy:
       "Pune combines a large IT and software services cluster with the Pimpri-Chinchwad and Chakan automotive and engineering belt, a strong education sector and growing biotechnology and startup activity. The result is a deep pool of salaried borrowers, supported by a large base of component manufacturers and service businesses.",
     propertyMarket:
-      "Residential demand is spread across the western IT corridor of Hinjawadi, Wakad and Baner, the eastern hub of Kharadi, Viman Nagar and Wagholi, and the affordable belts of Ravet and Moshi. Stamp duty is 5% plus 1% metro cess in Pune and Pimpri-Chinchwad, with a 1% concession for women, and registration is 1% capped at ₹30,000. Approved, RERA-registered projects sanction quickly.",
+      "Residential demand is spread across the western IT corridor of Hinjawadi, Wakad and Baner, the eastern hub of Kharadi, Viman Nagar and Wagholi, and the affordable belts of Ravet and Moshi. Stamp duty is 5% plus a 1% metro cess in Pune and Pimpri-Chinchwad, with a further local body tax in the municipal limits and a concession for women buyers; registration is 1% capped at ₹30,000. Verify the current schedule with the state before you transact. Approved, RERA-registered projects sanction quickly.",
     lenderPresence:
       "All major banks, HFCs and NBFCs operate large retail books in Pune, with several running IT employee programmes and project tie-ups across the western and eastern corridors. NBFCs are active in business loans and LAP for the Pimpri-Chinchwad manufacturing base.",
     localNotes: [

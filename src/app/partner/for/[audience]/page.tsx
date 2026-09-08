@@ -16,6 +16,7 @@ import { ButtonLink } from "@/components/shared/button";
 import { PartnerForm } from "@/components/forms/partner-form";
 import { ProductIcon } from "@/components/shared/product-icon";
 import { partnerAudiences, getAudience, partnerFaqs, partnerSteps } from "@/data/partner";
+import { audienceOptions, cityOptions, productOptions } from "@/data/lite";
 import { getProduct } from "@/data/products";
 
 export const dynamicParams = false;
@@ -29,7 +30,7 @@ export async function generateMetadata({ params }: PageProps<"/partner/for/[audi
   const a = getAudience(audience);
   if (!a) return {};
   return pageMetadata({
-    title: `Loan DSA Partnership for ${a.name}: ${a.headline}`,
+    title: `Loan DSA Partnership for ${a.name}`,
     description: `${a.summary}`,
     path: `/partner/for/${a.slug}`,
     keywords: a.keywords,
@@ -107,7 +108,7 @@ export default async function AudiencePage({ params }: PageProps<"/partner/for/[
         <div className="grid gap-10 lg:grid-cols-[1fr_0.8fr]">
           <div>
             <SectionHeader eyebrow="Apply" title={`Register as a partner`} lede="Free, with no obligation. A partner manager calls within one working day." />
-            <Card className="mt-8 p-6 sm:p-8"><PartnerForm defaultProfession={a.name} source={`partner:for:${a.slug}`} /></Card>
+            <Card className="mt-8 p-6 sm:p-8"><PartnerForm products={productOptions} audiences={audienceOptions} cities={cityOptions} defaultProfession={a.name} source={`partner:for:${a.slug}`} /></Card>
           </div>
           <div className="space-y-6 lg:sticky lg:top-28 lg:self-start">
             <div><p className="eyebrow mb-4 text-mute">FAQs</p><FaqList faqs={faqs} /></div>
