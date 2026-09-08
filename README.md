@@ -35,7 +35,7 @@ pnpm start
 
 ## Before launch: things only the business can fill in
 
-1. **Contact and NAP** in `.env.local` (`NEXT_PUBLIC_PHONE`, `NEXT_PUBLIC_EMAIL`, address, socials). Defaults are placeholders.
+1. **Contact and NAP.** The phone number (+91 70295 58200) and email (info@loanspartner.in) are live in `site-config.ts`. The partner and grievance addresses both point at `info@` because that is the one confirmed mailbox; split them out by setting `NEXT_PUBLIC_PARTNER_EMAIL` and `NEXT_PUBLIC_GRIEVANCE_EMAIL` once those inboxes exist. **Still placeholder: the street address and postcode**, which are empty, so the postal address in the Organization and LocalBusiness schema is city and state only. Social profile URLs are also unverified.
 2. **`foundedYear`** in `src/data/site-config.ts`, used on the About page. The headline proof numbers are counted from the data at build time in `ProofStrip`, so they cannot overstate what the site publishes; the only hard-coded one is the zero-fee claim.
 3. **Lender list** in `src/data/lenders.ts`: keep aligned with live empanelments. The published partner count on the home page is `lenders.length`, so adding or removing a row moves the number on the page. Replace text wordmarks in `LenderMarquee` with approved logo files once agreements are on record.
 4. **Lead sinks** in `.env.local`: at least one of `LEAD_WEBHOOK_URL` (Google Sheet / CRM), or `RESEND_API_KEY` + `LEAD_NOTIFY_EMAIL`. In development leads also append to `.data/leads.jsonl`.

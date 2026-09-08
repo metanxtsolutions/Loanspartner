@@ -23,12 +23,12 @@ export const siteConfig = {
   foundedYear: 2019,
   locale: "en_IN",
   contact: {
-    phone: or(process.env.NEXT_PUBLIC_PHONE, "+919999900000"),
-    phoneDisplay: or(process.env.NEXT_PUBLIC_PHONE_DISPLAY, "+91 99999 00000"),
-    whatsapp: or(process.env.NEXT_PUBLIC_WHATSAPP, "919999900000"),
-    email: or(process.env.NEXT_PUBLIC_EMAIL, "hello@loanspartner.in"),
-    partnerEmail: or(process.env.NEXT_PUBLIC_PARTNER_EMAIL, "partners@loanspartner.in"),
-    grievanceEmail: or(process.env.NEXT_PUBLIC_GRIEVANCE_EMAIL, "grievance@loanspartner.in"),
+    phone: or(process.env.NEXT_PUBLIC_PHONE, "+917029558200"),
+    phoneDisplay: or(process.env.NEXT_PUBLIC_PHONE_DISPLAY, "+91 70295 58200"),
+    whatsapp: or(process.env.NEXT_PUBLIC_WHATSAPP, "917029558200"),
+    email: or(process.env.NEXT_PUBLIC_EMAIL, "info@loanspartner.in"),
+    partnerEmail: or(process.env.NEXT_PUBLIC_PARTNER_EMAIL, "info@loanspartner.in"),
+    grievanceEmail: or(process.env.NEXT_PUBLIC_GRIEVANCE_EMAIL, "info@loanspartner.in"),
     address: {
       street: process.env.NEXT_PUBLIC_ADDRESS_STREET ?? "",
       locality: or(process.env.NEXT_PUBLIC_ADDRESS_CITY, "Gurugram"),
