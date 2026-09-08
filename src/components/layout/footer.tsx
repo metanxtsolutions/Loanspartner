@@ -4,7 +4,7 @@ import { Logo } from "@/components/shared/logo";
 import { products } from "@/data/products";
 import { cities } from "@/data/cities";
 import { partnerAudiences } from "@/data/partner";
-import { siteConfig } from "@/data/site-config";
+import { formattedAddress, siteConfig } from "@/data/site-config";
 
 const resourceLinks = [
   { label: "EMI calculator", href: "/tools/emi-calculator" },
@@ -30,7 +30,6 @@ const companyLinks = [
 
 export function Footer() {
   const year = new Date().getFullYear();
-  const a = siteConfig.contact.address;
   return (
     <footer className="bg-ink-950 text-white">
       <div className="container-x">
@@ -41,7 +40,7 @@ export function Footer() {
             <ul className="mt-6 space-y-2.5 text-sm">
               <li className="flex items-start gap-2.5 text-white/80"><Phone className="mt-0.5 size-4 shrink-0 text-verdant-400" /><a href={`tel:${siteConfig.contact.phone}`} className="hover:text-white">{siteConfig.contact.phoneDisplay}</a></li>
               <li className="flex items-start gap-2.5 text-white/80"><Mail className="mt-0.5 size-4 shrink-0 text-verdant-400" /><a href={`mailto:${siteConfig.contact.email}`} className="hover:text-white">{siteConfig.contact.email}</a></li>
-              <li className="flex items-start gap-2.5 text-white/80"><MapPin className="mt-0.5 size-4 shrink-0 text-verdant-400" /><span>{[a.street, a.locality, a.region, a.postalCode].filter(Boolean).join(", ")}, India</span></li>
+              <li className="flex items-start gap-2.5 text-white/80"><MapPin className="mt-0.5 size-4 shrink-0 text-verdant-400" /><span>{formattedAddress()}</span></li>
             </ul>
             <p className="mt-4 text-xs text-white/50">{siteConfig.contact.hours}</p>
           </div>

@@ -30,10 +30,10 @@ export const siteConfig = {
     partnerEmail: or(process.env.NEXT_PUBLIC_PARTNER_EMAIL, "info@loanspartner.in"),
     grievanceEmail: or(process.env.NEXT_PUBLIC_GRIEVANCE_EMAIL, "info@loanspartner.in"),
     address: {
-      street: process.env.NEXT_PUBLIC_ADDRESS_STREET ?? "",
-      locality: or(process.env.NEXT_PUBLIC_ADDRESS_CITY, "Gurugram"),
-      region: or(process.env.NEXT_PUBLIC_ADDRESS_STATE, "Haryana"),
-      postalCode: process.env.NEXT_PUBLIC_ADDRESS_PIN ?? "",
+      street: or(process.env.NEXT_PUBLIC_ADDRESS_STREET, "SDF Building, GP Block, Sector V, Bidhannagar"),
+      locality: or(process.env.NEXT_PUBLIC_ADDRESS_CITY, "Kolkata"),
+      region: or(process.env.NEXT_PUBLIC_ADDRESS_STATE, "West Bengal"),
+      postalCode: or(process.env.NEXT_PUBLIC_ADDRESS_PIN, "700091"),
       country: "IN",
     },
     hours: "Monday to Saturday, 9:30 am to 6:00 pm IST",
@@ -84,3 +84,14 @@ export const SITE_URL = siteConfig.url;
 export const absoluteUrl = (path: string) => (path === "/" ? SITE_URL : `${SITE_URL}${path.startsWith("/") ? path : `/${path}`}`);
 export const whatsappUrl = (text?: string) =>
   `https://wa.me/${siteConfig.contact.whatsapp}${text ? `?text=${encodeURIComponent(text)}` : ""}`;
+
+/**
+ * One postal string for the footer and contact page. The postcode follows the
+ * state with a space rather than a comma, which is how Indian addresses are
+ * written, and empty parts are dropped so a partial address still reads well.
+ */
+export const formattedAddress = () => {
+  const a = siteConfig.contact.address;
+  const regionAndPin = [a.region, a.postalCode].filter(Boolean).join(" ");
+  return [a.street, a.locality, regionAndPin, "India"].filter(Boolean).join(", ");
+};
