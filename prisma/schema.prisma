@@ -1,0 +1,208 @@
+// Lender partnership outreach CRM. Separate from the marketing site's
+// content model in src/data: this schema holds operational state (contacts,
+// messages, replies, approvals), not published copy.
+//
+//   pnpm db:generate   # regenerate the client after any change here
+//   pnpm db:push       # sync schema to DATABASE_URL (dev)
+//   pnpm db:migrate    # create a tracked migration (use for prod)
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum LenderStatus {
+  NEW // seeded, no contact discovery run yet
+  CONTACT_NEEDED // discovery ran, found nothing usable, needs manual research
+  READY // has an approved contact, no outreach sent yet
+  CONTACTED // proposal sent, awaiting reply
+  REPLIED // a reply came in, awaiting triage or action
+  INTERESTED
+  CALL_SCHEDULED
+  ONBOARDING
+  PARTNERSHIP_LIVE
+  NOT_INTERESTED
+  WRONG_CONTACT
+  ON_HOLD
+  OPTED_OUT
+}
+
+enum ContactConfidence {
+  HIGH // named partnership/DSA/alliances contact, or a role inbox explicitly for channel partners
+  MEDIUM // general business or sales inbox that plausibly reaches the right team
+  LOW // best-guess pattern or generic info/support inbox, needs a human check before sending
+}
+
+enum MessageDirection {
+  OUTBOUND
+  INBOUND
+}
+
+enum MessageKind {
+  PROPOSAL
+  FOLLOW_UP
+  REPLY
+}
+
+enum MessageStatus {
+  DRAFT // AI generated, not yet reviewed
+  PENDING_APPROVAL // queued for a human
+  APPROVED // approved, about to be sent
+  QUEUED // rate-limited, waiting for a send slot
+  SENT
+  DELIVERED
+  OPENED
+  BOUNCED
+  FAILED
+  SKIPPED // human chose not to send this one
+}
+
+enum ReplyClassification {
+  INTERESTED
+  NEEDS_INFO
+  REQUEST_CALL
+  NOT_INTERESTED
+  WRONG_CONTACT
+  NEEDS_DOCUMENTS
+  FOLLOW_UP_LATER
+  OUT_OF_OFFICE
+  UNSUBSCRIBE
+  UNCLEAR
+}
+
+model Lender {
+  id        String       @id @default(cuid())
+  slug      String       @unique
+  name      String
+  website   String
+  type      String
+  products  String[]
+  strengths String[]
+  summary   String
+  bestFor   String
+  status    LenderStatus @default(NEW)
+  pausedUntil DateTime? // paused for follow-ups / re-contact (e.g. "circle back in Q3")
+
+  contacts Contact[]
+  messages OutreachMessage[]
+  notes    Note[]
+  activity ActivityLog[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([status])
+}
+
+model Contact {
+  id         String            @id @default(cuid())
+  lenderId   String
+  lender     Lender            @relation(fields: [lenderId], references: [id], onDelete: Cascade)
+  email      String
+  name       String?
+  title      String?
+  isPrimary  Boolean           @default(true)
+  confidence ContactConfidence
+  sourceUrl  String?
+  sourceNote String? // e.g. "found on /partner-with-us page" or "entered manually by <admin>"
+  optedOut   Boolean           @default(false)
+  optedOutAt DateTime?
+
+  messages OutreachMessage[]
+
+  createdAt DateTime @default(now())
+
+  @@unique([lenderId, email])
+  @@index([email])
+}
+
+model OutreachMessage {
+  id        String            @id @default(cuid())
+  lenderId  String
+  lender    Lender            @relation(fields: [lenderId], references: [id], onDelete: Cascade)
+  contactId String?
+  contact   Contact?          @relation(fields: [contactId], references: [id])
+  threadId  String // groups a proposal with its follow-ups and replies; = id of the first message in the thread
+  direction MessageDirection
+  kind      MessageKind
+  status    MessageStatus     @default(DRAFT)
+
+  subject String
+  body    String
+  bodyHtml String?
+
+  aiModel       String?
+  aiPrompt      String? @db.Text
+  editedByHuman Boolean @default(false)
+
+  approvedBy String? // admin email
+  approvedAt DateTime?
+  skippedReason String?
+
+  sentAt          DateTime?
+  deliveredAt     DateTime?
+  openedAt        DateTime?
+  bouncedAt       DateTime?
+  bounceReason    String?
+  resendMessageId String?
+  failedReason    String?
+
+  // inbound only
+  inReplyToMessageId String?
+  fromEmail           String?
+  toEmail             String?
+  rawHeaders          Json?
+  replyClassification ReplyClassification?
+  classificationNote  String?
+  requiresApproval    Boolean @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([lenderId])
+  @@index([threadId])
+  @@index([status])
+  @@index([resendMessageId])
+}
+
+model Note {
+  id        String   @id @default(cuid())
+  lenderId  String
+  lender    Lender   @relation(fields: [lenderId], references: [id], onDelete: Cascade)
+  author    String
+  body      String
+  createdAt DateTime @default(now())
+
+  @@index([lenderId])
+}
+
+model ActivityLog {
+  id        String   @id @default(cuid())
+  lenderId  String?
+  lender    Lender?  @relation(fields: [lenderId], references: [id], onDelete: SetNull)
+  actor     String // admin email, or "system" for cron/automation
+  action    String // e.g. "contact.discovered", "message.approved", "message.sent", "reply.classified"
+  meta      Json?
+  createdAt DateTime @default(now())
+
+  @@index([lenderId])
+  @@index([createdAt])
+}
+
+model AdminUser {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  name         String?
+  createdAt    DateTime @default(now())
+}
+
+model Setting {
+  key       String   @id
+  value     Json
+  updatedAt DateTime @updatedAt
+}

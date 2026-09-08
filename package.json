@@ -12,12 +12,24 @@
     "format": "prettier --write .",
     "check:copy": "tsx scripts/check-copy.ts",
     "test:resend": "tsx --env-file=.env.local scripts/test-resend.ts",
-    "check": "pnpm lint && pnpm typecheck && pnpm check:copy"
+    "check": "pnpm lint && pnpm typecheck && pnpm check:copy",
+    "db:generate": "prisma generate",
+    "db:push": "prisma db push",
+    "db:migrate": "prisma migrate dev",
+    "db:studio": "prisma studio",
+    "outreach:seed": "tsx --env-file=.env.local scripts/outreach/seed-lenders.ts",
+    "outreach:discover-contacts": "tsx --env-file=.env.local scripts/outreach/discover-contacts.ts",
+    "outreach:create-admin": "tsx --env-file=.env.local scripts/outreach/create-admin.ts"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.70.0",
     "@hookform/resolvers": "^5.9.1",
+    "@prisma/client": "^6.18.0",
+    "cheerio": "^1.1.2",
     "clsx": "^2.1.1",
+    "imapflow": "^1.0.191",
     "lucide-react": "^1.41.0",
+    "mailparser": "^3.7.4",
     "next": "16.3.4",
     "react": "19.2.8",
     "react-dom": "19.2.8",
@@ -28,6 +40,7 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
+    "@types/mailparser": "^3.4.6",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
@@ -35,6 +48,7 @@
     "eslint-config-next": "16.3.4",
     "prettier": "^3.9.6",
     "prettier-plugin-tailwindcss": "^0.8.1",
+    "prisma": "^6.18.0",
     "tailwindcss": "^4",
     "tsx": "^4.23.13",
     "typescript": "^5"
