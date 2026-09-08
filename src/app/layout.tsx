@@ -39,7 +39,9 @@ export const metadata: Metadata = {
   twitter: { card: "summary_large_image", title: `${siteConfig.name}: ${siteConfig.tagline}`, description: siteConfig.metaDescription },
   robots: { index: true, follow: true, googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1, "max-video-preview": -1 } },
   category: "finance",
-  ...(process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION ? { verification: { google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION } } : {}),
+  // Search Console ownership token for https://loanspartner.in. Public by
+  // design: Google requires it to be readable in the page source.
+  verification: { google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || "zrBMnCOyWz2w5FtBJUO8ekDCJVQJ-ykw4qaA_3DpuqQ" },
 };
 
 export const viewport: Viewport = {
