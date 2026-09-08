@@ -1,14 +1,18 @@
 /**
  * Single source of truth for brand, contact (NAP), navigation and claims.
- * Values marked with `env` can be overridden without a code change.
  * Do not add numbers here that the business cannot substantiate.
+ *
+ * Every NEXT_PUBLIC_* variable below is read as a literal property access.
+ * Next.js inlines these at build time by textual substitution, so a computed
+ * lookup such as process.env[key] silently resolves to undefined in the
+ * bundle and the override is lost. Keep the literal form.
  */
-const env = (key: string, fallback: string) => process.env[key] ?? fallback;
+const or = (value: string | undefined, fallback: string) => (value && value.length > 0 ? value : fallback);
 
 export const siteConfig = {
   name: "LoansPartner",
-  legalName: env("NEXT_PUBLIC_LEGAL_NAME", "LoansPartner Financial Services"),
-  url: env("NEXT_PUBLIC_SITE_URL", "https://loanspartner.in"),
+  legalName: or(process.env.NEXT_PUBLIC_LEGAL_NAME, "LoansPartner Financial Services"),
+  url: or(process.env.NEXT_PUBLIC_SITE_URL, "https://loanspartner.in"),
   tagline: "Better loans begin with the right partner.",
   /** Long description for structured data (length is not penalised). */
   description:
@@ -19,17 +23,17 @@ export const siteConfig = {
   foundedYear: 2019,
   locale: "en_IN",
   contact: {
-    phone: env("NEXT_PUBLIC_PHONE", "+919999900000"),
-    phoneDisplay: env("NEXT_PUBLIC_PHONE_DISPLAY", "+91 99999 00000"),
-    whatsapp: env("NEXT_PUBLIC_WHATSAPP", "919999900000"),
-    email: env("NEXT_PUBLIC_EMAIL", "hello@loanspartner.in"),
-    partnerEmail: env("NEXT_PUBLIC_PARTNER_EMAIL", "partners@loanspartner.in"),
-    grievanceEmail: env("NEXT_PUBLIC_GRIEVANCE_EMAIL", "grievance@loanspartner.in"),
+    phone: or(process.env.NEXT_PUBLIC_PHONE, "+919999900000"),
+    phoneDisplay: or(process.env.NEXT_PUBLIC_PHONE_DISPLAY, "+91 99999 00000"),
+    whatsapp: or(process.env.NEXT_PUBLIC_WHATSAPP, "919999900000"),
+    email: or(process.env.NEXT_PUBLIC_EMAIL, "hello@loanspartner.in"),
+    partnerEmail: or(process.env.NEXT_PUBLIC_PARTNER_EMAIL, "partners@loanspartner.in"),
+    grievanceEmail: or(process.env.NEXT_PUBLIC_GRIEVANCE_EMAIL, "grievance@loanspartner.in"),
     address: {
-      street: env("NEXT_PUBLIC_ADDRESS_STREET", ""),
-      locality: env("NEXT_PUBLIC_ADDRESS_CITY", "Gurugram"),
-      region: env("NEXT_PUBLIC_ADDRESS_STATE", "Haryana"),
-      postalCode: env("NEXT_PUBLIC_ADDRESS_PIN", ""),
+      street: process.env.NEXT_PUBLIC_ADDRESS_STREET ?? "",
+      locality: or(process.env.NEXT_PUBLIC_ADDRESS_CITY, "Gurugram"),
+      region: or(process.env.NEXT_PUBLIC_ADDRESS_STATE, "Haryana"),
+      postalCode: process.env.NEXT_PUBLIC_ADDRESS_PIN ?? "",
       country: "IN",
     },
     hours: "Monday to Saturday, 9:30 am to 6:00 pm IST",
@@ -38,10 +42,10 @@ export const siteConfig = {
     ],
   },
   social: {
-    linkedin: env("NEXT_PUBLIC_LINKEDIN", "https://www.linkedin.com/company/loanspartner"),
-    instagram: env("NEXT_PUBLIC_INSTAGRAM", "https://www.instagram.com/loanspartner.in"),
-    youtube: env("NEXT_PUBLIC_YOUTUBE", ""),
-    x: env("NEXT_PUBLIC_X", ""),
+    linkedin: or(process.env.NEXT_PUBLIC_LINKEDIN, "https://www.linkedin.com/company/loanspartner"),
+    instagram: or(process.env.NEXT_PUBLIC_INSTAGRAM, "https://www.instagram.com/loanspartner.in"),
+    youtube: process.env.NEXT_PUBLIC_YOUTUBE ?? "",
+    x: process.env.NEXT_PUBLIC_X ?? "",
   },
   /**
    * The only hard-coded proof point is the one we control absolutely. The

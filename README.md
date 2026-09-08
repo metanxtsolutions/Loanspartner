@@ -65,4 +65,8 @@ pnpm start
 
 ## Deployment
 
-Any Node 20+ host. On Vercel, set the environment variables from `.env.example`. Security headers, redirects and image settings live in `next.config.ts`. After DNS cutover: submit `https://loanspartner.in/sitemap.xml` in Search Console, validate a product, a city and a guide page in the Rich Results Test, and confirm `robots.txt` lists the sitemap.
+Live at **https://www.loanspartner.in** (Vercel project `loanspartner.in`, team `metanxt`). Deploy with `npx vercel@latest --prod --yes`; the apex 308-redirects to `www`, and `NEXT_PUBLIC_SITE_URL` is set to the `www` form so canonicals, the sitemap and robots.txt all agree with what is served.
+
+Every `NEXT_PUBLIC_*` value in `site-config.ts` is read as a literal `process.env.NEXT_PUBLIC_X` property access. Next.js inlines these by textual substitution at build time, so a computed lookup like `process.env[key]` resolves to undefined in the bundle and the override is silently lost. Keep the literal form when adding new ones.
+
+Any Node 20+ host works. Set the environment variables from `.env.example`. Security headers, redirects and image settings live in `next.config.ts`. After DNS cutover: submit `https://loanspartner.in/sitemap.xml` in Search Console, validate a product, a city and a guide page in the Rich Results Test, and confirm `robots.txt` lists the sitemap.
