@@ -41,9 +41,16 @@ export const siteConfig = {
       { days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"], opens: "09:30", closes: "18:00" },
     ],
   },
+  /**
+   * Real, published profiles only. Every non-empty value is emitted as a
+   * `sameAs` entry on the Organization schema, where a wrong or non-existent
+   * URL is worse than no entry at all, and each one is also linked from the
+   * footer so the claim is verifiable on the page itself.
+   */
   social: {
-    linkedin: or(process.env.NEXT_PUBLIC_LINKEDIN, "https://www.linkedin.com/company/loanspartner"),
-    instagram: or(process.env.NEXT_PUBLIC_INSTAGRAM, "https://www.instagram.com/loanspartner.in"),
+    facebook: or(process.env.NEXT_PUBLIC_FACEBOOK, "https://www.facebook.com/loanspartner/"),
+    instagram: or(process.env.NEXT_PUBLIC_INSTAGRAM, "https://www.instagram.com/loanspartner/"),
+    linkedin: or(process.env.NEXT_PUBLIC_LINKEDIN, "https://www.linkedin.com/company/loanspartner/"),
     youtube: process.env.NEXT_PUBLIC_YOUTUBE ?? "",
     x: process.env.NEXT_PUBLIC_X ?? "",
   },

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Mail, MapPin, Phone, ShieldAlert } from "lucide-react";
 import { Logo } from "@/components/shared/logo";
+import { SocialLinks } from "@/components/shared/social-links";
 import { products } from "@/data/products";
 import { cities } from "@/data/cities";
 import { partnerAudiences } from "@/data/partner";
@@ -43,6 +44,7 @@ export function Footer() {
               <li className="flex items-start gap-2.5 text-white/80"><MapPin className="mt-0.5 size-4 shrink-0 text-verdant-400" /><span>{formattedAddress()}</span></li>
             </ul>
             <p className="mt-4 text-xs text-white/50">{siteConfig.contact.hours}</p>
+            <SocialLinks className="mt-5" />
           </div>
           <FooterCol title="Loans" className="lg:col-span-2">
             {products.map((p) => (<FooterLink key={p.slug} href={`/loans/${p.slug}`}>{p.name}</FooterLink>))}
