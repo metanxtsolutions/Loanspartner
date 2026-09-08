@@ -26,6 +26,7 @@ export type ProductLite = {
 };
 
 export type CityLite = { slug: string; name: string; state: string };
+export type LenderLite = { slug: string; name: string };
 export type AudienceLite = { slug: string; name: string; short: string };
 export type CategoryLite = { key: string; label: string };
 

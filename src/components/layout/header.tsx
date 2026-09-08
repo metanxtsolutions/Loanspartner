@@ -35,6 +35,8 @@ export function Header({ nav, phone, phoneDisplay }: { nav: NavData; phone: stri
   const menuId = useId();
   const drawerId = `${menuId}-drawer`;
   const toggleRef = useRef<HTMLButtonElement>(null);
+  const headerRef = useRef<HTMLElement>(null);
+  const drawerRef = useRef<HTMLDivElement>(null);
 
   // Close everything when the route changes, without an effect-driven re-render.
   const [seenPath, setSeenPath] = useState(pathname);
@@ -72,10 +74,46 @@ export function Header({ nav, phone, phoneDisplay }: { nav: NavData; phone: stri
     return () => document.removeEventListener("keydown", onKey);
   }, [open, mobile, closeAll]);
 
+  /**
+   * The drawer covers the page but its siblings stay in the document, so
+   * without this Tab walks straight out of it into content the user cannot
+   * see. Focus moves into the panel on open and cycles within the header,
+   * which on mobile means the logo, the close button and the panel. Escape
+   * closes and returns focus to the toggle, handled above.
+   */
+  useEffect(() => {
+    if (!mobile) return;
+    const header = headerRef.current;
+    const drawer = drawerRef.current;
+    if (!header || !drawer) return;
+    const SELECTOR = 'a[href], button:not([disabled]), summary, input, select, textarea, [tabindex]:not([tabindex="-1"])';
+    const focusable = () =>
+      Array.from(header.querySelectorAll<HTMLElement>(SELECTOR)).filter((el) => el.offsetParent !== null);
+    drawer.querySelector<HTMLElement>(SELECTOR)?.focus();
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key !== "Tab") return;
+      const items = focusable();
+      if (items.length === 0) return;
+      const first = items[0];
+      const last = items[items.length - 1];
+      const active = document.activeElement as HTMLElement | null;
+      const outside = !active || !header.contains(active);
+      if (e.shiftKey && (active === first || outside)) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && (active === last || outside)) {
+        e.preventDefault();
+        first.focus();
+      }
+    };
+    document.addEventListener("keydown", onKeyDown);
+    return () => document.removeEventListener("keydown", onKeyDown);
+  }, [mobile]);
+
   const isActive = (href: string) => pathname === href || pathname.startsWith(`${href}/`);
 
   return (
-    <header className="sticky top-0 z-50" onMouseLeave={() => setOpen(null)}>
+    <header ref={headerRef} className="sticky top-0 z-50" onMouseLeave={() => setOpen(null)}>
       <div
         className={cn(
           "border-b transition-colors duration-300",
@@ -137,7 +175,11 @@ export function Header({ nav, phone, phoneDisplay }: { nav: NavData; phone: stri
       {/* Mobile drawer */}
       <div
         id={drawerId}
+        ref={drawerRef}
         hidden={!mobile}
+        role="dialog"
+        aria-modal="true"
+        aria-label="Site menu"
         className="fixed inset-x-0 bottom-0 top-[var(--header-h)] z-40 overflow-y-auto bg-paper lg:hidden"
       >
         <div className="container-x py-6">

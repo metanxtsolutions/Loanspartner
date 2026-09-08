@@ -12,6 +12,7 @@ import { LenderMarquee } from "@/components/shared/lender-marquee";
 import { CtaBand } from "@/components/shared/cta-band";
 import { ButtonLink } from "@/components/shared/button";
 import { siteConfig } from "@/data/site-config";
+import { lenderOptions } from "@/data/lite";
 
 const title = "About LoansPartner";
 const description = "LoansPartner is a loan advisory and distribution partner working with banks, HFCs and NBFCs across India. Former credit professionals, zero fee to borrowers, RBI-aligned conduct, and a channel partner programme.";
@@ -70,7 +71,7 @@ export default function AboutPage() {
       </Section>
       <Section tone="paper" className="!py-12">
         <p className="eyebrow mb-4 text-mute">Lending partners</p>
-        <LenderMarquee tone="light" />
+        <LenderMarquee lenders={lenderOptions} tone="light" />
         <Link href="/lenders" className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-verdant-700">All lending partners <ArrowRight className="size-3.5" /></Link>
       </Section>
       <Section tone="cream"><TrustNotes /></Section>

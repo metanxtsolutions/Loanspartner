@@ -6,7 +6,8 @@
 import { products, productCategories } from "@/data/products";
 import { cities } from "@/data/cities";
 import { partnerAudiences } from "@/data/partner";
-import type { AudienceLite, CategoryLite, CityLite, NavData, ProductLite } from "@/data/lite-types";
+import { lenders } from "@/data/lenders";
+import type { AudienceLite, CategoryLite, CityLite, LenderLite, NavData, ProductLite } from "@/data/lite-types";
 
 export const productOptions: ProductLite[] = products.map((p) => ({
   slug: p.slug,
@@ -27,6 +28,7 @@ export const productOptions: ProductLite[] = products.map((p) => ({
 
 export const categoryOptions: CategoryLite[] = productCategories.map((c) => ({ key: c.key, label: c.label }));
 export const cityOptions: CityLite[] = cities.map((c) => ({ slug: c.slug, name: c.name, state: c.state }));
+export const lenderOptions: LenderLite[] = lenders.map((l) => ({ slug: l.slug, name: l.name }));
 export const audienceOptions: AudienceLite[] = partnerAudiences.map((a) => ({ slug: a.slug, name: a.name, short: a.short }));
 
 export const navData: NavData = {
