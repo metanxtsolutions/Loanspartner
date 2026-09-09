@@ -28,8 +28,8 @@ export type RecordResult = { event: LeadEvent; delivered: number; failures: stri
  * Runs every configured sink and reports how many actually accepted the lead.
  * A sink that is not configured returns false rather than throwing, so
  * `delivered === 0` means the lead reached nothing and is at risk of being
- * lost. In that case the whole event goes to the error log, which on a hosted
- * runtime is the last durable copy we control, so a lead can always be
+ * lost. In that case the whole event is written to the error log, which on a
+ * hosted runtime is the last durable copy we control, so a lead can always be
  * recovered by hand.
  */
 export async function recordEvent(input: Omit<LeadEvent, "id" | "at">): Promise<RecordResult> {
@@ -70,11 +70,17 @@ async function persistLocal(event: LeadEvent): Promise<boolean> {
 async function sendWebhook(event: LeadEvent): Promise<boolean> {
   const url = process.env.LEAD_WEBHOOK_URL;
   if (!url) return false;
+  const secret = process.env.LEAD_WEBHOOK_SECRET;
   return withRetry("webhook", async () => {
     const res = await fetch(url, {
       method: "POST",
-      headers: { "content-type": "application/json", ...(process.env.LEAD_WEBHOOK_SECRET ? { "x-webhook-secret": process.env.LEAD_WEBHOOK_SECRET } : {}) },
-      body: JSON.stringify(event),
+      headers: { "content-type": "application/json", ...(secret ? { "x-webhook-secret": secret } : {}) },
+      // The secret rides in the body as well as the header. Google Apps Script
+      // web apps cannot read custom request headers, and putting a shared
+      // secret in the query string would leak it into logs and history, so the
+      // body is the only place a Sheets receiver can check it. Header-based
+      // receivers (Zapier, Make, n8n, most CRMs) keep using the header.
+      body: JSON.stringify(secret ? { ...event, secret } : event),
       signal: AbortSignal.timeout(8000),
     });
     if (!res.ok) throw new Error(`webhook ${res.status}`);
