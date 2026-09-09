@@ -56,6 +56,34 @@ pnpm start
 - **No fabricated social proof.** There are no testimonials or disbursal totals in the code. Add them only with real, consented data. Regulatory statements (RBI pre-payment and gold lending directions, the Key Fact Statement, the DPDP Act, income-tax section numbering) are deliberately hedged and dated; re-check them before each content refresh rather than restating them as settled fact.
 - **Accessibility choices that are easy to undo by accident:** form controls use `--color-line-strong` for a 3:1 boundary, the duplicated half of the lender marquee is `aria-hidden` and non-focusable, icon-only comparison cells carry `sr-only` text, and data tables use `scope` on row and column headers.
 
+## Outreach platform (internal, `/admin/outreach`)
+
+A password-gated internal tool for running lender partnership outreach: it seeds a CRM from the real `src/data/lenders.ts` roster, researches each lender's own website for a real partnership or DSA contact, drafts a personalised proposal with Claude, and queues it for a human to approve before anything sends through Resend. Replies land in the same queue after classification. Nothing sends without a person clicking approve; see `src/actions/outreach/*` for every mutation and `prisma/schema.prisma` for the data model.
+
+**Setup**
+
+```bash
+# 1. Postgres. Any provider works locally or in prod; Neon integrates cleanly with Vercel.
+#    DATABASE_URL goes in .env.local (see .env.example for the full list of outreach vars).
+pnpm db:push                        # sync the schema (use db:migrate for a tracked prod migration)
+pnpm outreach:seed                  # load the 26 lenders from src/data/lenders.ts
+pnpm outreach:create-admin -- --email you@loanspartner.in --password "..."
+pnpm outreach:discover-contacts     # visits each lender's own site for a real contact email
+```
+
+Then set `ANTHROPIC_API_KEY` (drafting and reply classification), confirm `RESEND_API_KEY` and `OUTREACH_FROM_EMAIL` (outbound send, reusing the Resend account above), and `OUTREACH_IMAP_*` on a dedicated mailbox such as `partnerships@loanspartner.in` (reply monitoring, use an app password). `CRON_SECRET` protects the two scheduled routes in `vercel.json`; `RESEND_WEBHOOK_SECRET` verifies delivery/open/bounce webhooks from Resend. The settings page at `/admin/outreach/settings` shows which of these are configured.
+
+**How it is wired**
+
+- **Data model:** `Lender` → `Contact` (one or more, confidence-scored) → `OutreachMessage` (proposals, follow-ups, replies; one thread per contact). `ActivityLog` records every state change; `Note` is free-text per lender.
+- **Contact discovery** (`src/server/outreach/contactDiscovery.ts`) fetches a lender's own site and a handful of likely pages (`/partner`, `/dsa`, `/contact`, ...) and extracts real published emails, scored HIGH/MEDIUM/LOW by how partnership-relevant the address looks. It never invents an address; a lender with nothing published comes back empty and is flagged for manual research.
+- **AI drafting** (`src/server/outreach/ai.ts`) grounds every proposal, follow-up and reply strictly in the lender facts already in `src/data/lenders.ts` and the real LoansPartner facts in `site-config.ts`. The prompts explicitly forbid inventing numbers, volumes, or claimed relationships.
+- **Sending** (`src/server/outreach/email.ts`) enforces a daily cap and a minimum gap between sends (both configurable in Settings), checks the contact has not opted out, retries transient Resend errors, and never re-sends a proposal already delivered to the same contact.
+- **Replies and follow-ups** run from two Vercel Cron routes (`/api/outreach/cron/poll-replies`, `/api/outreach/cron/send-followups`), both requiring `Authorization: Bearer $CRON_SECRET`. Polling classifies each reply and drafts a response; sending it always needs a human click. Follow-ups stop the moment a lender's status leaves `CONTACTED` (a reply or opt-out flips it), matching the required "stop immediately" behaviour.
+- **Everything the marketing site's copy gate and bundle discipline apply here too:** this code lives under `src/server/outreach` and `src/actions/outreach`, is never imported from a `"use client"` file, and the admin route tree opts out of the public site's header, footer, analytics and JSON-LD (see the `x-pathname` branch in `src/app/layout.tsx` and `src/middleware.ts`).
+
+**Before it can run live outreach:** the four external services above (Postgres, Anthropic, Resend, the reply mailbox) all need real credentials, and the `partnerships@loanspartner.in`-style mailbox needs to actually exist and be reachable by IMAP. Until then the CRM, contact discovery and manual-entry paths all work with just `DATABASE_URL` set; drafting and sending are the parts gated on the other keys.
+
 ## Adding content
 
 - **New city:** append a `City` object to a `cities-batch-*.ts` file (all fields required, including a unique `productNotes` paragraph for each core product). Pages at `/cities/[slug]` and `/loans/[product]/[slug]` build automatically.

@@ -1,4 +1,3 @@
-import "server-only";
 import { prisma } from "@/server/outreach/db";
 
 export type OutreachSettings = {

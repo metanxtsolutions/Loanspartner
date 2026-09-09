@@ -1,4 +1,3 @@
-import "server-only";
 import { createHmac, randomBytes, scryptSync, timingSafeEqual } from "node:crypto";
 import { cookies } from "next/headers";
 import { prisma } from "@/server/outreach/db";
@@ -37,9 +36,15 @@ export function verifyPassword(password: string, stored: string) {
   return timingSafeEqual(candidate, expected);
 }
 
+/**
+ * The payload is base64url-encoded before joining with the signature so the
+ * "." delimiter is unambiguous: splitting a raw `${email}.${expires}`
+ * string on "." broke for any email containing a dot, such as
+ * "admin@loanspartner.in" itself, since ".in" adds an extra split point.
+ */
 export async function createSession(email: string) {
   const expires = Date.now() + SESSION_DAYS * 24 * 60 * 60 * 1000;
-  const payload = `${email}.${expires}`;
+  const payload = Buffer.from(JSON.stringify({ email, expires }), "utf8").toString("base64url");
   const token = `${payload}.${sign(payload)}`;
   const store = await cookies();
   store.set(COOKIE_NAME, token, {
@@ -62,14 +67,17 @@ export async function getSessionEmail(): Promise<string | null> {
   const token = store.get(COOKIE_NAME)?.value;
   if (!token) return null;
   const parts = token.split(".");
-  if (parts.length !== 3) return null;
-  const [email, expiresRaw, signature] = parts;
-  const payload = `${email}.${expiresRaw}`;
+  if (parts.length !== 2) return null;
+  const [payload, signature] = parts;
   const expected = sign(payload);
   if (expected.length !== signature.length || !timingSafeEqual(Buffer.from(expected), Buffer.from(signature))) return null;
-  const expires = Number(expiresRaw);
-  if (!Number.isFinite(expires) || Date.now() > expires) return null;
-  return email;
+  try {
+    const { email, expires } = JSON.parse(Buffer.from(payload, "base64url").toString("utf8")) as { email: string; expires: number };
+    if (!Number.isFinite(expires) || Date.now() > expires) return null;
+    return email;
+  } catch {
+    return null;
+  }
 }
 
 export async function requireAdmin() {

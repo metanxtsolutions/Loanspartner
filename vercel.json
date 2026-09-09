@@ -1,0 +1,6 @@
+{
+  "crons": [
+    { "path": "/api/outreach/cron/poll-replies", "schedule": "*/15 * * * *" },
+    { "path": "/api/outreach/cron/send-followups", "schedule": "0 5 * * *" }
+  ]
+}

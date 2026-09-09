@@ -1,19 +1,21 @@
 import type { Metadata, Viewport } from "next";
-import { Fraunces, Manrope } from "next/font/google";
+import { Bricolage_Grotesque, IBM_Plex_Mono, Instrument_Serif } from "next/font/google";
 import "./globals.css";
-import { Header } from "@/components/layout/header";
-import { Footer } from "@/components/layout/footer";
-import { MobileCta } from "@/components/layout/mobile-cta";
-import { RevealObserver } from "@/components/layout/reveal";
-import { Analytics } from "@/components/layout/analytics";
-import { JsonLd } from "@/components/shared/json-ld";
-import { organizationSchema, webSiteSchema } from "@/lib/schema";
 import { siteConfig } from "@/data/site-config";
-import { cityNames } from "@/data/cities";
-import { navData } from "@/data/lite";
 
-const manrope = Manrope({ subsets: ["latin"], variable: "--font-manrope", display: "swap" });
-const fraunces = Fraunces({ subsets: ["latin"], variable: "--font-fraunces", display: "swap", axes: ["opsz", "SOFT"] });
+const bricolage = Bricolage_Grotesque({ subsets: ["latin"], variable: "--font-bricolage", display: "swap" });
+const instrumentSerif = Instrument_Serif({
+  subsets: ["latin"],
+  weight: "400",
+  variable: "--font-instrument-serif",
+  display: "swap",
+});
+const plexMono = IBM_Plex_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500"],
+  variable: "--font-plex-mono",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
@@ -26,7 +28,16 @@ export const metadata: Metadata = {
   authors: [{ name: siteConfig.name, url: siteConfig.url }],
   creator: siteConfig.name,
   publisher: siteConfig.legalName,
-  keywords: ["loan advisory India", "loan DSA", "personal loan", "home loan", "business loan", "loan against property", "become loan DSA", "loan channel partner"],
+  keywords: [
+    "loan advisory India",
+    "loan DSA",
+    "personal loan",
+    "home loan",
+    "business loan",
+    "loan against property",
+    "become loan DSA",
+    "loan channel partner",
+  ],
   alternates: { canonical: siteConfig.url, languages: { "en-IN": siteConfig.url } },
   openGraph: {
     type: "website",
@@ -36,12 +47,22 @@ export const metadata: Metadata = {
     title: `${siteConfig.name}: ${siteConfig.tagline}`,
     description: siteConfig.metaDescription,
   },
-  twitter: { card: "summary_large_image", title: `${siteConfig.name}: ${siteConfig.tagline}`, description: siteConfig.metaDescription },
-  robots: { index: true, follow: true, googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1, "max-video-preview": -1 } },
+  twitter: {
+    card: "summary_large_image",
+    title: `${siteConfig.name}: ${siteConfig.tagline}`,
+    description: siteConfig.metaDescription,
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1, "max-video-preview": -1 },
+  },
   category: "finance",
   // Search Console ownership token for https://loanspartner.in. Public by
   // design: Google requires it to be readable in the page source.
-  verification: { google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || "zrBMnCOyWz2w5FtBJUO8ekDCJVQJ-ykw4qaA_3DpuqQ" },
+  verification: {
+    google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || "zrBMnCOyWz2w5FtBJUO8ekDCJVQJ-ykw4qaA_3DpuqQ",
+  },
 };
 
 export const viewport: Viewport = {
@@ -51,19 +72,21 @@ export const viewport: Viewport = {
   initialScale: 1,
 };
 
+/**
+ * Deliberately free of request-time APIs (headers(), cookies()) so every
+ * page under here can still prerender as static HTML. The public site's
+ * chrome (Header/Footer/Analytics/JsonLd) lives in (site)/layout.tsx, and
+ * /admin has its own layout tree; neither needs anything from this file
+ * beyond fonts and the html/body shell.
+ */
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en-IN" data-scroll-behavior="smooth" className={`${manrope.variable} ${fraunces.variable} h-full antialiased`}>
-      <body className="flex min-h-full flex-col pb-[4.5rem] lg:pb-0">
-        <JsonLd data={[organizationSchema({ cities: cityNames }), webSiteSchema()]} />
-        <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-ink-900 focus:px-4 focus:py-2 focus:text-white">Skip to content</a>
-        <Header nav={navData} phone={siteConfig.contact.phone} phoneDisplay={siteConfig.contact.phoneDisplay} />
-        <main id="main" className="flex-1">{children}</main>
-        <Footer />
-        <MobileCta />
-        <RevealObserver />
-        <Analytics />
-      </body>
+    <html
+      lang="en-IN"
+      data-scroll-behavior="smooth"
+      className={`${bricolage.variable} ${instrumentSerif.variable} ${plexMono.variable} h-full antialiased`}
+    >
+      <body className="min-h-full">{children}</body>
     </html>
   );
 }

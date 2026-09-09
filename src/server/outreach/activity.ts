@@ -1,4 +1,3 @@
-import "server-only";
 import { prisma } from "@/server/outreach/db";
 import type { Prisma } from "@prisma/client";
 
