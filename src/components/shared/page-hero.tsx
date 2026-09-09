@@ -17,13 +17,13 @@ export function PageHero({
   lede?: ReactNode;
   crumbs?: Crumb[];
   aside?: ReactNode;
-  tone?: "paper" | "ink" | "verdant";
+  tone?: "paper" | "ink" | "verdant" | "brass";
   children?: ReactNode;
   className?: string;
 }) {
   const dark = tone !== "paper";
   return (
-    <section className={cn("relative overflow-hidden", tone === "ink" && "noise bg-ink-900 text-white", tone === "verdant" && "noise bg-verdant-700 text-white", tone === "paper" && "bg-paper", className)}>
+    <section className={cn("relative overflow-hidden", tone === "ink" && "noise bg-ink-900 text-white", tone === "verdant" && "noise bg-verdant-700 text-white", tone === "brass" && "noise bg-brass-600 text-white", tone === "paper" && "bg-paper", className)}>
       <div className={cn("absolute inset-0", dark ? "grid-fade-dark" : "grid-fade")} aria-hidden />
       <div className="container-x relative pb-14 pt-10 lg:pb-20 lg:pt-14">
         {crumbs && <Breadcrumbs items={crumbs} tone={dark ? "dark" : "light"} className="mb-8" />}
