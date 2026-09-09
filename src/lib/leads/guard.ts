@@ -6,9 +6,9 @@ import { headers } from "next/headers";
  * time-on-form.
  *
  * The window needs a store shared across instances to mean anything on a
- * serverless runtime, where each request may land on a fresh process. If
- * UPSTASH_REDIS_REST_URL and UPSTASH_REDIS_REST_TOKEN are set we count there
- * over plain HTTP, which needs no client library. Without them we fall back to
+ * serverless runtime, where each request may land on a fresh process. When a
+ * Redis store is configured we count there over plain HTTP, which needs no
+ * client library. Without one we fall back to
  * a per-process map: still useful against a single noisy client hitting one
  * warm instance, but not a real limit. The honeypot and timing checks are
  * unaffected either way and remain the primary bot defence.
@@ -19,8 +19,12 @@ const MIN_FORM_SECONDS = 3;
 
 const hits = new Map<string, number[]>();
 
-const redisUrl = process.env.UPSTASH_REDIS_REST_URL;
-const redisToken = process.env.UPSTASH_REDIS_REST_TOKEN;
+// Vercel's Upstash integration injects KV_REST_API_URL and KV_REST_API_TOKEN
+// when a Redis store is connected to the project. Those are read first so the
+// limiter works the moment the store is linked, with no secret copied by hand.
+// UPSTASH_REDIS_REST_* stays supported for a database provisioned elsewhere.
+const redisUrl = process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL;
+const redisToken = process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN;
 
 /** True when the shared counter is configured, so the limit applies fleet-wide. */
 export const rateLimitIsShared = Boolean(redisUrl && redisToken);
