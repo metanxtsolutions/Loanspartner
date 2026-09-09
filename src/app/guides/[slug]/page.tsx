@@ -28,7 +28,7 @@ export async function generateMetadata({ params }: PageProps<"/guides/[slug]">):
   const { slug } = await params;
   const g = getGuide(slug);
   if (!g) return {};
-  return pageMetadata({ title: g.title, description: g.excerpt, path: `/guides/${g.slug}`, keywords: [g.primaryKeyword, ...g.secondaryKeywords], type: "article", publishedTime: g.publishedDate, modifiedTime: g.updatedDate });
+  return pageMetadata({ title: g.seoTitle ?? g.title, description: g.excerpt, path: `/guides/${g.slug}`, keywords: [g.primaryKeyword, ...g.secondaryKeywords], type: "article", publishedTime: g.publishedDate, modifiedTime: g.updatedDate });
 }
 
 export default async function GuidePage({ params }: PageProps<"/guides/[slug]">) {

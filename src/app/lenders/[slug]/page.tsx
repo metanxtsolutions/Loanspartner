@@ -4,10 +4,11 @@ import { notFound } from "next/navigation";
 import { ArrowRight, ExternalLink } from "lucide-react";
 import { pageMetadata } from "@/lib/seo";
 import { JsonLd } from "@/components/shared/json-ld";
-import { webPageSchema } from "@/lib/schema";
+import { webPageSchema, faqPageSchema } from "@/lib/schema";
 import { PageHero } from "@/components/shared/page-hero";
 import { Section, SectionHeader, Card, Pill } from "@/components/shared/section";
 import { CheckList } from "@/components/shared/checklist";
+import { FaqList } from "@/components/shared/faq";
 import { ProductCard } from "@/components/shared/product-card";
 import { LenderCards } from "@/components/shared/lender-cards";
 import { CtaBand } from "@/components/shared/cta-band";
@@ -28,7 +29,7 @@ export async function generateMetadata({ params }: PageProps<"/lenders/[slug]">)
   const l = getLender(slug);
   if (!l) return {};
   return pageMetadata({
-    title: `${l.name} Loans: Products and How to Apply`,
+    title: `${l.name} Loans: How to Apply`,
     description: `${l.summary} Apply for ${l.name} loans through LoansPartner with pre-screening across the panel and zero fee to borrowers.`,
     path: `/lenders/${l.slug}`,
     keywords: [`${l.name} loan`, `${l.name} personal loan`, `${l.name} home loan`, `${l.name} DSA`, `${l.name} loan apply`],
@@ -45,6 +46,7 @@ export default async function LenderPage({ params }: PageProps<"/lenders/[slug]"
   return (
     <>
       <JsonLd data={webPageSchema({ name: `${l.name} | Lending partner`, description: l.summary, path, dateModified: l.updatedAt })} />
+      <JsonLd data={faqPageSchema(l.faqs)} />
       <PageHero
         crumbs={[{ name: "Lending partners", path: "/lenders" }, { name: l.name, path }]}
         eyebrow={l.type}
@@ -73,6 +75,29 @@ export default async function LenderPage({ params }: PageProps<"/lenders/[slug]"
             <div className="mt-6 grid gap-4 sm:grid-cols-2">{prods.slice(0, 4).map((p, i) => (<ProductCard key={p.slug} product={p} delay={i * 60} />))}</div>
           </div>
         </div>
+      </Section>
+      <Section tone="paper">
+        <div className="grid gap-10 lg:grid-cols-[1.2fr_0.8fr]">
+          <div>
+            <SectionHeader eyebrow="Our read" title={`Where ${l.shortName} fits`} />
+            <div className="mt-6 space-y-4 text-[15px] leading-relaxed text-ink-800">
+              {l.profile.map((para) => (<p key={para.slice(0, 32)}>{para}</p>))}
+            </div>
+          </div>
+          <Card className="p-6">
+            <p className="eyebrow text-mute">Worth knowing</p>
+            <ul className="mt-4 space-y-3 text-sm leading-relaxed text-ink-800">
+              {l.watchOuts.map((w) => (
+                <li key={w.slice(0, 32)} className="border-l-2 border-brass-400 pl-3">{w}</li>
+              ))}
+            </ul>
+            <p className="mt-6 text-xs leading-relaxed text-mute">Our assessment, not a statement of {l.name}&rsquo;s policy. Terms are set by the lender and can change.</p>
+          </Card>
+        </div>
+      </Section>
+      <Section tone="cream">
+        <SectionHeader eyebrow="Questions" title={`${l.shortName}: common questions`} />
+        <FaqList faqs={l.faqs} className="mt-6" />
       </Section>
       {similar.length > 0 && (
         <Section tone="paper">

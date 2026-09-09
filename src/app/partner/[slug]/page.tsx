@@ -32,7 +32,7 @@ export async function generateMetadata({ params }: PageProps<"/partner/[slug]">)
   const p = fromSlug(slug);
   if (!p) return {};
   return pageMetadata({
-    title: `${p.name} DSA: Payouts and Registration`,
+    title: `${p.seoName ?? p.name} DSA: Payouts`,
     description: `Become a ${p.name.toLowerCase()} DSA with LoansPartner. Distribute ${p.name.toLowerCase()}s from our lender panel, typical tickets of ${p.dsa.ticketSize}, payouts of ${p.dsa.payoutFrom}% to ${p.dsa.payoutTo}%, processing handled by our credit desk. Free registration.`,
     path: `/partner/${slug}`,
     keywords: [`${p.name.toLowerCase()} DSA`, `${p.name.toLowerCase()} DSA registration`, `${p.name.toLowerCase()} DSA commission`, `${p.name.toLowerCase()} agent`, "loan DSA", "DSA partner program"],

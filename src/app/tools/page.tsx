@@ -8,7 +8,7 @@ import { PageHero } from "@/components/shared/page-hero";
 import { Section } from "@/components/shared/section";
 import { CtaBand } from "@/components/shared/cta-band";
 
-const title = "Loan Calculators: EMI, Eligibility, Balance Transfer";
+const title = "Loan Calculators: EMI and Eligibility";
 const description = "Free calculators from LoansPartner: EMI with amortisation schedule, loan eligibility on your income, home loan balance transfer savings, and DSA income modelling. Plus current indicative rates and a loan glossary.";
 
 export const metadata: Metadata = pageMetadata({ title, description, path: "/tools", keywords: ["EMI calculator", "loan eligibility calculator", "home loan balance transfer calculator", "DSA income calculator", "loan calculator India"] });

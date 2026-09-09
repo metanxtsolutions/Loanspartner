@@ -41,7 +41,7 @@ export async function generateMetadata({ params }: PageProps<"/loans/[product]/[
   if (!data) return {};
   const { p, c } = data;
   return pageMetadata({
-    title: `${p.name} in ${c.name}: Rates and Eligibility`,
+    title: `${p.seoName ?? p.name} in ${c.name}: Rates`,
     description: `Get a ${p.name.toLowerCase()} in ${c.name} from banks and NBFCs on our panel. ${c.tagline} Zero fee, local documentation support, lender shortlist within one working day.`,
     path: `/loans/${p.slug}/${c.slug}`,
     keywords: [`${p.name.toLowerCase()} in ${c.name}`, `${p.name.toLowerCase()} ${c.name}`, `best ${p.name.toLowerCase()} ${c.name}`, `${p.name.toLowerCase()} agent ${c.name}`, ...p.keywords.slice(0, 3), ...c.keywords.slice(0, 2)],

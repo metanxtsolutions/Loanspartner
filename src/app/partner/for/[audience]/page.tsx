@@ -30,7 +30,7 @@ export async function generateMetadata({ params }: PageProps<"/partner/for/[audi
   const a = getAudience(audience);
   if (!a) return {};
   return pageMetadata({
-    title: `Loan DSA Partnership for ${a.name}`,
+    title: `Loan DSA for ${a.seoName ?? a.name}`,
     description: `${a.summary}`,
     path: `/partner/for/${a.slug}`,
     keywords: a.keywords,

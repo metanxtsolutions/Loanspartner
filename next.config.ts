@@ -1,5 +1,29 @@
 import type { NextConfig } from "next";
 
+/**
+ * Scripts allow 'unsafe-inline' on purpose. Next.js emits inline bootstrap and
+ * flight-data scripts on every page, and the alternative, per-request nonces,
+ * needs middleware that would make every static page render dynamically.
+ * The host allowlist is still the part that matters: it blocks a script
+ * injected from anywhere we have not named. Revisit if a nonce becomes free.
+ *
+ * googletagmanager and google-analytics are the GA4 tag.
+ */
+const contentSecurityPolicy = [
+  "default-src 'self'",
+  "base-uri 'self'",
+  "object-src 'none'",
+  "frame-ancestors 'none'",
+  "form-action 'self'",
+  "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com",
+  "style-src 'self' 'unsafe-inline'",
+  "img-src 'self' data: blob: https://www.googletagmanager.com https://www.google-analytics.com",
+  "font-src 'self' data:",
+  "connect-src 'self' https://www.google-analytics.com https://analytics.google.com https://www.googletagmanager.com",
+  "manifest-src 'self'",
+  "upgrade-insecure-requests",
+].join("; ");
+
 const securityHeaders = [
   { key: "X-Content-Type-Options", value: "nosniff" },
   { key: "X-Frame-Options", value: "DENY" },
@@ -9,6 +33,7 @@ const securityHeaders = [
     key: "Permissions-Policy",
     value: "camera=(), microphone=(), geolocation=(), payment=(), interest-cohort=()",
   },
+  { key: "Content-Security-Policy", value: contentSecurityPolicy },
   ...(process.env.NODE_ENV === "production"
     ? [
         {

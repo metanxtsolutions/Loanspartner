@@ -19,11 +19,22 @@ export function generateStaticParams() {
   return glossary.map((t) => ({ term: t.slug }));
 }
 
+/**
+ * Glossary entries spell the acronym out in full, which reads well as an H1 but
+ * overflows the <title> once the brand suffix is appended. The expansion is
+ * already in the first line of the definition, so dropping it from the title
+ * costs nothing and keeps the acronym people actually search for.
+ */
+function seoTerm(term: string) {
+  const head = term.replace(/\s*\(.*\)\s*$/, "").trim();
+  return term.length > 30 && head.length > 0 ? head : term;
+}
+
 export async function generateMetadata({ params }: PageProps<"/glossary/[term]">): Promise<Metadata> {
   const { term } = await params;
   const t = getTerm(term);
   if (!t) return {};
-  return pageMetadata({ title: `${t.term} Explained`, description: `${t.short} ${t.definition[0]}`, path: `/glossary/${t.slug}`, keywords: [`what is ${t.term.toLowerCase()}`, `${t.term.toLowerCase()} meaning`, `${t.term.toLowerCase()} loan`, "loan glossary"] });
+  return pageMetadata({ title: `${seoTerm(t.term)} Explained`, description: `${t.short} ${t.definition[0]}`, path: `/glossary/${t.slug}`, keywords: [`what is ${t.term.toLowerCase()}`, `${t.term.toLowerCase()} meaning`, `${t.term.toLowerCase()} loan`, "loan glossary"] });
 }
 
 export default async function TermPage({ params }: PageProps<"/glossary/[term]">) {

@@ -39,7 +39,7 @@ export async function generateMetadata({ params }: PageProps<"/loans/[product]">
   const p = getProduct(product);
   if (!p) return {};
   return pageMetadata({
-    title: `${p.name}: Rates from ${p.rate.from.toFixed(2)}%, Eligibility`,
+    title: `${p.seoName ?? p.name} Rates from ${p.rate.from.toFixed(2)}%`,
     description: `${p.summary} Compare ${p.name.toLowerCase()} offers from our lender panel with LoansPartner. Zero fee to borrowers.`,
     path: `/loans/${p.slug}`,
     keywords: p.keywords,

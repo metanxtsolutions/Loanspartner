@@ -29,7 +29,7 @@ export async function generateMetadata({ params }: PageProps<"/cities/[city]">):
   const c = getCity(city);
   if (!c) return {};
   return pageMetadata({
-    title: `Loans in ${c.name}: Personal, Home and Business`,
+    title: `Loans in ${c.name}: Compare Rates`,
     description: `LoansPartner's ${c.name} desk arranges personal, home, business and property loans from our lender panel. ${c.tagline} Zero fee to borrowers.`,
     path: `/cities/${c.slug}`,
     keywords: c.keywords,

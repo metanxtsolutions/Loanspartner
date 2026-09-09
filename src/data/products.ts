@@ -8,6 +8,11 @@ export type LoanProduct = {
   slug: string;
   name: string;
   shortName: string;
+  /**
+   * Used in <title> only, where the full name would push the tag past the
+   * length Google shows. Falls back to `name`, so set it only when needed.
+   */
+  seoName?: string;
   category: ProductCategory;
   icon: IconName;
   tagline: string;
@@ -672,6 +677,7 @@ export const products: LoanProduct[] = [
   {
     slug: "machinery-loan",
     name: "Machinery and Equipment Loan",
+    seoName: "Machinery Loan",
     shortName: "Machinery",
     category: "business",
     icon: "cog",

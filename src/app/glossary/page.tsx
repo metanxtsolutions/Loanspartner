@@ -8,7 +8,7 @@ import { Section } from "@/components/shared/section";
 import { CtaBand } from "@/components/shared/cta-band";
 import { glossary } from "@/data/glossary";
 
-const title = "Loan Glossary: CIBIL, FOIR, KFS and LTV Explained";
+const title = "Loan and Credit Glossary";
 const description = "Plain-language definitions of the terms you meet on a loan application in India: credit score, FOIR, APR, Key Fact Statement, loan-to-value, repo-linked rates, balance transfer, DSA and more.";
 
 export const metadata: Metadata = pageMetadata({ title, description, path: "/glossary", keywords: ["loan glossary", "loan terms explained", "what is FOIR", "what is KFS", "what is LTV", "loan terminology India"] });

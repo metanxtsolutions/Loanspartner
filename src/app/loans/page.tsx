@@ -15,7 +15,7 @@ import { cities } from "@/data/cities";
 import { globalFaqs } from "@/data/faqs";
 import { formatINR } from "@/lib/utils";
 
-const title = "Loan Products: Personal, Home, Business and Property";
+const title = "Loan Products in India";
 const description = "Compare 12 loan products from banks and NBFCs on our panel with LoansPartner: personal loans from 10.25%, home loans from 7.35%, business loans, loan against property, car and education loans. Zero fee to borrowers.";
 
 export const metadata: Metadata = pageMetadata({ title, description, path: "/loans", keywords: ["loan products India", "types of loans", "compare loans", "personal loan", "home loan", "business loan", "loan against property"] });

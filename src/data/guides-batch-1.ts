@@ -1,9 +1,11 @@
 import type { Guide } from "@/data/guide-types";
+import { repoRateLabel } from "@/data/policy-rates";
 
 export const guidesBatch1: Guide[] = [
   {
     slug: "how-to-become-a-loan-dsa-in-india",
     title: "How to Become a Loan DSA in India (2026 Guide)",
+    seoTitle: "How to Become a Loan DSA in India",
     category: "Partner programme",
     excerpt: "A practical guide to becoming a Direct Selling Agent for loans: who qualifies, how registration works, what you earn per product, and the RBI rules you must follow.",
     readTime: "9 min read",
@@ -111,6 +113,7 @@ export const guidesBatch1: Guide[] = [
   {
     slug: "loan-dsa-commission-structure-explained",
     title: "Loan DSA Commission: How Much Agents Really Earn",
+    seoTitle: "Loan DSA Commission: What Agents Earn",
     category: "Partner programme",
     excerpt: "How DSA payouts are calculated, why percentages differ by product, what a realistic monthly income looks like, and the clawbacks and deductions to watch for.",
     readTime: "8 min read",
@@ -185,6 +188,7 @@ export const guidesBatch1: Guide[] = [
   {
     slug: "rbi-rules-for-loan-dsas-2026",
     title: "RBI Rules Every Loan DSA Must Follow in 2026",
+    seoTitle: "RBI Rules for Loan DSAs",
     category: "Safety and compliance",
     excerpt: "The Digital Lending Directions 2025, the 2026 draft directions on marketing and sales, the DPDP Act, and what they mean in practice for agents who source loans.",
     readTime: "8 min read",
@@ -264,6 +268,7 @@ export const guidesBatch1: Guide[] = [
   {
     slug: "personal-loan-eligibility-how-lenders-decide",
     title: "Personal Loan Eligibility: How Banks Actually Decide",
+    seoTitle: "Personal Loan Eligibility Explained",
     category: "Borrowing basics",
     excerpt: "The five inputs behind every personal loan decision: income, FOIR, credit report, employer profile and stability, with worked examples and practical fixes.",
     readTime: "8 min read",
@@ -338,6 +343,7 @@ export const guidesBatch1: Guide[] = [
   {
     slug: "personal-loan-with-low-cibil-score",
     title: "How to Get a Personal Loan with a Low CIBIL Score (and When Not To)",
+    seoTitle: "Personal Loan with a Low CIBIL Score",
     category: "Credit and scores",
     excerpt: "Realistic options for scores below 700: which lenders consider you, what it costs, secured alternatives that are cheaper, and how to rebuild the score in six months.",
     readTime: "7 min read",
@@ -412,6 +418,7 @@ export const guidesBatch1: Guide[] = [
   {
     slug: "home-loan-balance-transfer-when-it-saves-money",
     title: "Home Loan Balance Transfer: When It Saves Money and When It Does Not",
+    seoTitle: "When a Home Loan Balance Transfer Pays",
     category: "Home loans",
     excerpt: "The arithmetic of switching lenders: rate difference, remaining tenure, costs and the repricing alternative, with a worked example and a simple break-even rule.",
     readTime: "7 min read",
@@ -421,7 +428,7 @@ export const guidesBatch1: Guide[] = [
     secondaryKeywords: ["home loan transfer calculator", "should I transfer my home loan", "home loan balance transfer charges", "home loan repricing"],
     tags: ["home loan", "balance transfer", "refinance", "interest"],
     intro: [
-      "With the repo rate at 5.25% after the cuts of 2025 and 2026, new home loans are being written at 7.35% to 8%. Millions of older loans still run at 8.75% to 9.5% or higher. The gap is real money, but a balance transfer has costs and effort, and in a surprising number of cases the better move is a phone call to your existing bank.",
+      `With the repo rate at ${repoRateLabel} after the cuts of 2025 and 2026, new home loans are being written at 7.35% to 8%. Millions of older loans still run at 8.75% to 9.5% or higher. The gap is real money, but a balance transfer has costs and effort, and in a surprising number of cases the better move is a phone call to your existing bank.`,
       "This guide gives you the arithmetic and a simple rule for deciding.",
     ],
     sections: [

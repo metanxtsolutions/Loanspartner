@@ -4,6 +4,8 @@ export type PartnerAudience = {
   slug: string;
   name: string;
   short: string;
+  /** Short form for <title>, where the full name overflows. Falls back to `name`. */
+  seoName?: string;
   headline: string;
   summary: string;
   why: string[];
@@ -109,6 +111,7 @@ export const partnerAudiences: PartnerAudience[] = [
   {
     slug: "ex-bankers",
     name: "Ex-bankers and Finance Professionals",
+    seoName: "Ex-bankers",
     short: "Former bank, NBFC and fintech staff",
     headline: "Use your credit judgement and network, without the targets and the branch.",
     summary: "Former bankers and NBFC professionals know how credit decisions are made and have relationships built over years. As a LoansPartner channel partner you apply that judgement across a 40-lender panel rather than a single institution, and earn on disbursals with none of the institutional overhead.",
@@ -126,6 +129,7 @@ export const partnerAudiences: PartnerAudience[] = [
   {
     slug: "mutual-fund-distributors",
     name: "Mutual Fund and Wealth Distributors",
+    seoName: "Mutual Fund Distributors",
     short: "MFDs, RIAs and wealth advisors",
     headline: "Your clients trust you with their wealth. They will trust you with their borrowing too.",
     summary: "Mutual fund distributors and wealth advisors advise households on every major financial decision, and borrowing is one of the largest. Adding loans through LoansPartner gives your clients a trusted route to home loans, loans against property and balance transfers, and gives you a payout that complements trail income.",
@@ -143,6 +147,7 @@ export const partnerAudiences: PartnerAudience[] = [
   {
     slug: "working-professionals",
     name: "Working Professionals and Freelancers",
+    seoName: "Working Professionals",
     short: "Anyone with a network",
     headline: "Earn a serious second income from referrals, with no investment and no target.",
     summary: "You do not need a finance background to succeed as a LoansPartner channel partner. Colleagues, friends, community members and social media followers all need loans, and a compliant referral through our desk earns you a payout on every disbursal. Many of our partners started with a single referral.",

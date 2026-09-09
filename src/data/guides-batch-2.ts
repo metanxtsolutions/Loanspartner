@@ -1,9 +1,11 @@
 import type { Guide } from "@/data/guide-types";
+import { policyRates, repoRateLabel } from "@/data/policy-rates";
 
 export const guidesBatch2: Guide[] = [
   {
     slug: "loan-against-property-vs-personal-loan",
     title: "Loan Against Property vs Personal Loan: Which Is Cheaper for You?",
+    seoTitle: "Loan Against Property vs Personal Loan",
     category: "Borrowing basics",
     excerpt: "Cost, speed, amount, risk and tax treatment compared, with the situations where each product wins and a worked comparison on a ₹20 lakh need.",
     readTime: "7 min read",
@@ -83,6 +85,7 @@ export const guidesBatch2: Guide[] = [
   {
     slug: "business-loan-documents-checklist-msme",
     title: "Business Loan Documents Checklist for MSMEs (2026)",
+    seoTitle: "Business Loan Documents for MSMEs",
     category: "Business finance",
     excerpt: "Every document a bank or NBFC asks for on an unsecured business loan, why each one matters, the mistakes that get files rejected, and how to prepare a file that sanctions in a week.",
     readTime: "8 min read",
@@ -172,6 +175,7 @@ export const guidesBatch2: Guide[] = [
   {
     slug: "understanding-your-cibil-score",
     title: "Understanding Your CIBIL Score and How to Improve It",
+    seoTitle: "CIBIL Score: How to Read and Improve It",
     category: "Credit and scores",
     excerpt: "How the score is built, what each range means to a lender, the five factors that move it, common myths, and a 90-day improvement plan.",
     readTime: "8 min read",
@@ -261,8 +265,9 @@ export const guidesBatch2: Guide[] = [
   {
     slug: "fixed-vs-floating-home-loan-rate",
     title: "Fixed vs Floating Home Loan Rate in 2026: Which Should You Choose?",
+    seoTitle: "Fixed vs Floating Home Loan Rate",
     category: "Home loans",
-    excerpt: "How repo-linked floating rates work, what fixed and hybrid options really offer, and how to decide with the repo rate at 5.25% and the cycle where it is.",
+    excerpt: `How repo-linked floating rates work, what fixed and hybrid options really offer, and how to decide with the repo rate at ${repoRateLabel} and the cycle where it is.`,
     readTime: "6 min read",
     publishedDate: "2026-02-18",
     updatedDate: "2026-09-01",
@@ -276,7 +281,7 @@ export const guidesBatch2: Guide[] = [
       {
         heading: "How a repo-linked floating rate works",
         body: [
-          "Since October 2019, banks must link floating-rate home loans to an external benchmark, and nearly all chose the RBI repo rate. Your rate equals the repo rate plus a spread fixed at sanction. With the repo rate at 5.25% in September 2026 and typical spreads of 2.10% to 2.75%, new loans price at about 7.35% to 8%. When the RBI changes the repo rate, your rate follows at the next reset, at most three months later.",
+          `Since October 2019, banks must link floating-rate home loans to an external benchmark, and nearly all chose the RBI repo rate. Your rate equals the repo rate plus a spread fixed at sanction. With the repo rate at ${repoRateLabel} in ${policyRates.asOfLabel} and typical spreads of 2.10% to 2.75%, new loans price at about 7.35% to 8%. When the RBI changes the repo rate, your rate follows at the next reset, at most three months later.`,
           "The spread has two parts: the bank's base spread, which cannot rise during the loan except on a credit downgrade, and a credit risk premium that reflects your profile. Housing finance companies use their own benchmark rate rather than the repo, which is less transparent; compare their actual rates and reset history.",
         ],
       },
@@ -289,7 +294,7 @@ export const guidesBatch2: Guide[] = [
       {
         heading: "The decision in the current cycle",
         body: [
-          "After the 2025 and 2026 cuts, the repo rate is at 5.25% and most forecasts see it steady or slightly lower over the next year. Locking a fixed rate at a premium when rates are low and stable is usually poor value: you pay more from day one for protection against rises that may not come for years. Floating wins in most scenarios today.",
+          `After the 2025 and 2026 cuts, the repo rate is at ${repoRateLabel} and most forecasts see it steady or slightly lower over the next year. Locking a fixed rate at a premium when rates are low and stable is usually poor value: you pay more from day one for protection against rises that may not come for years. Floating wins in most scenarios today.`,
           "Fixed makes sense for a borrower who cannot tolerate any EMI increase, such as someone on a tight, fixed budget near retirement, or when a lender offers a short fixed period at no premium.",
         ],
       },
@@ -312,7 +317,7 @@ export const guidesBatch2: Guide[] = [
     keyTakeaways: [
       "Nearly all home loans are repo-linked floating; your rate is repo plus a fixed spread.",
       "Fixed rates cost 1.5% to 2.5% more and are rarely fixed for the whole tenure.",
-      "With the repo rate at 5.25% and stable, floating is the better value for most borrowers.",
+      `With the repo rate at ${repoRateLabel} and stable, floating is the better value for most borrowers.`,
       "Compare spreads and fees between floating offers, and review your spread every two years.",
     ],
     faqs: [
@@ -325,6 +330,7 @@ export const guidesBatch2: Guide[] = [
   {
     slug: "personal-loan-for-self-employed",
     title: "Personal Loan for Self-Employed: Documents and Eligibility",
+    seoTitle: "Personal Loan for the Self-Employed",
     category: "Borrowing basics",
     excerpt: "Why self-employed applicants face more scrutiny, the documents that prove income, banking-based programmes when ITR understates earnings, and alternatives that are cheaper.",
     readTime: "7 min read",
@@ -404,6 +410,7 @@ export const guidesBatch2: Guide[] = [
   {
     slug: "how-to-spot-loan-fraud",
     title: "How to Spot a Loan Scam: Fake Agents and Advance Fees",
+    seoTitle: "How to Spot a Loan Scam",
     category: "Safety and compliance",
     excerpt: "The patterns behind India's most common loan frauds, the checks that take two minutes, and what to do if you have already paid.",
     readTime: "6 min read",
@@ -479,6 +486,7 @@ export const guidesBatch2: Guide[] = [
   {
     slug: "how-to-read-a-key-fact-statement",
     title: "How to Read a Key Fact Statement (KFS) Before Signing Your Loan",
+    seoTitle: "How to Read a Key Fact Statement",
     category: "Safety and compliance",
     excerpt: "Line by line through RBI's standard loan disclosure: APR, fees, EMI schedule, prepayment terms and what to do if something is missing.",
     readTime: "6 min read",

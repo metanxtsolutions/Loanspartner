@@ -9,7 +9,7 @@ import { CtaBand } from "@/components/shared/cta-band";
 import { guides, guideCategories, guidesByCategory, featuredGuides } from "@/data/guides";
 import { siteConfig } from "@/data/site-config";
 
-const title = "Loan Guides: Eligibility, Credit Scores and DSA";
+const title = "Loan Guides and Explainers";
 const description = "Plain-language guides on how loans are approved, improving your credit score, when a balance transfer pays, business loan documents, the DSA business and avoiding loan fraud. Reviewed by the LoansPartner credit desk.";
 
 export const metadata: Metadata = pageMetadata({ title, description, path: "/guides", keywords: ["loan guides India", "personal loan guide", "home loan guide", "DSA guide", "CIBIL score guide", "loan fraud"] });

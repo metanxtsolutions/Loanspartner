@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import { callbackSchema, contactSchema, leadStep1Schema, leadStep2Schema, partnerSchema } from "@/lib/leads/schema";
 import { newLeadId, recordEvent } from "@/lib/leads/store";
 import { botCheck, rateLimited, requestMeta } from "@/lib/leads/guard";
+import { siteConfig } from "@/data/site-config";
 
 export type ActionState = {
   ok: boolean;
@@ -14,6 +15,16 @@ export type ActionState = {
 };
 
 const idle: ActionState = { ok: false };
+
+/**
+ * Shown when every sink refused the lead. The submission is still in the error
+ * log, but we must not tell someone we have their details when no one will see
+ * them, so we hand them a phone number instead of a false confirmation.
+ */
+const undelivered: ActionState = {
+  ok: false,
+  message: `We could not record your request just now. Please call us on ${siteConfig.contact.phoneDisplay} and we will take the details directly.`,
+};
 
 function fieldErrors(err: z.ZodError): Record<string, string> {
   const out: Record<string, string> = {};
@@ -43,7 +54,7 @@ async function precheck(form: FormData): Promise<ActionState | null> {
   if (bot === "honeypot") return { ok: true, message: "Thanks, we will be in touch." }; // silently drop
   if (bot === "too-fast") return { ok: false, message: "Please take a moment to review the form and submit again." };
   const meta = await requestMeta();
-  if (rateLimited(meta.ip)) return { ok: false, message: "Too many requests from this network. Please call us instead." };
+  if (await rateLimited(meta.ip)) return { ok: false, message: "Too many requests from this network. Please call us instead." };
   return null;
 }
 
@@ -55,7 +66,8 @@ export async function submitLeadStep1(_prev: ActionState = idle, form: FormData)
   if (!parsed.success) return { ok: false, errors: fieldErrors(parsed.error) };
   const meta = await requestMeta();
   const leadId = newLeadId();
-  await recordEvent({ leadId, type: "lead.created", ip: meta.ip, userAgent: meta.userAgent, page: meta.referer, data: parsed.data });
+  const { delivered } = await recordEvent({ leadId, type: "lead.created", ip: meta.ip, userAgent: meta.userAgent, page: meta.referer, data: parsed.data });
+  if (delivered === 0) return undelivered;
   const q = new URLSearchParams({ lead: leadId, step: "2", product: parsed.data.product, amount: String(parsed.data.amount) });
   if (parsed.data.city) q.set("city", parsed.data.city);
   if (parsed.data.name) q.set("name", parsed.data.name);
@@ -69,7 +81,8 @@ export async function submitLeadStep2(_prev: ActionState = idle, form: FormData)
   if (!parsed.success) return { ok: false, errors: fieldErrors(parsed.error) };
   const meta = await requestMeta();
   const { leadId, ...data } = parsed.data;
-  await recordEvent({ leadId, type: "lead.qualified", ip: meta.ip, userAgent: meta.userAgent, page: meta.referer, data });
+  const { delivered } = await recordEvent({ leadId, type: "lead.qualified", ip: meta.ip, userAgent: meta.userAgent, page: meta.referer, data });
+  if (delivered === 0) return undelivered;
   redirect(`/apply/thank-you?lead=${leadId}`);
 }
 
@@ -80,7 +93,8 @@ export async function submitCallback(_prev: ActionState = idle, form: FormData):
   if (!parsed.success) return { ok: false, errors: fieldErrors(parsed.error) };
   const meta = await requestMeta();
   const leadId = newLeadId();
-  await recordEvent({ leadId, type: "callback.requested", ip: meta.ip, userAgent: meta.userAgent, page: meta.referer, data: parsed.data });
+  const { delivered } = await recordEvent({ leadId, type: "callback.requested", ip: meta.ip, userAgent: meta.userAgent, page: meta.referer, data: parsed.data });
+  if (delivered === 0) return undelivered;
   return { ok: true, leadId, message: "Thank you. Our credit desk will call you within one working day." };
 }
 
@@ -92,7 +106,8 @@ export async function submitPartner(_prev: ActionState = idle, form: FormData): 
   const meta = await requestMeta();
   const leadId = newLeadId();
   const { consent: _c, ...data } = parsed.data;
-  await recordEvent({ leadId, type: "partner.applied", ip: meta.ip, userAgent: meta.userAgent, page: meta.referer, data });
+  const { delivered } = await recordEvent({ leadId, type: "partner.applied", ip: meta.ip, userAgent: meta.userAgent, page: meta.referer, data });
+  if (delivered === 0) return undelivered;
   return { ok: true, leadId, message: "Application received. A partner manager will call you within one working day." };
 }
 
@@ -103,6 +118,7 @@ export async function submitContact(_prev: ActionState = idle, form: FormData): 
   if (!parsed.success) return { ok: false, errors: fieldErrors(parsed.error) };
   const meta = await requestMeta();
   const leadId = newLeadId();
-  await recordEvent({ leadId, type: "contact.sent", ip: meta.ip, userAgent: meta.userAgent, page: meta.referer, data: parsed.data });
+  const { delivered } = await recordEvent({ leadId, type: "contact.sent", ip: meta.ip, userAgent: meta.userAgent, page: meta.referer, data: parsed.data });
+  if (delivered === 0) return undelivered;
   return { ok: true, leadId, message: "Message sent. We reply within one working day." };
 }

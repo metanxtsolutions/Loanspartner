@@ -12,6 +12,12 @@ export type GuideSection = {
 export type Guide = {
   slug: string;
   title: string;
+  /**
+   * Shown in <title> when the editorial headline would be truncated in search
+   * results. The headline stays on the page as the H1; this is only the SERP
+   * label. Falls back to `title`.
+   */
+  seoTitle?: string;
   category: GuideCategory;
   excerpt: string;
   readTime: string;
