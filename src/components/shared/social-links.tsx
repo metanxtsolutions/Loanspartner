@@ -46,8 +46,8 @@ export function SocialLinks({ className, tone = "dark" }: { className?: string; 
               className={cn(
                 "flex size-9 items-center justify-center rounded-full border transition-colors",
                 tone === "dark"
-                  ? "border-white/15 text-white/70 hover:border-verdant-400/60 hover:bg-white/10 hover:text-white"
-                  : "border-line text-mute hover:border-verdant-500 hover:text-verdant-700",
+                  ? "hover:border-brass-400/60 border-white/15 text-white/70 hover:bg-white/10 hover:text-white"
+                  : "border-line text-mute hover:border-brass-500 hover:text-brass-600",
               )}
             >
               <svg viewBox="0 0 24 24" className="size-4" fill="currentColor" aria-hidden focusable="false">

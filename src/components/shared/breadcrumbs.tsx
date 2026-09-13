@@ -7,7 +7,15 @@ import { cn } from "@/lib/utils";
 export type Crumb = { name: string; path: string };
 
 /** Visual breadcrumb and its BreadcrumbList schema come from the same array. */
-export function Breadcrumbs({ items, className, tone = "light" }: { items: Crumb[]; className?: string; tone?: "light" | "dark" }) {
+export function Breadcrumbs({
+  items,
+  className,
+  tone = "light",
+}: {
+  items: Crumb[];
+  className?: string;
+  tone?: "light" | "dark";
+}) {
   const all: Crumb[] = [{ name: "Home", path: "/" }, ...items];
   return (
     <nav aria-label="Breadcrumb" className={cn("text-[13px]", className)}>
@@ -22,11 +30,22 @@ export function Breadcrumbs({ items, className, tone = "light" }: { items: Crumb
                   {c.name}
                 </span>
               ) : (
-                <Link href={c.path} className={cn("hover:underline underline-offset-4", tone === "dark" ? "text-white/60 hover:text-white" : "text-mute hover:text-ink-900")}>
+                <Link
+                  href={c.path}
+                  className={cn(
+                    "underline-offset-4 hover:underline",
+                    tone === "dark" ? "text-white/60 hover:text-white" : "text-mute hover:text-ink-900",
+                  )}
+                >
                   {c.name}
                 </Link>
               )}
-              {!last && <ChevronRight className={cn("size-3.5", tone === "dark" ? "text-white/40" : "text-mute-2")} aria-hidden />}
+              {!last && (
+                <ChevronRight
+                  className={cn("size-3.5", tone === "dark" ? "text-white/40" : "text-mute-2")}
+                  aria-hidden
+                />
+              )}
             </li>
           );
         })}

@@ -5,28 +5,57 @@ import type { LoanProduct } from "@/data/products";
 import { formatINR } from "@/lib/utils";
 import { cn } from "@/lib/utils";
 
-export function ProductCard({ product, href, cityName, className, delay = 0 }: { product: LoanProduct; href?: string; cityName?: string; className?: string; delay?: number }) {
+export function ProductCard({
+  product,
+  href,
+  cityName,
+  className,
+  delay = 0,
+}: {
+  product: LoanProduct;
+  href?: string;
+  cityName?: string;
+  className?: string;
+  delay?: number;
+}) {
   const link = href ?? `/loans/${product.slug}`;
   return (
     <Link
       href={link}
       data-reveal
       data-reveal-delay={delay}
-      className={cn("group relative flex h-full flex-col rounded-card border border-line bg-white p-6 shadow-soft transition-all duration-300 hover:-translate-y-1 hover:border-verdant-400/60 hover:shadow-lift", className)}
+      className={cn(
+        "group rounded-card border-line shadow-soft hover:border-brass-400/60 hover:shadow-lift relative flex h-full flex-col border bg-white p-6 transition-all duration-300 hover:-translate-y-1",
+        className,
+      )}
     >
       <div className="flex items-start justify-between">
-        <span className="flex size-11 items-center justify-center rounded-xl bg-verdant-50 text-verdant-700 transition-colors group-hover:bg-verdant-600 group-hover:text-white">
+        <span className="bg-brass-50 text-brass-600 group-hover:bg-brass-500 flex size-11 items-center justify-center transition-colors group-hover:text-white">
           <ProductIcon icon={product.icon} className="size-5" />
         </span>
-        <ArrowUpRight className="size-5 text-mute-2 transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-verdant-600" aria-hidden />
+        <ArrowUpRight
+          className="text-mute-2 group-hover:text-brass-600 size-5 transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+          aria-hidden
+        />
       </div>
-      <h3 className="mt-5 font-display text-[1.35rem] leading-tight text-ink-950">
-        {product.name}{cityName ? ` in ${cityName}` : ""}
+      <h3 className="font-display text-ink-950 mt-5 text-[1.35rem] leading-tight">
+        {product.name}
+        {cityName ? ` in ${cityName}` : ""}
       </h3>
-      <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-mute">{product.summary}</p>
-      <dl className="mt-5 grid grid-cols-2 gap-3 border-t border-line pt-4 text-xs">
-        <div><dt className="text-mute">Rate from</dt><dd className="tnum mt-0.5 text-base font-bold text-ink-900">{product.rate.from.toFixed(2)}%<span className="text-xs font-semibold text-mute"> p.a.</span></dd></div>
-        <div><dt className="text-mute">Up to</dt><dd className="tnum mt-0.5 text-base font-bold text-ink-900">₹{formatINR(product.amount.max, { compact: true })}</dd></div>
+      <p className="text-mute mt-2 line-clamp-3 text-sm leading-relaxed">{product.summary}</p>
+      <dl className="border-line mt-5 grid grid-cols-2 gap-3 border-t pt-4 text-xs">
+        <div>
+          <dt className="text-mute">Rate from</dt>
+          <dd className="tnum text-ink-900 mt-0.5 text-base font-bold">
+            {product.rate.from.toFixed(2)}%<span className="text-mute text-xs font-semibold"> p.a.</span>
+          </dd>
+        </div>
+        <div>
+          <dt className="text-mute">Up to</dt>
+          <dd className="tnum text-ink-900 mt-0.5 text-base font-bold">
+            ₹{formatINR(product.amount.max, { compact: true })}
+          </dd>
+        </div>
       </dl>
     </Link>
   );

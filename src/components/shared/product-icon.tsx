@@ -1,4 +1,18 @@
-import { Briefcase, Building2, Car, CarFront, Cog, Coins, GraduationCap, Home, RefreshCw, Stethoscope, User, Wallet, type LucideProps } from "lucide-react";
+import {
+  Briefcase,
+  Building2,
+  Car,
+  CarFront,
+  Cog,
+  Coins,
+  GraduationCap,
+  Home,
+  RefreshCw,
+  Stethoscope,
+  User,
+  Wallet,
+  type LucideProps,
+} from "lucide-react";
 import type { IconName } from "@/data/lite-types";
 
 const icons = {

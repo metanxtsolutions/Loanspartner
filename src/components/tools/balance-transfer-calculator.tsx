@@ -39,31 +39,109 @@ export function BalanceTransferCalculator() {
     }
     const sameEmiSaving = oldInterest - sameEmiInterest - costs;
     const worth = netSaving > 0 && breakEven <= months;
-    return { oldEmi, newEmi, oldInterest, newInterest, grossSaving, netSaving, monthlySaving, breakEven, sameEmiMonths, sameEmiSaving, worth };
+    return {
+      oldEmi,
+      newEmi,
+      oldInterest,
+      newInterest,
+      grossSaving,
+      netSaving,
+      monthlySaving,
+      breakEven,
+      sameEmiMonths,
+      sameEmiSaving,
+      worth,
+    };
   }, [outstanding, months, currentRate, newRate, costs]);
 
   return (
     <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
       <Panel className="space-y-7">
-        <SliderField label="Outstanding balance" value={outstanding} onChange={setOutstanding} min={500_000} max={100_000_000} step={100_000} format={inrCompact} suffix="₹" />
-        <SliderField label="Remaining tenure" value={months} onChange={setMonths} min={12} max={360} step={1} format={(v) => `${Math.round(v / 12)} yr`} suffix="months" hint={`${(months / 12).toFixed(1)} years`} />
-        <SliderField label="Current interest rate" value={currentRate} onChange={setCurrentRate} min={6} max={16} step={0.05} format={(v) => `${v}%`} suffix="% p.a." />
-        <SliderField label="New interest rate" value={newRate} onChange={setNewRate} min={6} max={16} step={0.05} format={(v) => `${v}%`} suffix="% p.a." />
-        <SliderField label="Transfer costs" value={costs} onChange={setCosts} min={0} max={500_000} step={1_000} format={inrCompact} suffix="₹" hint="Processing, legal, technical, stamp" />
+        <SliderField
+          label="Outstanding balance"
+          value={outstanding}
+          onChange={setOutstanding}
+          min={500_000}
+          max={100_000_000}
+          step={100_000}
+          format={inrCompact}
+          suffix="₹"
+        />
+        <SliderField
+          label="Remaining tenure"
+          value={months}
+          onChange={setMonths}
+          min={12}
+          max={360}
+          step={1}
+          format={(v) => `${Math.round(v / 12)} yr`}
+          suffix="months"
+          hint={`${(months / 12).toFixed(1)} years`}
+        />
+        <SliderField
+          label="Current interest rate"
+          value={currentRate}
+          onChange={setCurrentRate}
+          min={6}
+          max={16}
+          step={0.05}
+          format={(v) => `${v}%`}
+          suffix="% p.a."
+        />
+        <SliderField
+          label="New interest rate"
+          value={newRate}
+          onChange={setNewRate}
+          min={6}
+          max={16}
+          step={0.05}
+          format={(v) => `${v}%`}
+          suffix="% p.a."
+        />
+        <SliderField
+          label="Transfer costs"
+          value={costs}
+          onChange={setCosts}
+          min={0}
+          max={500_000}
+          step={1_000}
+          format={inrCompact}
+          suffix="₹"
+          hint="Processing, legal, technical, stamp"
+        />
       </Panel>
       <Panel className="flex flex-col" live>
-        <Result label={r.worth ? "Net saving over remaining tenure" : "Net result over remaining tenure"} value={inr(r.netSaving)} big tone={r.worth ? "verdant" : "brass"} />
-        <p className="mt-2 text-sm font-semibold text-ink-800">{r.worth ? `Worth doing. You recover the costs in ${r.breakEven} months.` : r.netSaving <= 0 ? "Not worth it at these numbers. Ask your lender to reprice instead." : "Marginal. Check the repricing option with your current lender first."}</p>
+        <Result
+          label={r.worth ? "Net saving over remaining tenure" : "Net result over remaining tenure"}
+          value={inr(r.netSaving)}
+          big
+          tone={r.worth ? "brass" : "ink"}
+        />
+        <p className="text-ink-800 mt-2 text-sm font-semibold">
+          {r.worth
+            ? `Worth doing. You recover the costs in ${r.breakEven} months.`
+            : r.netSaving <= 0
+              ? "Not worth it at these numbers. Ask your lender to reprice instead."
+              : "Marginal. Check the repricing option with your current lender first."}
+        </p>
         <div className="mt-6 grid grid-cols-2 gap-4">
           <Result label="Current EMI" value={inr(r.oldEmi)} tone="mute" />
           <Result label="New EMI" value={inr(r.newEmi)} />
-          <Result label="Monthly saving" value={inr(r.monthlySaving)} tone="verdant" />
+          <Result label="Monthly saving" value={inr(r.monthlySaving)} tone="brass" />
           <Result label="Interest saved (gross)" value={inr(r.grossSaving)} />
         </div>
         {r.sameEmiMonths > 0 && r.sameEmiMonths < months && (
-          <p className="mt-5 rounded-xl bg-verdant-50 px-4 py-3 text-sm text-verdant-700"><span className="font-bold">Keep your current EMI instead:</span> the loan closes in {r.sameEmiMonths} months rather than {months}, saving about {inr(r.sameEmiSaving)} after costs.</p>
+          <p className="bg-brass-50 text-brass-600 mt-5 px-4 py-3 text-sm">
+            <span className="font-bold">Keep your current EMI instead:</span> the loan closes in {r.sameEmiMonths}{" "}
+            months rather than {months}, saving about {inr(r.sameEmiSaving)} after costs.
+          </p>
         )}
-        <Link href="/apply?product=home-loan-balance-transfer" className="mt-auto inline-flex items-center justify-center gap-2 rounded-full bg-ink-900 px-6 py-3 text-sm font-bold text-white hover:bg-ink-800">Get transfer offers <ArrowRight className="size-4" /></Link>
+        <Link
+          href="/apply?product=home-loan-balance-transfer"
+          className="bg-ink-900 hover:bg-ink-800 mt-auto inline-flex items-center justify-center gap-2 px-6 py-3 text-sm font-bold text-white"
+        >
+          Get transfer offers <ArrowRight className="size-4" />
+        </Link>
       </Panel>
     </div>
   );

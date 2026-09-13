@@ -14,7 +14,13 @@ function foirCap(income: number, product: string) {
   return Math.min(cap, 70);
 }
 
-export function EligibilityCalculator({ products, defaultProduct = "personal-loan" }: { products: ProductLite[]; defaultProduct?: string }) {
+export function EligibilityCalculator({
+  products,
+  defaultProduct = "personal-loan",
+}: {
+  products: ProductLite[];
+  defaultProduct?: string;
+}) {
   const [product, setProduct] = useState(defaultProduct);
   const p = products.find((x) => x.slug === product) ?? products[0];
   const [income, setIncome] = useState(75_000);
@@ -44,31 +50,79 @@ export function EligibilityCalculator({ products, defaultProduct = "personal-loa
     <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
       <Panel className="space-y-7">
         <div>
-          <label htmlFor="elig-product" className="label">Loan product</label>
+          <label htmlFor="elig-product" className="label">
+            Loan product
+          </label>
           <select id="elig-product" value={product} onChange={(e) => onProduct(e.target.value)} className="field">
-            {products.map((x) => (<option key={x.slug} value={x.slug}>{x.name}</option>))}
+            {products.map((x) => (
+              <option key={x.slug} value={x.slug}>
+                {x.name}
+              </option>
+            ))}
           </select>
         </div>
-        <SliderField label="Net monthly income" value={income} onChange={setIncome} min={15_000} max={2_000_000} step={5_000} format={inrCompact} suffix="₹" />
-        <SliderField label="Existing EMIs per month" value={existing} onChange={setExisting} min={0} max={1_000_000} step={1_000} format={inrCompact} suffix="₹" />
-        <SliderField label="Interest rate" value={rate} onChange={setRate} min={p.rateFrom} max={p.rateTo} step={0.05} format={(v) => `${v}%`} suffix="% p.a." />
-        <SliderField label="Tenure" value={years} onChange={setYears} min={1} max={Math.floor(p.tenureMaxMonths / 12)} step={1} format={(v) => `${v} yr`} suffix="years" />
+        <SliderField
+          label="Net monthly income"
+          value={income}
+          onChange={setIncome}
+          min={15_000}
+          max={2_000_000}
+          step={5_000}
+          format={inrCompact}
+          suffix="₹"
+        />
+        <SliderField
+          label="Existing EMIs per month"
+          value={existing}
+          onChange={setExisting}
+          min={0}
+          max={1_000_000}
+          step={1_000}
+          format={inrCompact}
+          suffix="₹"
+        />
+        <SliderField
+          label="Interest rate"
+          value={rate}
+          onChange={setRate}
+          min={p.rateFrom}
+          max={p.rateTo}
+          step={0.05}
+          format={(v) => `${v}%`}
+          suffix="% p.a."
+        />
+        <SliderField
+          label="Tenure"
+          value={years}
+          onChange={setYears}
+          min={1}
+          max={Math.floor(p.tenureMaxMonths / 12)}
+          step={1}
+          format={(v) => `${v} yr`}
+          suffix="years"
+        />
       </Panel>
       <Panel className="flex flex-col" live>
-        <Result label="Indicative eligible amount" value={inr(r.loan)} big tone="verdant" />
+        <Result label="Indicative eligible amount" value={inr(r.loan)} big tone="brass" />
         <div className="mt-6 grid grid-cols-2 gap-4">
           <Result label="Affordable EMI" value={inr(r.maxEmi)} />
           <Result label="EMI at eligible amount" value={inr(r.emi)} tone="mute" />
         </div>
-        <p className="mt-5 rounded-xl bg-cream px-4 py-3 text-sm text-ink-800">
-          Assumes lenders cap total EMIs at <span className="tnum font-bold">{r.cap}%</span> of net income for this income band and product{r.capped ? `, and the product's maximum of ${inrCompact(p.amountMax)}` : ""}. Actual eligibility also depends on credit score, employer category and, for secured loans, the asset value.
+        <p className="bg-cream text-ink-800 mt-5 px-4 py-3 text-sm">
+          Assumes lenders cap total EMIs at <span className="tnum font-bold">{r.cap}%</span> of net income for this
+          income band and product{r.capped ? `, and the product's maximum of ${inrCompact(p.amountMax)}` : ""}. Actual
+          eligibility also depends on credit score, employer category and, for secured loans, the asset value.
         </p>
         {r.belowMin && (
-          <p className="mt-3 rounded-xl bg-brass-50 px-4 py-3 text-sm text-brass-600">
-            This is below the usual minimum of {inrCompact(p.amountMin)} for a {p.name.toLowerCase()}. A longer tenure, a co-applicant or a different product would suit better; our desk can advise.
+          <p className="bg-brass-50 text-brass-600 mt-3 px-4 py-3 text-sm">
+            This is below the usual minimum of {inrCompact(p.amountMin)} for a {p.name.toLowerCase()}. A longer tenure,
+            a co-applicant or a different product would suit better; our desk can advise.
           </p>
         )}
-        <Link href={`/apply?product=${p.slug}&amount=${Math.round(r.loan / 10_000) * 10_000}`} className="mt-auto inline-flex items-center justify-center gap-2 rounded-full bg-ink-900 px-6 py-3 text-sm font-bold text-white hover:bg-ink-800">
+        <Link
+          href={`/apply?product=${p.slug}&amount=${Math.round(r.loan / 10_000) * 10_000}`}
+          className="bg-ink-900 hover:bg-ink-800 mt-auto inline-flex items-center justify-center gap-2 px-6 py-3 text-sm font-bold text-white"
+        >
           Check with real lenders <ArrowRight className="size-4" aria-hidden />
         </Link>
       </Panel>

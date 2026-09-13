@@ -13,9 +13,15 @@ export function ContactForm({ defaultSubject = "loan" }: { defaultSubject?: stri
     <form onSubmit={onSubmit} method="post" aria-label="Send us a message" className="relative space-y-4" noValidate>
       <Honeypot />
       <div className="grid gap-4 sm:grid-cols-2">
-        <Field label="Name" name="name" error={state.errors?.name}>{(a) => (<input {...a} name="name" type="text" autoComplete="name" className="field" required />)}</Field>
-        <Field label="Email" name="email" error={state.errors?.email}>{(a) => (<input {...a} name="email" type="email" autoComplete="email" className="field" required />)}</Field>
-        <Field label="Mobile (optional)" name="phone" error={state.errors?.phone}>{(a) => (<input {...a} name="phone" type="tel" inputMode="tel" autoComplete="tel" className="field" />)}</Field>
+        <Field label="Name" name="name" error={state.errors?.name}>
+          {(a) => <input {...a} name="name" type="text" autoComplete="name" className="field" required />}
+        </Field>
+        <Field label="Email" name="email" error={state.errors?.email}>
+          {(a) => <input {...a} name="email" type="email" autoComplete="email" className="field" required />}
+        </Field>
+        <Field label="Mobile (optional)" name="phone" error={state.errors?.phone}>
+          {(a) => <input {...a} name="phone" type="tel" inputMode="tel" autoComplete="tel" className="field" />}
+        </Field>
         <Field label="Subject" name="subject" error={state.errors?.subject}>
           {(a) => (
             <select {...a} name="subject" className="field" defaultValue={defaultSubject}>
@@ -28,9 +34,13 @@ export function ContactForm({ defaultSubject = "loan" }: { defaultSubject?: stri
           )}
         </Field>
       </div>
-      <Field label="Message" name="message" error={state.errors?.message}>{(a) => (<textarea {...a} name="message" rows={5} className="field" required />)}</Field>
+      <Field label="Message" name="message" error={state.errors?.message}>
+        {(a) => <textarea {...a} name="message" rows={5} className="field" required />}
+      </Field>
       <FormError message={state.message} />
-      <SubmitButton pending={pending}><Send className="size-4" aria-hidden /> Send message</SubmitButton>
+      <SubmitButton pending={pending}>
+        <Send className="size-4" aria-hidden /> Send message
+      </SubmitButton>
     </form>
   );
 }

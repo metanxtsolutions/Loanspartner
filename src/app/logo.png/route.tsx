@@ -5,11 +5,22 @@ export const dynamic = "force-static";
 /** 512x512 PNG logo for schema.org and manifest consumers that prefer raster. */
 export function GET() {
   return new ImageResponse(
-    (
-      <div style={{ width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center", background: "#0B1B33", borderRadius: 120 }}>
-        <svg width="360" height="360" viewBox="0 0 48 48" fill="none"><path d="M13 31c0-8.3 6.7-15 15-15h7" stroke="#F7F5EF" strokeWidth="4" strokeLinecap="round" /><path d="M35 17c0 8.3-6.7 15-15 15h-7" stroke="#12996F" strokeWidth="4" strokeLinecap="round" /><circle cx="35" cy="17" r="3" fill="#CFAE5E" /></svg>
-      </div>
-    ),
+    <div
+      style={{
+        width: "100%",
+        height: "100%",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        background: "#0B1B33",
+        borderRadius: 115,
+      }}
+    >
+      <svg width="297" height="297" viewBox="0 0 100 100" fill="none">
+        <path d="M27 14 V86 H70" stroke="#FBFAF7" strokeWidth="13" />
+        <path d="M27 14 H51 a19.5 19.5 0 0 1 0 39 H27" stroke="#C6A15B" strokeWidth="13" />
+      </svg>
+    </div>,
     { width: 512, height: 512 },
   );
 }

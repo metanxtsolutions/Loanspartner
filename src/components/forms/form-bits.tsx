@@ -33,8 +33,10 @@ export function useGuardedAction(action: (fd: FormData) => void) {
 /** Hidden from people, filled by bots. */
 export function Honeypot() {
   return (
-    <div className="absolute -left-[9999px] top-0 h-0 w-0 overflow-hidden" aria-hidden>
-      <label>Website <input type="text" name="website" tabIndex={-1} autoComplete="off" /></label>
+    <div className="absolute top-0 -left-[9999px] h-0 w-0 overflow-hidden" aria-hidden>
+      <label>
+        Website <input type="text" name="website" tabIndex={-1} autoComplete="off" />
+      </label>
     </div>
   );
 }
@@ -55,7 +57,11 @@ export function Field({
   name: string;
   error?: string;
   hint?: string;
-  children: (props: { id: string; "aria-invalid": boolean | undefined; "aria-describedby": string | undefined }) => React.ReactNode;
+  children: (props: {
+    id: string;
+    "aria-invalid": boolean | undefined;
+    "aria-describedby": string | undefined;
+  }) => React.ReactNode;
   className?: string;
 }) {
   const uid = useId();
@@ -65,22 +71,42 @@ export function Field({
   const describedBy = error ? errorId : hint ? hintId : undefined;
   return (
     <div className={className}>
-      <label htmlFor={id} className="label">{label}</label>
+      <label htmlFor={id} className="label">
+        {label}
+      </label>
       {children({ id, "aria-invalid": error ? true : undefined, "aria-describedby": describedBy })}
-      {hint && !error && <p id={hintId} className="hint">{hint}</p>}
-      {error && <p id={errorId} className="error" role="alert">{error}</p>}
+      {hint && !error && (
+        <p id={hintId} className="hint">
+          {hint}
+        </p>
+      )}
+      {error && (
+        <p id={errorId} className="error" role="alert">
+          {error}
+        </p>
+      )}
     </div>
   );
 }
 
-export function SubmitButton({ children, pending, className, variant = "primary" }: { children: React.ReactNode; pending: boolean; className?: string; variant?: "primary" | "light" }) {
+export function SubmitButton({
+  children,
+  pending,
+  className,
+  variant = "primary",
+}: {
+  children: React.ReactNode;
+  pending: boolean;
+  className?: string;
+  variant?: "primary" | "light";
+}) {
   return (
     <button
       type="submit"
       disabled={pending}
       className={cn(
-        "inline-flex h-12 w-full items-center justify-center gap-2 rounded-full px-6 text-[15px] font-bold transition-all disabled:opacity-70",
-        variant === "primary" ? "bg-verdant-600 text-white hover:bg-verdant-700 hover:shadow-glow" : "bg-white text-ink-900 hover:bg-cream",
+        "inline-flex h-12 w-full items-center justify-center gap-2 px-6 text-[15px] font-bold transition-all disabled:opacity-70",
+        variant === "primary" ? "bg-brass-500 hover:bg-brass-400 text-ink-950" : "text-ink-900 hover:bg-cream bg-white",
         className,
       )}
     >
@@ -92,7 +118,10 @@ export function SubmitButton({ children, pending, className, variant = "primary"
 
 export function SuccessNote({ message }: { message?: string }) {
   return (
-    <div className="flex items-start gap-3 rounded-2xl border border-verdant-400/40 bg-verdant-50 p-4 text-sm text-verdant-700" role="status">
+    <div
+      className="border-brass-400/40 bg-brass-50 text-brass-600 flex items-start gap-3 border p-4 text-sm"
+      role="status"
+    >
       <CheckCircle2 className="mt-0.5 size-5 shrink-0" aria-hidden />
       <p className="font-semibold">{message ?? "Thank you. We will be in touch shortly."}</p>
     </div>
@@ -101,7 +130,11 @@ export function SuccessNote({ message }: { message?: string }) {
 
 export function FormError({ message }: { message?: string }) {
   if (!message) return null;
-  return <p className="rounded-xl bg-danger-50 px-3 py-2 text-sm font-semibold text-danger" role="alert">{message}</p>;
+  return (
+    <p className="bg-danger-50 text-danger px-3 py-2 text-sm font-semibold" role="alert">
+      {message}
+    </p>
+  );
 }
 
 export const amountPresets = [200_000, 500_000, 1_000_000, 2_500_000, 5_000_000, 10_000_000];

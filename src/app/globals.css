@@ -1,8 +1,9 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: var(--font-manrope), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
-  --font-display: var(--font-fraunces), "Iowan Old Style", Georgia, serif;
+  --font-sans: var(--font-bricolage), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-display: var(--font-instrument-serif), "Iowan Old Style", Georgia, serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, "SFMono-Regular", Menlo, monospace;
 
   /* Ink: the brand navy scale */
   --color-ink-950: #06101f;
@@ -36,9 +37,9 @@
   --color-verdant-50: #f0f9f4;
 
   /* Brass: premium highlights, sparingly */
-  --color-brass-600: #7d5f1d;
-  --color-brass-500: #b8923c;
-  --color-brass-400: #cfae5e;
+  --color-brass-600: #7a5a22;
+  --color-brass-500: #a87f3d;
+  --color-brass-400: #c6a15b;
   --color-brass-300: #e3cb8a;
   --color-brass-100: #f6edd4;
   --color-brass-50: #fbf6e8;
@@ -46,8 +47,8 @@
   --color-danger: #b42318;
   --color-danger-50: #fef3f2;
 
-  --radius-card: 1.25rem;
-  --radius-panel: 1.75rem;
+  --radius-card: 0;
+  --radius-panel: 0;
 
   --shadow-soft: 0 1px 2px rgba(11, 27, 51, 0.04), 0 8px 24px -12px rgba(11, 27, 51, 0.18);
   --shadow-lift: 0 2px 4px rgba(11, 27, 51, 0.05), 0 24px 48px -20px rgba(11, 27, 51, 0.28);
@@ -213,9 +214,9 @@ body {
 .prose-lp ul { padding-left: 1.25rem; list-style: disc; }
 .prose-lp ol { padding-left: 1.25rem; list-style: decimal; }
 .prose-lp li + li { margin-top: 0.4em; }
-.prose-lp li::marker { color: var(--color-verdant-600); }
+.prose-lp li::marker { color: var(--color-brass-500); }
 .prose-lp a { color: var(--color-ink-700); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--color-brass-400); }
-.prose-lp a:hover { color: var(--color-verdant-700); }
+.prose-lp a:hover { color: var(--color-brass-600); }
 .prose-lp strong { color: var(--color-ink-950); font-weight: 700; }
 .prose-lp table { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
 .prose-lp th, .prose-lp td { padding: 0.7rem 0.85rem; border-bottom: 1px solid var(--color-line); text-align: left; vertical-align: top; }
@@ -225,7 +226,7 @@ body {
 /* Form controls */
 .field {
   width: 100%;
-  border-radius: 0.875rem;
+  border-radius: 0;
   border: 1px solid var(--color-line-strong);
   background: white;
   padding: 0.8rem 1rem;
@@ -235,13 +236,13 @@ body {
   transition: border-color 0.15s, box-shadow 0.15s;
 }
 .field::placeholder { color: var(--color-mute-2); }
-.field:focus { border-color: var(--color-verdant-500); box-shadow: 0 0 0 4px rgba(18, 153, 111, 0.14); }
+.field:focus { border-color: var(--color-brass-500); box-shadow: 0 0 0 4px rgba(168, 127, 61, 0.14); }
 .field[aria-invalid="true"] { border-color: var(--color-danger); }
 .label { display: block; font-size: 0.8rem; font-weight: 700; color: var(--color-ink-800); margin-bottom: 0.4rem; }
 .hint { font-size: 0.78rem; color: var(--color-mute); margin-top: 0.35rem; }
 .error { font-size: 0.78rem; color: var(--color-danger); margin-top: 0.35rem; }
 
-input[type="range"] { accent-color: var(--color-verdant-600); }
+input[type="range"] { accent-color: var(--color-brass-500); }
 
 /* Focus ring, global */
-:focus-visible { outline: 2px solid var(--color-verdant-500); outline-offset: 2px; border-radius: 4px; }
+:focus-visible { outline: 2px solid var(--color-brass-500); outline-offset: 2px; border-radius: 0; }
