@@ -623,7 +623,7 @@ export const products: LoanProduct[] = [
   },
   {
     slug: "working-capital-loan",
-    name: "Working Capital Loan",
+    name: "Working Capital - OD / CC",
     shortName: "Working Capital",
     category: "business",
     icon: "wallet",
