@@ -6,7 +6,7 @@ import { sendPlatformEmail } from "@/server/dashboard/email";
 /**
  * Writes the in-app notification first (source of truth, always succeeds if
  * the DB write succeeds) and then makes a best-effort attempt to also email
- * it. Never throws — a notification failure should never roll back or fail
+ * it. Never throws: a notification failure should never roll back or fail
  * the business action (a status change, a document review) that caused it.
  */
 export async function notify(params: {

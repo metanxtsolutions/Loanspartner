@@ -10,7 +10,7 @@ export type Column<T> = {
 };
 
 /**
- * Presentational only — search/filter is done server-side via URL query
+ * Presentational only: search/filter is done server-side via URL query
  * params on the page that renders this (see e.g. /console/applications),
  * so the table itself needs no client JavaScript. When `rowHref` is given,
  * the first column's content becomes the row's link rather than an

@@ -20,10 +20,10 @@ function isPublic(pathname: string, prefix: "/partners" | "/console") {
   return list.some((p) => pathname === p || pathname.startsWith(`${p}/`));
 }
 
-export function middleware(request: NextRequest) {
+export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const token = request.cookies.get(SESSION_COOKIE_NAME)?.value;
-  const session = token ? verifySessionToken(token) : null;
+  const session = token ? await verifySessionToken(token) : null;
 
   const redirectTo = (path: string) => {
     const url = request.nextUrl.clone();

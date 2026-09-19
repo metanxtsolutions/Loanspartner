@@ -23,7 +23,7 @@ export const APPLICATION_STATUS_META: StatusMeta<ApplicationStatus> = {
   SUBMITTED: { label: "Submitted", tone: "info", customerHint: "Received. Our desk will review it shortly." },
   UNDER_REVIEW: { label: "Under review", tone: "info", customerHint: "Our credit desk is reviewing your profile." },
   DOCS_REQUIRED: { label: "Documents needed", tone: "warning", customerHint: "Upload the requested documents to keep this moving." },
-  DOCS_SUBMITTED: { label: "Documents received", tone: "info", customerHint: "Thanks — we're verifying your documents." },
+  DOCS_SUBMITTED: { label: "Documents received", tone: "info", customerHint: "Thanks, we're verifying your documents." },
   LENDER_MATCHING: { label: "Matching lenders", tone: "info", customerHint: "We're shortlisting the lenders that best fit your profile." },
   SENT_TO_LENDER: { label: "Sent to lender", tone: "info", customerHint: "Your file is with the lender for assessment." },
   LENDER_REVIEW: { label: "Lender review", tone: "info", customerHint: "The lender is assessing your application." },

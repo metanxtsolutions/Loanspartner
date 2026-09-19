@@ -6,7 +6,7 @@ import { SESSION_COOKIE_NAME, createSessionToken, verifySessionToken, type Sessi
 export type { SessionPayload };
 
 export async function createSession(userId: string, role: UserRole) {
-  const { token, expires } = createSessionToken(userId, role);
+  const { token, expires } = await createSessionToken(userId, role);
   const store = await cookies();
   store.set(SESSION_COOKIE_NAME, token, {
     httpOnly: true,

@@ -3,7 +3,7 @@ import type { AdminRole } from "@prisma/client";
 /**
  * Fixed permission matrix for the four AdminRoles, rather than a dynamic
  * roles/permissions editor. A SUPER_ADMIN can reassign a user's AdminRole
- * (/console/roles) but cannot invent a new permission from the UI — new
+ * (/console/roles) but cannot invent a new permission from the UI: new
  * permissions are added here, in code, deliberately.
  */
 export const PERMISSIONS = [

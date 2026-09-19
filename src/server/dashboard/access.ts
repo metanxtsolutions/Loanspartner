@@ -63,7 +63,7 @@ export async function requireAdmin(permission?: Permission) {
   return user;
 }
 
-/** Throws instead of redirecting — for use inside server actions, where a redirect can't carry a form error back to the caller. */
+/** Throws instead of redirecting: for use inside server actions, where a redirect can't carry a form error back to the caller. */
 export async function assertCustomer() {
   const actor = await getActor();
   if (!actor || actor.role !== "CUSTOMER") throw new AccessDeniedError();

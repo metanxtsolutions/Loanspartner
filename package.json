@@ -19,7 +19,8 @@
     "db:studio": "prisma studio",
     "outreach:seed": "tsx --env-file=.env.local scripts/outreach/seed-lenders.ts",
     "outreach:discover-contacts": "tsx --env-file=.env.local scripts/outreach/discover-contacts.ts",
-    "outreach:create-admin": "tsx --env-file=.env.local scripts/outreach/create-admin.ts"
+    "outreach:create-admin": "tsx --env-file=.env.local scripts/outreach/create-admin.ts",
+    "dashboard:seed": "tsx --env-file=.env.local scripts/dashboard/seed-demo.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.70.0",
