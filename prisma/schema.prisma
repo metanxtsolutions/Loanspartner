@@ -206,3 +206,365 @@ model Setting {
   value     Json
   updatedAt DateTime @updatedAt
 }
+
+// ---------------------------------------------------------------------------
+// Dashboard platform: customer, channel-partner and admin ("console") apps.
+// Separate from the outreach models above (that CRM manages lender
+// partnerships; this manages borrowers, partners and their applications).
+// Own session/auth (src/server/auth), own login at /login, /partners/login
+// and /console/login — deliberately not merged with AdminUser/outreach auth.
+// ---------------------------------------------------------------------------
+
+enum UserRole {
+  CUSTOMER
+  PARTNER
+  ADMIN
+}
+
+enum AdminRole {
+  SUPER_ADMIN
+  OPS
+  FINANCE
+  SUPPORT
+}
+
+enum AccountStatus {
+  PENDING_VERIFICATION
+  ACTIVE
+  SUSPENDED
+}
+
+enum PartnerKycStatus {
+  NOT_SUBMITTED
+  PENDING_REVIEW
+  APPROVED
+  REJECTED
+}
+
+enum ApplicationStatus {
+  DRAFT
+  SUBMITTED
+  UNDER_REVIEW
+  DOCS_REQUIRED
+  DOCS_SUBMITTED
+  LENDER_MATCHING
+  SENT_TO_LENDER
+  LENDER_REVIEW
+  APPROVED
+  SANCTIONED
+  DISBURSED
+  REJECTED
+  WITHDRAWN
+  ON_HOLD
+}
+
+enum DocumentType {
+  PAN
+  AADHAAR
+  PHOTO
+  INCOME_PROOF
+  BANK_STATEMENT
+  ITR
+  GST_CERTIFICATE
+  PROPERTY_PAPER
+  BUSINESS_PROOF
+  OTHER
+}
+
+enum DocumentStatus {
+  PENDING_REVIEW
+  APPROVED
+  REJECTED
+}
+
+enum CommissionStatus {
+  ACCRUED
+  APPROVED
+  PAID
+  DISPUTED
+  VOID
+}
+
+enum PayoutStatus {
+  PENDING
+  PROCESSING
+  PAID
+  FAILED
+}
+
+enum NotificationType {
+  APPLICATION_STATUS
+  DOCUMENT_REVIEW
+  KYC_REVIEW
+  COMMISSION
+  PAYOUT
+  ACCOUNT
+  BROADCAST
+}
+
+model User {
+  id              String        @id @default(cuid())
+  email           String        @unique
+  phone           String?
+  passwordHash    String
+  name            String
+  role            UserRole
+  adminRole       AdminRole?
+  status          AccountStatus @default(PENDING_VERIFICATION)
+  emailVerifiedAt DateTime?
+  lastLoginAt     DateTime?
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+
+  partnerProfile  PartnerProfile?
+  customerProfile CustomerProfile?
+
+  applicationsAsCustomer LoanApplication[] @relation("ApplicationCustomer")
+  applicationsAsPartner  LoanApplication[] @relation("ApplicationPartner")
+  applicationsAssigned   LoanApplication[] @relation("ApplicationAssignedAdmin")
+  applicationNotes       ApplicationNote[]
+  applicationEvents      ApplicationStatusEvent[]
+
+  documentsOwned    Document[] @relation("DocumentOwner")
+  documentsReviewed Document[] @relation("DocumentReviewer")
+
+  commissionEntries CommissionEntry[]
+  payouts           Payout[]          @relation("PayoutPartner")
+  payoutsProcessed  Payout[]          @relation("PayoutProcessedBy")
+
+  notifications Notification[]
+  auditLogs     AuditLog[]
+
+  emailVerificationTokens EmailVerificationToken[]
+  passwordResetTokens     PasswordResetToken[]
+
+  @@index([role])
+  @@index([status])
+}
+
+model PartnerProfile {
+  id                     String           @id @default(cuid())
+  userId                 String           @unique
+  user                   User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  firmName               String?
+  panNumber              String?
+  gstNumber              String?
+  city                   String?
+  referralCode           String           @unique
+  kycStatus              PartnerKycStatus @default(NOT_SUBMITTED)
+  kycNote                String?
+  bankAccountName        String?
+  bankAccountNumber      String?
+  bankIfsc               String?
+  commissionRateOverride Float?
+  approvedByAdminId      String?
+  approvedAt             DateTime?
+  createdAt              DateTime         @default(now())
+  updatedAt              DateTime         @updatedAt
+
+  @@index([kycStatus])
+}
+
+model CustomerProfile {
+  id             String    @id @default(cuid())
+  userId         String    @unique
+  user           User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  city           String?
+  panNumber      String?
+  dateOfBirth    DateTime?
+  employmentType String?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+}
+
+model LoanApplication {
+  id                String            @id @default(cuid())
+  code              String            @unique
+  customerId        String
+  customer          User              @relation("ApplicationCustomer", fields: [customerId], references: [id])
+  partnerId         String?
+  partner           User?             @relation("ApplicationPartner", fields: [partnerId], references: [id])
+  assignedAdminId   String?
+  assignedAdmin     User?             @relation("ApplicationAssignedAdmin", fields: [assignedAdminId], references: [id])
+  productSlug       String
+  requestedAmount   Float
+  city              String
+  employmentType    String?
+  status            ApplicationStatus @default(DRAFT)
+  assignedLenderSlug String?
+  sanctionedAmount  Float?
+  rejectionReason   String?
+  submittedAt       DateTime?
+  decisionAt        DateTime?
+  disbursedAt       DateTime?
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
+
+  documents         Document[]
+  events            ApplicationStatusEvent[]
+  notes             ApplicationNote[]
+  commissionEntry   CommissionEntry?
+
+  @@index([customerId])
+  @@index([partnerId])
+  @@index([status])
+  @@index([assignedAdminId])
+}
+
+model ApplicationStatusEvent {
+  id            String             @id @default(cuid())
+  applicationId String
+  application   LoanApplication    @relation(fields: [applicationId], references: [id], onDelete: Cascade)
+  fromStatus    ApplicationStatus?
+  toStatus      ApplicationStatus
+  actorUserId   String?
+  actor         User?              @relation(fields: [actorUserId], references: [id])
+  actorRole     UserRole?
+  note          String?
+  createdAt     DateTime           @default(now())
+
+  @@index([applicationId])
+}
+
+model ApplicationNote {
+  id                String          @id @default(cuid())
+  applicationId     String
+  application       LoanApplication @relation(fields: [applicationId], references: [id], onDelete: Cascade)
+  authorUserId      String
+  author            User            @relation(fields: [authorUserId], references: [id])
+  body              String
+  visibleToCustomer Boolean         @default(false)
+  createdAt         DateTime        @default(now())
+
+  @@index([applicationId])
+}
+
+model Document {
+  id               String          @id @default(cuid())
+  ownerUserId      String
+  owner            User            @relation("DocumentOwner", fields: [ownerUserId], references: [id])
+  applicationId    String?
+  application      LoanApplication? @relation(fields: [applicationId], references: [id], onDelete: SetNull)
+  type             DocumentType
+  status           DocumentStatus  @default(PENDING_REVIEW)
+  fileUrl          String
+  fileName         String
+  mimeType         String
+  sizeBytes        Int
+  reviewedByAdminId String?
+  reviewer         User?           @relation("DocumentReviewer", fields: [reviewedByAdminId], references: [id])
+  reviewNote       String?
+  uploadedAt       DateTime        @default(now())
+  reviewedAt       DateTime?
+
+  @@index([ownerUserId])
+  @@index([applicationId])
+  @@index([status])
+}
+
+model CommissionEntry {
+  id            String            @id @default(cuid())
+  partnerId     String
+  partner       User              @relation(fields: [partnerId], references: [id])
+  applicationId String            @unique
+  application   LoanApplication   @relation(fields: [applicationId], references: [id])
+  baseAmount    Float
+  rate          Float
+  amount        Float
+  status        CommissionStatus  @default(ACCRUED)
+  payoutId      String?
+  payout        Payout?           @relation(fields: [payoutId], references: [id])
+  createdAt     DateTime          @default(now())
+  updatedAt     DateTime          @updatedAt
+
+  @@index([partnerId])
+  @@index([status])
+}
+
+model Payout {
+  id                 String       @id @default(cuid())
+  partnerId          String
+  partner            User         @relation("PayoutPartner", fields: [partnerId], references: [id])
+  periodLabel        String
+  totalAmount        Float
+  status             PayoutStatus @default(PENDING)
+  reference          String?
+  processedByAdminId String?
+  processedByAdmin   User?        @relation("PayoutProcessedBy", fields: [processedByAdminId], references: [id])
+  processedAt        DateTime?
+  createdAt          DateTime     @default(now())
+
+  entries CommissionEntry[]
+
+  @@index([partnerId])
+  @@index([status])
+}
+
+model Notification {
+  id        String           @id @default(cuid())
+  userId    String
+  user      User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type      NotificationType
+  title     String
+  body      String
+  link      String?
+  readAt    DateTime?
+  createdAt DateTime         @default(now())
+
+  @@index([userId])
+  @@index([userId, readAt])
+}
+
+model AuditLog {
+  id          String   @id @default(cuid())
+  actorUserId String?
+  actor       User?    @relation(fields: [actorUserId], references: [id], onDelete: SetNull)
+  actorRole   UserRole?
+  action      String
+  entityType  String?
+  entityId    String?
+  meta        Json?
+  createdAt   DateTime @default(now())
+
+  @@index([actorUserId])
+  @@index([createdAt])
+  @@index([entityType, entityId])
+}
+
+model LenderOpsSetting {
+  lenderSlug              String   @id
+  isAcceptingApplications Boolean  @default(true)
+  internalNote            String?
+  updatedAt               DateTime @updatedAt
+}
+
+model PlatformSetting {
+  key       String   @id
+  value     Json
+  updatedAt DateTime @updatedAt
+}
+
+model EmailVerificationToken {
+  id         String    @id @default(cuid())
+  userId     String
+  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tokenHash  String    @unique
+  purpose    String // "verify_email" | "claim_account"
+  expiresAt  DateTime
+  consumedAt DateTime?
+  createdAt  DateTime  @default(now())
+
+  @@index([userId])
+}
+
+model PasswordResetToken {
+  id         String    @id @default(cuid())
+  userId     String
+  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tokenHash  String    @unique
+  expiresAt  DateTime
+  consumedAt DateTime?
+  createdAt  DateTime  @default(now())
+
+  @@index([userId])
+}
