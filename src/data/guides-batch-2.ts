@@ -551,4 +551,97 @@ export const guidesBatch2: Guide[] = [
     relatedProducts: ["personal-loan", "home-loan", "business-loan"],
     relatedGuides: ["how-to-spot-loan-fraud", "fixed-vs-floating-home-loan-rate", "rbi-rules-for-loan-dsas-2026"],
   },
+  {
+    slug: "why-loan-applications-get-rejected",
+    title: "Why Loan Applications Get Rejected, and How to Fix It Before You Reapply",
+    seoTitle: "Why Loan Applications Get Rejected",
+    category: "Borrowing basics",
+    excerpt: "The six reasons most personal, business and home loan applications are declined, what each one actually means, and the specific fix before you reapply.",
+    readTime: "8 min read",
+    publishedDate: "2026-09-19",
+    updatedDate: "2026-09-19",
+    primaryKeyword: "why loan applications get rejected",
+    secondaryKeywords: ["loan application rejected reasons", "personal loan declined", "loan rejected what to do", "how to reapply for a loan after rejection"],
+    tags: ["rejection", "eligibility", "CIBIL", "FOIR"],
+    intro: [
+      "A rejection rarely means you are uncreditworthy. It usually means one specific line in your file did not match what the lender's policy needed to see, and the file went no further. Lenders do not send a reason; they send a decline. That silence is what sends most borrowers straight into applying again, at another bank, with the same file, and getting the same result, plus a second hard enquiry on their report.",
+      "This guide works through the reasons an application actually gets declined, in the order our credit desk sees them, and the specific fix for each one before you apply again. Two or three of these usually apply at once, which is why a single fix rarely turns a decline into a sanction on its own.",
+    ],
+    sections: [
+      {
+        heading: "Your FOIR is over the lender's cap",
+        body: [
+          "FOIR, the Fixed Obligation to Income Ratio, is your total monthly EMIs and card payments divided by your net monthly income. Most banks cap it between 50% and 60% for salaried applicants; NBFCs sometimes go higher for strong profiles and lower for thin ones. A new loan that would push you past the cap gets declined even if your credit score and income are both good, because the lender is not assessing whether you are a good borrower in general, only whether this specific EMI fits this specific budget.",
+          "The fix is arithmetic, not persuasion: close or pay down an existing loan or card before reapplying, ask for a smaller amount or a longer tenure to lower the EMI, or add an earning co-applicant so the ratio is measured against combined income.",
+        ],
+      },
+      {
+        heading: "Something in your credit report does not match your application",
+        body: [
+          "A declared income that does not match what the bureau's other lender records imply, an address that does not match your KYC, or a loan you did not mention that shows up on the report all read as a discrepancy, and underwriters are trained to decline on discrepancies rather than query them. A settled account (paid for less than the full amount owed) is a common one: it clears the debt but stays visible on the report for years and reads as a partial default to the next lender.",
+          "Pull your own CIBIL, Experian and Equifax reports before you apply anywhere, not after a decline. Reports differ between bureaus and a lender may pull any of the three. Fix factual errors through the bureau's dispute process, which typically takes 30 to 45 days, before your next application.",
+        ],
+      },
+      {
+        heading: "Your income is real but not provable the way this lender needs it",
+        body: [
+          "Salaried income paid partly in cash, self-employed income where the ITR understates actual turnover, or a job change inside the last six months are all real income that a standard policy cannot verify against its own checklist. The application gets declined not because the income is doubted, but because the file cannot prove it in the format the policy requires.",
+          "Self-employed applicants generally need two to three years of ITRs and bank statements that show income consistent with the return; a banking-based programme, where a lender underwrites off bank statement credits rather than the ITR, exists at some lenders specifically for this gap and is worth asking about by name.",
+        ],
+      },
+      {
+        heading: "Your employer or industry sits outside the lender's approved list",
+        body: [
+          "Banks maintain internal lists that rate employers and, for business loans, industries by risk. A salaried applicant at an unlisted small company, or a business in a sector a particular lender is currently cautious on such as real estate broking, travel or certain trading categories, can be declined purely on that classification, independent of the applicant's own numbers.",
+          "This is lender-specific, not applicant-specific, which is why the same file can be declined at one bank and sanctioned at another the same week. Checking which lenders currently cover your employer category or industry before applying, rather than after a decline, is the actual value a broker or an advisory desk adds here.",
+        ],
+      },
+      {
+        heading: "Too many applications in a short window",
+        body: [
+          "Every full application triggers a hard enquiry on your credit report, and three or more hard enquiries within 60 to 90 days is itself a decline reason at several lenders, independent of everything else in the file. It reads as credit hunger, whether or not that is accurate. Applying to five lenders at once to improve your odds usually produces the opposite result: five enquiries and no sanction.",
+          "A soft pre-screen, checked against a lender's published policy before a full application is submitted, does not touch the credit bureau and avoids this entirely. This is the specific reason to have one lender's underwriting policy checked against your profile before submitting anywhere, rather than applying broadly and seeing what sticks.",
+        ],
+      },
+      {
+        heading: "What to actually do before you reapply",
+        body: [
+          "Wait at least three months before reapplying to a bank that has just declined you; reapplying sooner at the same lender rarely changes the outcome and adds another enquiry to the record it will look at next time. Use the gap to fix the specific reason, not to apply elsewhere with the same file.",
+          "In order: pull all three bureau reports and dispute any factual error, calculate your FOIR against the new EMI and adjust the amount or tenure if it is over 50% to 60%, gather the documents that prove income in the format a lender actually accepts, and confirm your employer or industry is covered by the lender's current policy before submitting. A pre-screen against actual, current lender policies checks all four before you touch your credit report again.",
+        ],
+      },
+    ],
+    keyTakeaways: [
+      "A decline is a policy mismatch on one or two specific points, not a verdict on your creditworthiness.",
+      "FOIR over 50% to 60% of net income is the single most common reason across products.",
+      "Discrepancies between your application and your credit report cause more declines than a low score does.",
+      "Applying to several lenders at once adds hard enquiries and often causes the decline it was meant to avoid.",
+      "Wait roughly three months and fix the specific cause before reapplying to the same lender.",
+    ],
+    faqs: [
+      {
+        question: "How long should I wait after a loan rejection to apply again?",
+        answer: "Roughly three months at the same lender, so the earlier hard enquiry has aged and you have had time to fix the actual cause. A different lender with a genuinely better-fit policy can sometimes be approached sooner, which is exactly what a pre-screen is for.",
+      },
+      {
+        question: "Does a rejected loan application hurt my credit score?",
+        answer: "The application itself does not; the hard enquiry it triggers does, typically by a small amount that recovers within a few months. Several enquiries close together do more damage than one rejection.",
+      },
+      {
+        question: "Can I find out the exact reason my loan was rejected?",
+        answer: "Lenders are not required to give one and rarely do beyond a generic message. Your credit report and your own FOIR calculation will usually show which of the reasons in this guide applies; a broker or advisory desk that has seen the lender's policy can often narrow it further.",
+      },
+      {
+        question: "Is it true that applying to many lenders improves my chances?",
+        answer: "No. Each full application is a hard enquiry, and several close together are themselves a decline reason at many lenders. One well-matched application, checked against policy first, outperforms five broad ones.",
+      },
+    ],
+    relatedProducts: ["personal-loan", "business-loan", "home-loan"],
+    relatedGuides: [
+      "personal-loan-eligibility-how-lenders-decide",
+      "understanding-your-cibil-score",
+      "personal-loan-with-low-cibil-score",
+      "personal-loan-for-self-employed",
+    ],
+  },
 ];
