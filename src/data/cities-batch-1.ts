@@ -30,6 +30,8 @@ export const citiesBatch1: City[] = [
         "Home loans in Mumbai are large, with ₹75 lakh to ₹2 crore being routine in the suburbs and higher in South and Central Mumbai. Lenders offer 75% funding above ₹75 lakh, so buyers need meaningful own contribution. We help with the extra legal steps that older societies, redevelopment allotments and MHADA properties require, and we compare rates across banks and HFCs where a 0.25% spread difference on a ₹1.2 crore loan is worth several lakh rupees.",
       "business-loan":
         "Mumbai's trading and manufacturing families, from Bhiwandi textiles to Zaveri Bazaar jewellers and Andheri media firms, are well served by unsecured business loan programmes, and lenders here are comfortable with GST and banking-based assessments. Turnover thresholds are higher than in smaller cities, so we route smaller firms to NBFC programmes and larger ones to bank pricing.",
+      "working-capital-loan":
+        "Mumbai's Bhiwandi textile mills, Zaveri Bazaar jewellers and the trading families across South and Central Mumbai carry some of the largest working capital requirements on our panel, many well past the ₹1 crore turnover most banks ask for. Corporate-facing firms in BKC and Lower Parel often do better on invoice discounting against blue-chip customers than a traditional stock-based cash credit limit, and we assess both before recommending one.",
       "loan-against-property":
         "Because property values are so high, a loan against a modest Mumbai flat or shop can raise a substantial amount, and LAP is the most cost-effective route for business owners who would otherwise borrow unsecured. Lenders here value properties conservatively in older buildings without occupancy certificates, so we shortlist lenders by their appetite for the specific building type and location.",
       "car-loan":
@@ -73,6 +75,8 @@ export const citiesBatch1: City[] = [
         "Home loans in Delhi involve more property due diligence than almost anywhere else: freehold status, DDA conveyance, builder-floor plan sanction and mutation records all come into play. We prepare the property file before approaching the lender so that legal clearance is quick, and we match government employees to public sector banks and corporate borrowers to private banks and HFCs for the best pricing.",
       "business-loan":
         "Delhi's wholesale traders, garment exporters, manufacturers in Okhla and Bawana and service firms in Nehru Place have strong access to unsecured business credit, with lenders comfortable assessing GST turnover and banking. Cash-heavy businesses benefit from programmes that look at average bank balance and transaction patterns rather than reported profits.",
+      "working-capital-loan":
+        "Delhi's wholesale trading hubs, from Chandni Chowk to Bhagirath Palace and Karol Bagh, run on cash credit limits drawn against fast-moving stock, while the city's growing base of consulting and services firms borrows more naturally against invoice discounting on corporate receivables. Government-linked vendors and suppliers add a third pattern: longer receivable cycles that need a limit sized for delayed payment, not just seasonal stock.",
       "loan-against-property":
         "Loans against property are extremely popular with Delhi's business families because commercial shops in markets such as Karol Bagh and Lajpat Nagar and residential builder floors carry high valuations. Lenders differentiate sharply between freehold and leasehold and between authorised and unauthorised colonies, so lender selection decides both approval and rate.",
       "car-loan":
@@ -116,6 +120,8 @@ export const citiesBatch1: City[] = [
         "Home loans in Bengaluru are shaped by property documentation more than by income. A-khata apartments in approved projects sanction quickly; B-khata sites, gram panchayat approvals and DC-converted land need lenders with specific programmes. We check the property first and then match the lender, and we compare the strong HFC presence here against bank rates for IT salaried buyers.",
       "business-loan":
         "Bengaluru's MSMEs in Peenya, Bommasandra and Jigani, alongside a fast-growing base of service startups and D2C brands, use unsecured business loans for working capital. Lenders here are experienced with young, high-growth firms and with revenue-based assessments, and several NBFCs run programmes for businesses under three years old with strong banking.",
+      "working-capital-loan":
+        "Bengaluru's IT services and product companies are largely asset-light, so an overdraft or invoice discounting against corporate client receivables usually suits them better than a stock-based cash credit limit. The MSME manufacturing clusters in Peenya and Bommasandra are the opposite case: inventory and component stock are real assets, and a cash credit facility assessed on drawing power against that stock typically sanctions a larger limit.",
       "loan-against-property":
         "Rising property values on the IT corridors make loans against property attractive for business owners and for professionals funding overseas education or a second home. Lender selection hinges on khata type, approval authority and whether the property is a site, an apartment or an independent house; we handle all three with lenders that have Bengaluru-specific programmes.",
       "car-loan":
@@ -159,6 +165,8 @@ export const citiesBatch1: City[] = [
         "Home loans in Hyderabad move fast: approved projects in Kokapet, Tellapur and Kompally sanction in days because registration and encumbrance checks are online. Ticket sizes in the western corridor have risen sharply, so rate comparison matters, and we look at both banks and HFCs for salaried buyers and at lenders with plot-plus-construction programmes for buyers of HMDA-approved plots.",
       "business-loan":
         "Hyderabad's pharma ancillary units, engineering workshops in Balanagar and Jeedimetla, and service businesses across the city qualify for unsecured business loans on GST turnover and banking. Lenders are also familiar with the city's large pharmaceutical supply chain, which helps vendors to major manufacturers secure larger limits.",
+      "working-capital-loan":
+        "Hyderabad's bulk drug and pharmaceutical manufacturers carry heavy raw material and finished goods inventory, which makes a stock-based cash credit limit the natural fit, while the HITEC City and Gachibowli IT and global capability centre base is better served by invoice discounting against corporate receivables. Traditional trading businesses around Charminar and Secunderabad tend to need smaller, faster-renewing overdraft limits.",
       "loan-against-property":
         "Rapid appreciation in West Hyderabad has made loans against property a strong option for business owners and for families funding overseas education, which is very common here. Transparent market-value data helps lenders value quickly; lender selection depends mainly on property approval status and the income assessment method that suits the borrower.",
       "car-loan":
@@ -202,6 +210,8 @@ export const citiesBatch1: City[] = [
         "Home loans in Chennai require careful property vetting: patta in the seller's name, CMDA or DTCP approval and an approved building plan are non-negotiable for most lenders. With transaction costs around 11%, we help buyers size the loan correctly and compare the strong public sector bank offers here against private banks and HFCs for the same profile.",
       "business-loan":
         "Chennai's automotive suppliers, engineering firms in Ambattur, textile traders and healthcare businesses have well-documented financials that lenders value. Unsecured business loans are readily available on GST turnover, and suppliers to large OEMs qualify for larger limits with lenders that recognise the strength of their customers.",
+      "working-capital-loan":
+        "Auto component suppliers in Sriperumbudur and Oragadam operate on payment cycles set by the assembler they supply, so a dropline overdraft against property or invoice discounting against the OEM's receivable often works better than a standard cash credit limit. Chennai's port-linked trading and logistics firms and the wholesale trade in T. Nagar and Parry's Corner remain classic stock and receivable-based cash credit cases.",
       "loan-against-property":
         "Loans against property in Chennai are popular with industrial and trading families in Ambattur, Guindy and Ekkatuthangal, and with landlords of commercial property in T. Nagar and Anna Nagar. Clear patta and approvals allow high loan-to-value from banks; older properties without full approvals go to HFCs and NBFCs with suitable programmes.",
       "car-loan":
@@ -245,6 +255,8 @@ export const citiesBatch1: City[] = [
         "Home loans in Kolkata are well served by public sector banks and HFCs for New Town and Rajarhat projects, while older properties in North and South Kolkata need lenders comfortable with cooperative structures and older completion certificates. We check mutation and building documents early and route each file to a lender that funds that property type at the best rate.",
       "business-loan":
         "Kolkata's traders in Burrabazar and Posta, engineering units in Howrah and leather exporters in Bantala have access to unsecured business loans from banks and NBFCs, with turnover assessed through GST and banking. Family businesses with modest reported profits but strong banking do best with surrogate-income programmes.",
+      "working-capital-loan":
+        "Kolkata's wholesale trading community and the jute and engineering manufacturers of Howrah and Hooghly are among the most active working capital borrowers on our panel, typically on cash credit limits drawn against stock and monitored through periodic statements. Tea and commodity trading businesses need a limit that flexes with price volatility across the season, which is a drawing power calculation our Kolkata desk handles often.",
       "loan-against-property":
         "Commercial property in Burrabazar, Park Street and Salt Lake, and residential property in South Kolkata, supports substantial loans against property for business families. Lender appetite depends heavily on title clarity and building age, so we shortlist lenders with local experience in older buildings and cooperative flats.",
       "car-loan":
@@ -288,6 +300,8 @@ export const citiesBatch1: City[] = [
         "Home loans in Pune are among the fastest in the country for approved projects in Wakad, Hinjawadi, Kharadi and Wagholi, where lenders have already completed legal checks. First-time buyers dominate, and we help them compare bank and HFC offers, plan the metro cess and registration outlay, and understand pre-EMI on under-construction purchases.",
       "business-loan":
         "Pune's automotive component makers, engineering workshops in Bhosari and Chakan, and service firms across the city have strong access to unsecured business loans, with lenders assessing GST turnover and banking. Suppliers with purchase orders from large OEMs qualify for larger limits and better rates through supply chain programmes.",
+      "working-capital-loan":
+        "Pune's auto and engineering component manufacturers in the Chakan and Pimpri-Chinchwad belt tend to need long-tenure, property-backed dropline overdrafts rather than annually renewed cash credit, since their capacity investments are capital heavy and their receivable cycles are set by large original equipment manufacturers. IT and services firms in the city are better matched to overdraft or invoice discounting against corporate clients.",
       "loan-against-property":
         "Loans against property are widely used by Pune's manufacturing families and by professionals with flats in appreciating corridors. Society NOCs and completion certificates are standard requirements, and industrial property in Pimpri-Chinchwad and Chakan is financed by lenders with industrial LAP programmes at attractive loan-to-value.",
       "car-loan":
@@ -331,6 +345,8 @@ export const citiesBatch1: City[] = [
         "Home loans in Ahmedabad benefit from low transaction costs and a large supply of approved projects in Bopal, Shela, Gota and along the SP Ring Road. Buyers of plots and bungalows need lenders comfortable with NA permission and construction-linked disbursal. We compare bank and HFC offers and handle society share transfers for resale flats.",
       "business-loan":
         "Ahmedabad is one of India's strongest markets for unsecured business loans, with lenders experienced in textiles, pharma, chemicals and trading. Businesses with solid GST turnover and banking qualify for bank pricing; younger or cash-heavy businesses are served by NBFC surrogate programmes. We structure the request to fit the lender's sector appetite.",
+      "working-capital-loan":
+        "Ahmedabad's textile, pharmaceutical and chemical manufacturers in Vatva, Naroda and Sanand run on classic cash credit limits against stock and receivables, and the city's large wholesale trading base adds significant seasonal demand around festival and export cycles. Turnover-based assessment suits most of these businesses well, and our Ahmedabad desk routes larger manufacturers to bank pricing and smaller traders to NBFC programmes with faster turnaround.",
       "loan-against-property":
         "Loans against property are the workhorse of Ahmedabad business finance, with residential bungalows, commercial offices in Prahlad Nagar and industrial sheds in Vatva and Naroda all financed at attractive rates. Industrial property programmes are widely available, and we match the property type and income method to the lender with the best loan-to-value.",
       "car-loan":
