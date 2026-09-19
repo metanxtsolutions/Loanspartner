@@ -12,22 +12,22 @@ const bullets = [
 
 export function Hero() {
   return (
-    <section className="noise bg-ink-900 relative overflow-hidden text-white">
-      <div className="grid-fade-dark absolute inset-0" aria-hidden />
+    <section className="noise bg-paper relative overflow-hidden">
+      <div className="grid-fade absolute inset-0" aria-hidden />
       <div className="container-x relative grid items-center gap-12 pt-14 pb-16 lg:grid-cols-[1.2fr_0.85fr] lg:pt-20 lg:pb-24">
         <div className="animate-rise">
-          <p className="eyebrow text-brass-400">Loan advisory and distribution partner · India</p>
-          <h1 className="display mt-5 text-[2.75rem] leading-[1.02] sm:text-6xl lg:text-[4.25rem]">
-            Better loans begin with the <em className="text-brass-300 font-normal italic">right partner</em>.
+          <p className="eyebrow text-brass-600">Loan advisory and distribution partner · India</p>
+          <h1 className="display text-ink-950 mt-5 text-[2.75rem] leading-[1.02] sm:text-6xl lg:text-[4.25rem]">
+            Better loans begin with the <em className="text-brass-600 font-normal italic">right partner</em>.
           </h1>
-          <p className="mt-6 max-w-xl text-lg leading-relaxed text-white/75">
+          <p className="text-mute mt-6 max-w-xl text-lg leading-relaxed">
             We compare personal, home, business and property loans across leading lenders, read your profile the way a
             credit manager does, and put your file where it will be approved on the best terms. At no cost to you.
           </p>
           <ul className="mt-7 space-y-2.5">
             {bullets.map((b) => (
-              <li key={b} className="flex items-center gap-3 text-[15px] text-white/85">
-                <span className="flex size-5 items-center justify-center bg-white/10 text-white">
+              <li key={b} className="text-ink-800 flex items-center gap-3 text-[15px]">
+                <span className="bg-ink-50 text-ink-700 flex size-5 items-center justify-center">
                   <Check className="size-3" strokeWidth={3} />
                 </span>
                 {b}
@@ -35,17 +35,17 @@ export function Hero() {
             ))}
           </ul>
           <div className="mt-8 flex flex-wrap items-center gap-3">
-            <ButtonLink href="/loans" variant="outline-light" size="lg">
+            <ButtonLink href="/loans" variant="secondary" size="lg">
               Explore loan products
             </ButtonLink>
-            <ButtonLink href="/partner" variant="ghost" size="lg" className="text-white hover:bg-white/10">
+            <ButtonLink href="/partner" variant="ghost" size="lg">
               Become a partner <ArrowRight className="size-4" />
             </ButtonLink>
           </div>
         </div>
 
         <div className="animate-rise relative [animation-delay:120ms]">
-          <div className="rounded-panel text-ink-900 shadow-lift relative border border-white/10 bg-white p-6 sm:p-7">
+          <div className="rounded-panel text-ink-900 shadow-lift border-line relative border bg-white p-6 sm:p-7">
             <div className="flex items-center justify-between">
               <p className="font-display text-2xl">Check your eligibility</p>
               <span className="bg-brass-100 text-brass-600 px-2.5 py-1 text-[11px] font-bold">Free</span>
@@ -59,9 +59,9 @@ export function Hero() {
           </div>
         </div>
       </div>
-      <div className="container-x relative border-t border-white/10 py-6">
-        <p className="eyebrow mb-3 text-white/40">Loans arranged from</p>
-        <LenderMarquee lenders={lenderOptions} tone="dark" />
+      <div className="container-x border-line relative border-t py-6">
+        <p className="eyebrow text-mute mb-3">Loans arranged from</p>
+        <LenderMarquee lenders={lenderOptions} tone="light" />
       </div>
     </section>
   );
