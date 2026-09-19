@@ -670,7 +670,7 @@ export const products: LoanProduct[] = [
     ],
     keywords: ["working capital loan", "overdraft facility", "cash credit limit", "dropline overdraft", "invoice discounting", "working capital finance MSME"],
     related: ["business-loan", "loan-against-property", "machinery-loan"],
-    core: false,
+    core: true,
     dsa: { payoutFrom: 0.75, payoutTo: 1.5, ticketSize: "₹50 lakh to ₹3 crore", pitch: "Annual renewals create recurring relationships, and large limits make even modest payouts substantial.", sellsTo: ["Manufacturers and distributors", "Contractors and EPC firms", "CA practices with SME clients"] },
     updatedAt: "2026-09-01",
   },

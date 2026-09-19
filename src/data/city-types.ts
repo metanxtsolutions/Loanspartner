@@ -1,6 +1,6 @@
 import type { Faq } from "@/data/products";
 
-export type CoreProductSlug = "personal-loan" | "home-loan" | "business-loan" | "loan-against-property" | "car-loan";
+export type CoreProductSlug = "personal-loan" | "home-loan" | "business-loan" | "loan-against-property" | "car-loan" | "working-capital-loan";
 
 export type City = {
   slug: string;
