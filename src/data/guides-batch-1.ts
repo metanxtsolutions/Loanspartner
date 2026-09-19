@@ -487,4 +487,107 @@ export const guidesBatch1: Guide[] = [
     relatedGuides: ["fixed-vs-floating-home-loan-rate", "how-to-read-a-key-fact-statement"],
     featured: true,
   },
+  {
+    slug: "which-loan-products-pay-dsa-agents-the-most",
+    title: "Which Loan Products Pay DSA Agents the Most in India (2026)",
+    seoTitle: "Which Loan Products Pay DSAs the Most",
+    category: "Partner programme",
+    excerpt: "A product-by-product ranking of DSA payout per deal, from loan against property and working capital at the top to gold loans at the bottom, and why the highest percentage is rarely the highest income.",
+    readTime: "7 min read",
+    publishedDate: "2026-09-19",
+    updatedDate: "2026-09-19",
+    primaryKeyword: "which loan products pay DSA the most",
+    secondaryKeywords: ["best loan product for DSA commission", "highest paying DSA product", "DSA income by product", "which loan to sell as a DSA"],
+    tags: ["DSA", "commission", "payout", "product selection"],
+    intro: [
+      "New partners usually ask this as a percentage question: which product pays the highest commission rate. That is the wrong version of the question. A product paying 2.5% on a two lakh rupee personal loan pays less in hand than one paying 1% on a large loan against property, and a high payout percentage on a product nobody in your network needs pays nothing at all.",
+      "This guide ranks our twelve products by approximate payout per deal, using the payout ranges and typical ticket sizes on our own panel, then works through why the top of that table is not automatically the right product to specialise in.",
+    ],
+    sections: [
+      {
+        heading: "Payout per deal, ranked",
+        body: [
+          "The figures below are the midpoint of our published payout range applied to the midpoint of the typical ticket size for that product. They are illustrative, not a promise: your actual payout depends on the lender, the borrower's profile and current campaign slabs, and is confirmed on your partner statement.",
+        ],
+        table: {
+          headers: ["Product", "Payout range", "Typical ticket size", "Approximate payout per deal"],
+          rows: [
+            ["Working Capital - OD / CC", "0.75% to 1.5%", "₹50 lakh to ₹3 crore", "≈ ₹1,97,000"],
+            ["Loan Against Property", "0.75% to 1.25%", "₹40 lakh to ₹3 crore", "≈ ₹1,70,000"],
+            ["Business Loan", "1.5% to 3%", "₹10 lakh to ₹50 lakh", "≈ ₹67,500"],
+            ["Machinery and Equipment Loan", "0.75% to 1.5%", "₹15 lakh to ₹1 crore", "≈ ₹64,700"],
+            ["Professional Loan", "1.5% to 2.5%", "₹10 lakh to ₹50 lakh", "≈ ₹60,000"],
+            ["Home Loan", "0.4% to 0.8%", "₹30 lakh to ₹1.5 crore", "≈ ₹54,000"],
+            ["Home Loan Balance Transfer", "0.4% to 0.7%", "₹30 lakh to ₹1 crore", "≈ ₹35,750"],
+            ["Education Loan", "0.5% to 1%", "₹15 lakh to ₹60 lakh", "≈ ₹28,100"],
+            ["Personal Loan", "1.5% to 2.5%", "₹2 lakh to ₹15 lakh", "≈ ₹17,000"],
+            ["Car Loan", "0.5% to 1.5%", "₹6 lakh to ₹25 lakh", "≈ ₹15,500"],
+            ["Used Car Loan", "1% to 2%", "₹3 lakh to ₹12 lakh", "≈ ₹11,250"],
+            ["Gold Loan", "0.25% to 0.5%", "₹50,000 to ₹5 lakh", "≈ ₹1,000"],
+          ],
+        },
+      },
+      {
+        heading: "Why loan against property and working capital top the table",
+        body: [
+          "Both are secured, large-ticket products. The payout percentage looks modest next to a personal loan, but it applies to a sum ten to twenty times larger, so the rupee amount wins even at a lower rate. Working capital limits add a second advantage the table does not show: they renew annually, and many lenders pay again on enhancement or renewal, so one well-placed client can pay out for several years.",
+          "The cost of that payout is a longer, more document-heavy sales cycle. A loan against property or a working capital file needs a property valuation, legal checks and, often, a business owner who wants advice rather than a quick form. This is a relationship-led product, not a volume one.",
+        ],
+      },
+      {
+        heading: "Why personal loans still make sense at the bottom of the table",
+        body: [
+          "Personal loans pay the least per deal but close in days, need the least documentation, and draw from the widest possible pool of prospects: almost any salaried professional is a candidate. A partner who closes eight personal loans a month can out-earn one loan against property deal that takes two months to sanction, and personal loan clients refer other personal loan clients faster than any other product.",
+          "Used car loans and gold loans sit at a similar point: small tickets, but fast decisions and, for gold loans especially, very high frequency in the right location.",
+        ],
+      },
+      {
+        heading: "The real question: ticket size, deal frequency and sales cycle together",
+        body: [
+          "Monthly income is roughly payout per deal multiplied by how many you can realistically close, and how many you can close depends on how long each file takes and how large your addressable network is for that product. A product at the top of the payout table with a network of zero prospects earns nothing. A product at the bottom with fifty warm prospects a month can outperform every product above it.",
+        ],
+      },
+      {
+        heading: "Which product fits which partner",
+        body: ["Match the product to the referral relationships you already have, not to the payout table alone:"],
+        bullets: [
+          "Chartered accountants and tax consultants: business loans, working capital and loan against property, from clients who already share GST turnover and financials.",
+          "Real estate agents and builders' sales teams: home loans and loan against property, at the point a buyer is already committed to a property.",
+          "Insurance and wealth advisors: home loan balance transfer for existing clients paying above-market rates, and personal loans for near-term needs.",
+          "Doctors, CAs and consulting-firm networks: professional loans, which price close to personal loans but are underwritten more favourably for these segments.",
+          "Automotive dealers and showroom staff: new and used car loans, on volume and repeat business.",
+          "Equipment dealers and industrial associations: machinery and equipment loans, with well-documented, repeat borrowers.",
+        ],
+      },
+      {
+        heading: "How to actually decide",
+        body: [
+          "Pick one high-ticket, relationship-led product that matches a network you already have, and one fast, high-frequency product to keep monthly income steady while the larger deals mature. Specialising in two or three products, as our commission guide covers in more depth, consistently outperforms spreading thin across all twelve.",
+        ],
+      },
+    ],
+    keyTakeaways: [
+      "Payout per deal, not payout percentage, is what actually determines income; a lower rate on a larger ticket usually wins.",
+      "Loan against property and working capital pay the most per deal but need a longer, relationship-led sales cycle.",
+      "Personal, used car and gold loans pay less per deal but close fast and draw from the widest prospect pool.",
+      "Match the product to the referral network you already have rather than choosing by payout percentage alone.",
+      "Specialising in two or three products outperforms spreading across all twelve.",
+    ],
+    faqs: [
+      {
+        question: "Which single loan product pays a DSA the most per deal?",
+        answer: "On our panel, working capital and loan against property pay the most per deal because their payout percentage applies to a much larger ticket size, even though the percentage itself is lower than on unsecured products.",
+      },
+      {
+        question: "Should a new DSA start with high-ticket or high-frequency products?",
+        answer: "Most new partners do better starting with a fast, high-frequency product such as personal loans to build a track record and steady income, then adding a relationship-led, high-ticket product once they have the referral network for it.",
+      },
+      {
+        question: "Do these payout figures apply to every lender?",
+        answer: "No. They are ranges across our panel; the exact rate for a given file depends on the lender, the borrower's profile and current slabs, and is confirmed on your partner statement before you commit effort to a file.",
+      },
+    ],
+    relatedProducts: ["loan-against-property", "working-capital-loan", "business-loan", "personal-loan"],
+    relatedGuides: ["loan-dsa-commission-structure-explained", "how-to-become-a-loan-dsa-in-india", "rbi-rules-for-loan-dsas-2026"],
+  },
 ];
