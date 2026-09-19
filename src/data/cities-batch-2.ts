@@ -32,6 +32,8 @@ export const citiesBatch2: City[] = [
         "Gurugram's service firms, startups, automotive suppliers in Manesar and IMT, and trading businesses in Udyog Vihar qualify for unsecured business loans from lenders that understand corporate supply chains and high-growth companies. Lenders here are comfortable with young firms that have strong banking and reputable customers.",
       "working-capital-loan":
         "The Manesar and IMT industrial belt's auto ancillary units supply Maruti Suzuki and its ecosystem on payment terms that suit a dropline overdraft against property more than a short-tenure cash credit limit. Gurugram's corporate headquarters, consulting and fintech firms are largely asset-light and are better served by invoice discounting or an unsecured overdraft against strong banking relationships.",
+      "professional-loan":
+        "Gurugram's corporate and consulting base makes management consultants and company secretaries a large professional loan segment, often financing a move into independent practice. The city's private hospital chains also support a meaningful doctor segment, generally for clinic or diagnostic centre setup rather than hospital-scale investment.",
       "loan-against-property":
         "High property values make loans against property in Gurugram unusually productive: an apartment or a commercial unit in Cyber City or on Golf Course Road can raise several crores at secured rates. Lender selection depends on project completion status, the presence of an occupation certificate and the income assessment method for business owners.",
       "car-loan":
@@ -77,6 +79,8 @@ export const citiesBatch2: City[] = [
         "Noida's IT service firms, media production houses, electronics assemblers and trading businesses across Sector 18 and Greater Noida qualify for unsecured business loans on GST turnover and banking. Lenders are familiar with contract-based revenue in media and IT and assess accordingly.",
       "working-capital-loan":
         "Electronics and mobile manufacturing units in Greater Noida and along the Yamuna Expressway carry meaningful component and finished goods inventory, which makes a stock-based cash credit limit the standard recommendation. Noida's IT, ITES and media firms, being largely asset-light, are usually better matched to invoice discounting against corporate receivables or a smaller unsecured overdraft.",
+      "professional-loan":
+        "Noida's IT, media and electronics base skews its professional loan demand toward engineers and independent consultants rather than the medical and legal segments that dominate older cities. A smaller but steady base of doctors serves the city's fast-growing residential population.",
       "loan-against-property":
         "Loans against property in Noida require Authority transfer memoranda and occupancy certificates, and lenders value leasehold properties slightly more conservatively than freehold. Commercial units in Sector 18 and along the expressway, and residential flats in completed projects, are financed by lenders with Noida-specific programmes that we shortlist for each case.",
       "car-loan":
@@ -122,6 +126,8 @@ export const citiesBatch2: City[] = [
         "Jaipur's gems and jewellery exporters, textile and garment manufacturers, handicraft traders and hospitality businesses qualify for unsecured business loans from lenders with sector appetite. GST turnover and export documentation strengthen files, and we route seasonal businesses to lenders that understand tourism cash flows.",
       "working-capital-loan":
         "Jaipur's gems and jewellery exporters carry high-value, low-bulk inventory that some lenders value conservatively, so we shortlist lenders whose valuation and drawing power methods suit precious stock rather than assuming a standard cash credit formula applies. Handicraft and textile exporters in Sitapura and Bagru typically need a limit sized around export order cycles rather than domestic stock alone.",
+      "professional-loan":
+        "Jaipur's gems and jewellery trade generates significant demand from chartered accountants who handle export documentation and GST compliance, and the city's tourism and heritage-building activity keeps architects busy. Doctors round out the segment, generally at established practices rather than new clinics.",
       "loan-against-property":
         "Loans against property are widely used by Jaipur's trading and manufacturing families, with residential bungalows in Vaishali Nagar and Malviya Nagar and commercial property in Johari Bazaar and MI Road supporting substantial amounts. Patta, JDA approval and clear title determine lender appetite and loan-to-value.",
       "car-loan":
@@ -167,6 +173,8 @@ export const citiesBatch2: City[] = [
         "Lucknow's trading community, healthcare businesses, educational institutions and the emerging IT services sector qualify for unsecured business loans on GST turnover and banking. Lenders are expanding their SME books here, and we route smaller or cash-heavy businesses to NBFC programmes designed for them.",
       "working-capital-loan":
         "Lucknow's trading businesses tend to run on smaller, faster-renewing unsecured overdrafts rather than large secured cash credit limits, matching the scale of most firms in this segment. Vendors and suppliers to the city's large government and public sector establishment need a limit built around longer, more predictable payment cycles, which is a different assessment from a typical trading business.",
+      "professional-loan":
+        "Lucknow's major government medical colleges and teaching hospitals make doctors, including newly qualified specialists, one of the strongest professional loan segments on our Lucknow desk. Lawyers practising before the Allahabad High Court's Lucknow bench and chartered accountants serving the city's government and public sector base add further volume.",
       "loan-against-property":
         "Loans against property in Lucknow draw on residential property in Gomti Nagar, Aliganj and Indira Nagar and commercial property in Hazratganj and Aminabad. Freehold status and LDA approval decide lender appetite, and we match business owners to lenders with the assessment method that suits their income documents.",
       "car-loan":
@@ -212,6 +220,8 @@ export const citiesBatch2: City[] = [
         "Chandigarh and Mohali businesses in pharma, IT services, education, healthcare and trading qualify for unsecured business loans on GST and banking, with lenders expanding SME books across the Tricity. Agricultural trading and processing businesses from the region are served by lenders with sector familiarity.",
       "working-capital-loan":
         "Punjab's agricultural trading and processing families, who bring much of the capital into the Tricity's business economy, need working capital limits that flex sharply around the harvest and procurement season, which is a seasonal drawing power calculation our desk handles regularly. Mohali's IT and pharmaceutical manufacturing base is a more conventional mix of stock-based cash credit and invoice discounting against corporate clients.",
+      "professional-loan":
+        "Chandigarh's PGI and the Tricity's other major teaching hospitals make doctors an especially strong professional loan segment, often financing specialist clinic setup straight after a fellowship. Lawyers before the Punjab and Haryana High Court and chartered accountants serving Punjab's business families are the other significant groups.",
       "loan-against-property":
         "Loans against property in Chandigarh draw on high-value residential houses in the sectors and commercial property in Sector 17, Sector 34 and Mohali's Phase areas. Freehold conversions and sanctioned plans decide lender appetite, and we match business families to lenders with suitable income assessment programmes.",
       "car-loan":
@@ -257,6 +267,8 @@ export const citiesBatch2: City[] = [
         "Indore's traders in textiles, pharma distribution and agri-commodities, and manufacturers at Pithampur, have growing access to unsecured business loans on GST and banking. Lenders are expanding programmes here, and we route cash-heavy or seasonal businesses to NBFC programmes designed for them.",
       "working-capital-loan":
         "Indore's soybean and agri-commodity traders carry some of the most seasonal working capital needs on our panel, with drawing power swinging sharply around the harvest, so we structure limits with headroom for that cycle rather than a flat annual figure. Pithampur's manufacturers are a steadier, stock-based cash credit case, and Indore's role as a regional distribution hub adds consistent receivable-financing demand.",
+      "professional-loan":
+        "Indore's large trading base and growing healthcare and education institutions support steady demand from both chartered accountants and doctors, with several lenders running region-specific programmes given the city's role as central India's commercial hub. Pharma distribution professionals add a further, more specialised segment.",
       "loan-against-property":
         "Loans against property are the mainstay of business finance for Indore's trading families, with residential bungalows in Vijay Nagar and Saket, and commercial property in Siyaganj and MG Road, supporting substantial amounts. Colony approval and clear title decide lender appetite, and surrogate-income programmes are available with select lenders.",
       "car-loan":
@@ -302,6 +314,8 @@ export const citiesBatch2: City[] = [
         "Surat's diamond units, textile weavers and processors, embroidery businesses and chemical traders qualify for unsecured business loans from lenders with sector programmes. GST turnover and banking are the main assessment tools, and we route businesses to lenders whose sector appetite is currently active.",
       "working-capital-loan":
         "Surat's diamond cutting and polishing units run largely on export receivables, so invoice or bill discounting against confirmed overseas orders usually suits them better than a conventional stock-based cash credit limit, since rough and polished diamond inventory is difficult for most lenders to value as collateral. The synthetic textile and embroidery trade is the more standard case: cash credit against stock and receivables, sized to turnover.",
+      "professional-loan":
+        "Surat's diamond and textile trade generates heavy demand from chartered accountants who manage the sector's export documentation and GST compliance, making CA-specific programmes some of the most active on our Surat desk. Doctors and architects, tied to the city's rapid population growth, are a smaller but growing segment.",
       "loan-against-property":
         "Loans against property are the backbone of Surat's business finance, with residential bungalows and flats in Vesu and Adajan, commercial property on Ring Road and industrial sheds in Sachin and Pandesara supporting large amounts. Industrial LAP programmes are widely available, and surrogate-income assessment suits the city's business families.",
       "car-loan":
@@ -347,6 +361,8 @@ export const citiesBatch2: City[] = [
         "Kochi's spice and seafood exporters, hospitality businesses, healthcare providers and IT service firms qualify for unsecured business loans on GST and banking, with Kerala's banks offering competitive programmes and national NBFCs adding options for younger firms. Export-linked businesses benefit from lenders with trade finance experience.",
       "working-capital-loan":
         "Kochi's spice, seafood and gold trading businesses are heavily export-oriented, and invoice discounting against confirmed Gulf and international buyers often suits them better than a domestic stock-based limit, particularly where NRI-linked trade brings in foreign receivables. Infopark and SmartCity IT firms are asset-light and better matched to overdraft or invoice discounting against corporate clients, while the port and shipyard-linked engineering base remains a conventional cash credit case.",
+      "professional-loan":
+        "Kochi's strong medical tourism sector and its base of NRI-qualified doctors returning to set up practice make healthcare one of the most active professional loan segments on our panel, often financing clinic or diagnostic centre setup. Chartered accountants serving the city's export and trading businesses are the other significant group.",
       "loan-against-property":
         "Loans against property in Kochi draw on high-value land and houses across the district, and NRI owners commonly use them to fund business or education. Lenders assess building permits and title carefully, and NRI cases require specific documentation, which our desk handles with lenders that run NRI LAP programmes.",
       "car-loan":

@@ -617,7 +617,7 @@ export const products: LoanProduct[] = [
     ],
     keywords: ["professional loan", "loan for doctors", "loan for chartered accountants", "doctor loan", "CA loan", "clinic setup loan", "medical equipment loan"],
     related: ["business-loan", "machinery-loan", "personal-loan"],
-    core: false,
+    core: true,
     dsa: { payoutFrom: 1.5, payoutTo: 2.5, ticketSize: "₹10 lakh to ₹50 lakh", pitch: "Prime borrowers with fast approvals; medical associations and CA networks are excellent referral channels.", sellsTo: ["Doctors and hospital groups", "CA and CS practices", "Architects and consulting firms"] },
     updatedAt: "2026-09-01",
   },

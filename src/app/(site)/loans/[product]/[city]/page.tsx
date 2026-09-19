@@ -147,7 +147,10 @@ export default async function ProductCityPage({ params }: PageProps<"/loans/[pro
                   <p>{c.propertyMarket}</p>
                 </>
               )}
-              {(p.slug === "business-loan" || p.slug === "personal-loan" || p.slug === "working-capital-loan") && (
+              {(p.slug === "business-loan" ||
+                p.slug === "personal-loan" ||
+                p.slug === "working-capital-loan" ||
+                p.slug === "professional-loan") && (
                 <>
                   <h3>Who borrows in {c.name}</h3>
                   <p>{c.economy}</p>
