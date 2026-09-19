@@ -55,7 +55,7 @@ export function ToolPage({
         title={title}
         lede={lede}
       />
-      <Section tone="cream" className="!pt-0">
+      <Section tone="cream" className="!pt-0 flow-root">
         <div className="-mt-6 lg:-mt-10">{calculator}</div>
         <LinkPills className="mt-8" title="Other tools" links={toolLinks.filter((l) => l.href !== path)} />
       </Section>
