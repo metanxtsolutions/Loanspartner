@@ -18,7 +18,7 @@ export function Hero() {
         <div className="animate-rise">
           <p className="eyebrow text-brass-600">Loan advisory and distribution partner · India</p>
           <h1 className="display text-ink-950 mt-5 text-[2.75rem] leading-[1.02] sm:text-6xl lg:text-[4.25rem]">
-            Better loans begin with the <em className="text-brass-600 font-normal italic">right partner</em>.
+            Better loans begin with the <em className="text-brass-600 font-normal not-italic">right partner</em>.
           </h1>
           <p className="text-mute mt-6 max-w-xl text-lg leading-relaxed">
             We compare personal, home, business and property loans across leading lenders, read your profile the way a
