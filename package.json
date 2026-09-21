@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "postinstall": "prisma generate",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
@@ -19,12 +20,14 @@
     "db:studio": "prisma studio",
     "outreach:seed": "tsx --env-file=.env.local scripts/outreach/seed-lenders.ts",
     "outreach:discover-contacts": "tsx --env-file=.env.local scripts/outreach/discover-contacts.ts",
-    "outreach:create-admin": "tsx --env-file=.env.local scripts/outreach/create-admin.ts"
+    "outreach:create-admin": "tsx --env-file=.env.local scripts/outreach/create-admin.ts",
+    "dashboard:seed": "tsx --env-file=.env.local scripts/dashboard/seed-demo.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.70.0",
     "@hookform/resolvers": "^5.9.1",
     "@prisma/client": "^6.18.0",
+    "@vercel/blob": "^2.8.0",
     "cheerio": "^1.1.2",
     "clsx": "^2.1.1",
     "imapflow": "^1.0.191",
