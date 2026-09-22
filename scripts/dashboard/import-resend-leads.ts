@@ -9,7 +9,7 @@
  * `lead id`, `page` and `time`. Collect them from Resend's email log (or the
  * inbox) however is convenient; the shape is deliberately trivial.
  *
- *   pnpm exec tsx --env-file=.env.local scripts/dashboard/import-resend-leads.ts <file.json> [more.json]
+ *   pnpm dashboard:import-leads <file.json> [more.json]
  *
  * Idempotent: rows are keyed on the pipeline's leadId exactly like the live
  * sink, so re-running only fills gaps. Events are replayed oldest first so an

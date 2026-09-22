@@ -12,7 +12,12 @@
  * real service layer would trigger (emails, in-app notifications) are
  * intentionally skipped here: this is data, not a live workflow run.
  *
- *   pnpm dashboard:seed
+ *   pnpm dashboard:seed -- --demo
+ *
+ * The `--demo` flag is required. This repo's DATABASE_URL points at the one
+ * database production also uses, and the demo accounts were purged from it
+ * on 2026-09-23 once real customers and partners started signing up. Only
+ * run this against a database you are happy to fill with fake people.
  *
  * Safe to run repeatedly: upserts every user by email, and only creates the
  * demo applications once (skipped if any already exist with the sentinel
@@ -21,6 +26,11 @@
 import { PrismaClient } from "@prisma/client";
 import { hashPassword } from "@/server/auth/password";
 import { products } from "@/data/products";
+
+if (!process.argv.includes("--demo")) {
+  console.error("Refusing to seed demo data without --demo. This writes fake customers, partners and applications into whatever DATABASE_URL points at.");
+  process.exit(1);
+}
 
 const prisma = new PrismaClient();
 
