@@ -12,7 +12,12 @@
  * real service layer would trigger (emails, in-app notifications) are
  * intentionally skipped here: this is data, not a live workflow run.
  *
- *   pnpm dashboard:seed
+ *   pnpm dashboard:seed -- --demo
+ *
+ * The `--demo` flag is required. This repo's DATABASE_URL points at the one
+ * database production also uses, and the demo accounts were purged from it
+ * on 2026-09-23 once real customers and partners started signing up. Only
+ * run this against a database you are happy to fill with fake people.
  *
  * Safe to run repeatedly: upserts every user by email, and only creates the
  * demo applications once (skipped if any already exist with the sentinel
@@ -21,6 +26,11 @@
 import { PrismaClient } from "@prisma/client";
 import { hashPassword } from "@/server/auth/password";
 import { products } from "@/data/products";
+
+if (!process.argv.includes("--demo")) {
+  console.error("Refusing to seed demo data without --demo. This writes fake customers, partners and applications into whatever DATABASE_URL points at.");
+  process.exit(1);
+}
 
 const prisma = new PrismaClient();
 
@@ -77,8 +87,6 @@ async function main() {
 
   const customer3 = await upsertUser({ email: "customer3@loanspartner.in", name: "Arjun Verma", phone: "9800000013", role: "CUSTOMER" });
   await prisma.customerProfile.upsert({ where: { userId: customer3.id }, create: { userId: customer3.id, city: "Delhi", employmentType: "salaried" }, update: {} });
-
-  await seedWebsiteLeads();
 
   const alreadySeeded = await prisma.loanApplication.findFirst({ where: { code: { startsWith: "LP-DEMO-" } } });
   if (alreadySeeded) {
@@ -199,80 +207,6 @@ async function createWithTimeline(params: {
   const finalStatus = params.steps[params.steps.length - 1];
   await prisma.loanApplication.update({ where: { id: app.id }, data: { status: finalStatus as never } });
   return app;
-}
-
-/** One sample of each public-form submission kind, so /console/leads has something to show. Upserted on fixed ids, so safe to re-run. */
-async function seedWebsiteLeads() {
-  const rows = [
-    {
-      leadId: "00000000-0000-4000-8000-000000000101",
-      kind: "LOAN_ENQUIRY" as const,
-      name: "Sneha Iyer",
-      phone: "9800000021",
-      email: "sneha.iyer@example.com",
-      city: "Chennai",
-      productSlug: "home-loan",
-      amount: 6_500_000,
-      source: "product:home-loan",
-      qualifiedAt: new Date(),
-      data: { product: "home-loan", amount: 6_500_000, phone: "9800000021", name: "Sneha Iyer", city: "Chennai", employment: "salaried", monthlyIncome: 145_000, cibil: "750+", existingEmi: 12_000, email: "sneha.iyer@example.com", source: "product:home-loan" },
-    },
-    {
-      leadId: "00000000-0000-4000-8000-000000000102",
-      kind: "LOAN_ENQUIRY" as const,
-      name: null,
-      phone: "9800000022",
-      email: null,
-      city: null,
-      productSlug: "personal-loan",
-      amount: 300_000,
-      source: "hero",
-      qualifiedAt: null,
-      data: { product: "personal-loan", amount: 300_000, phone: "9800000022", source: "hero" },
-    },
-    {
-      leadId: "00000000-0000-4000-8000-000000000103",
-      kind: "PARTNER_INTEREST" as const,
-      name: "Rakesh Menon",
-      phone: "9800000023",
-      email: "rakesh.menon@example.com",
-      city: "Kochi",
-      productSlug: null,
-      amount: null,
-      source: "partner-register",
-      qualifiedAt: null,
-      data: { name: "Rakesh Menon", phone: "9800000023", email: "rakesh.menon@example.com", city: "Kochi", profession: "Insurance Agents", entityType: "individual", experience: "3-5", products: ["home-loan", "loan-against-property"], network: "About 200 policyholders across Kochi and Thrissur, mostly salaried families.", source: "partner-register" },
-    },
-    {
-      leadId: "00000000-0000-4000-8000-000000000104",
-      kind: "CALLBACK" as const,
-      name: "Farhan Ali",
-      phone: "9800000024",
-      email: null,
-      city: "Hyderabad",
-      productSlug: "business-loan",
-      amount: null,
-      source: "product-callback:business-loan",
-      qualifiedAt: null,
-      data: { name: "Farhan Ali", phone: "9800000024", product: "business-loan", city: "Hyderabad", note: "Best time to call is after 6pm.", source: "product-callback:business-loan" },
-    },
-    {
-      leadId: "00000000-0000-4000-8000-000000000105",
-      kind: "CONTACT" as const,
-      name: "Meera Krishnan",
-      phone: null,
-      email: "meera.k@example.com",
-      city: null,
-      productSlug: null,
-      amount: null,
-      source: null,
-      qualifiedAt: null,
-      data: { name: "Meera Krishnan", email: "meera.k@example.com", subject: "loan", message: "I took a personal loan through you last year. Can I get a top-up on the same loan, and what documents would you need?" },
-    },
-  ];
-  for (const row of rows) {
-    await prisma.websiteLead.upsert({ where: { leadId: row.leadId }, create: row, update: {} });
-  }
 }
 
 async function printCredentials() {
