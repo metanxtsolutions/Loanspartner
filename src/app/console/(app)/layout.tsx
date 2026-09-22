@@ -22,16 +22,23 @@ import { logoutAdminAction } from "@/actions/auth/admin";
 import { markNotificationsReadAction } from "@/actions/console/notifications";
 import { listNotifications, unreadCount } from "@/server/dashboard/notifications";
 import { adminRoleHasPermission, ADMIN_ROLE_LABELS, type Permission } from "@/lib/dashboard/permissions";
-import { DashboardShell, type NavItem } from "@/components/dashboard/dashboard-shell";
+import { DashboardShell, type NavChild, type NavItem } from "@/components/dashboard/dashboard-shell";
 
 export const metadata: Metadata = { robots: { index: false, follow: false } };
 
-const NAV: { href: string; label: string; icon: ReactNode; permission?: Permission }[] = [
+const LEAD_KINDS = [
+  { kind: "LOAN_ENQUIRY", label: "Loan enquiry" },
+  { kind: "PARTNER_INTEREST", label: "Partner interest" },
+  { kind: "CALLBACK", label: "Callback" },
+  { kind: "CONTACT", label: "Contact" },
+].map(({ kind, label }) => ({ href: `/console/leads?kind=${kind}`, label }));
+
+const NAV: { href: string; label: string; icon: ReactNode; permission?: Permission; children?: NavChild[] }[] = [
   { href: "/console", label: "Overview", icon: <LayoutDashboard className="size-4" /> },
   { href: "/console/users", label: "Users", icon: <Users className="size-4" />, permission: "users.manage" },
   { href: "/console/partners", label: "Partners", icon: <UserCheck className="size-4" />, permission: "partners.review_kyc" },
   { href: "/console/applications", label: "Applications", icon: <FileText className="size-4" />, permission: "applications.manage" },
-  { href: "/console/leads", label: "Website leads", icon: <Inbox className="size-4" />, permission: "leads.manage" },
+  { href: "/console/leads", label: "Website leads", icon: <Inbox className="size-4" />, permission: "leads.manage", children: LEAD_KINDS },
   { href: "/console/lenders", label: "Lenders", icon: <Landmark className="size-4" />, permission: "lenders.manage" },
   { href: "/console/products", label: "Products", icon: <Package className="size-4" /> },
   { href: "/console/documents", label: "Documents", icon: <FileCheck2 className="size-4" />, permission: "documents.review" },
@@ -51,6 +58,7 @@ export default async function ConsoleAppLayout({ children }: { children: ReactNo
     href: item.href,
     label: item.label,
     icon: item.icon,
+    children: item.children,
   }));
 
   const [notifications, unread] = await Promise.all([listNotifications(actor.id), unreadCount(actor.id)]);

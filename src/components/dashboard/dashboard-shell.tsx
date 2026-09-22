@@ -2,12 +2,13 @@
 
 import { useState, type ReactNode } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import { Menu, X, LogOut } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { NotificationBell, type NotificationItem } from "@/components/dashboard/notification-bell";
 
-export type NavItem = { href: string; label: string; icon: ReactNode };
+export type NavChild = { href: string; label: string };
+export type NavItem = { href: string; label: string; icon: ReactNode; children?: NavChild[] };
 export type NavSection = { title?: string; items: NavItem[] };
 
 export function DashboardShell({
@@ -34,9 +35,18 @@ export function DashboardShell({
   children: ReactNode;
 }) {
   const pathname = usePathname();
+  const searchParams = useSearchParams();
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const isActive = (href: string) => (href === sections[0]?.items[0]?.href ? pathname === href : pathname === href || pathname.startsWith(`${href}/`));
+
+  // A child is a filtered view of its parent (same path, extra query
+  // params), so it is active only when every param in its href matches.
+  const isChildActive = (href: string) => {
+    const [path, query = ""] = href.split("?");
+    if (pathname !== path) return false;
+    return [...new URLSearchParams(query)].every(([k, v]) => searchParams.get(k) === v);
+  };
 
   const Nav = (
     <nav aria-label="Dashboard navigation" className="flex flex-col gap-6 px-4 py-6">
@@ -44,23 +54,47 @@ export function DashboardShell({
         <div key={section.title ?? i} className="flex flex-col gap-1">
           {section.title ? <p className="text-mute-2 px-3 pb-1 text-[11px] font-bold tracking-wide uppercase">{section.title}</p> : null}
           {section.items.map((item) => {
-            const active = isActive(item.href);
+            const childActive = item.children?.some((c) => isChildActive(c.href)) ?? false;
+            const active = isActive(item.href) && !childActive;
             return (
-              <Link
-                key={item.href}
-                href={item.href}
-                onClick={() => setMobileOpen(false)}
-                aria-current={active ? "page" : undefined}
-                className={cn(
-                  "flex items-center gap-3 px-3 py-2.5 text-sm font-medium transition",
-                  active ? "bg-ink-900 text-white" : "text-ink-700 hover:bg-ink-100",
-                )}
-              >
-                <span className="shrink-0" aria-hidden="true">
-                  {item.icon}
-                </span>
-                {item.label}
-              </Link>
+              <div key={item.href} className="flex flex-col">
+                <Link
+                  href={item.href}
+                  onClick={() => setMobileOpen(false)}
+                  aria-current={active ? "page" : undefined}
+                  className={cn(
+                    "flex items-center gap-3 px-3 py-2.5 text-sm font-medium transition",
+                    active ? "bg-ink-900 text-white" : childActive ? "text-ink-950" : "text-ink-700 hover:bg-ink-100",
+                  )}
+                >
+                  <span className="shrink-0" aria-hidden="true">
+                    {item.icon}
+                  </span>
+                  {item.label}
+                </Link>
+                {item.children?.length ? (
+                  <ul className="border-line mt-1 mb-1 ml-5 flex flex-col gap-0.5 border-l pl-2">
+                    {item.children.map((child) => {
+                      const on = isChildActive(child.href);
+                      return (
+                        <li key={child.href}>
+                          <Link
+                            href={child.href}
+                            onClick={() => setMobileOpen(false)}
+                            aria-current={on ? "page" : undefined}
+                            className={cn(
+                              "flex items-center px-3 py-1.5 text-[13px] font-medium transition",
+                              on ? "bg-ink-900 text-white" : "text-ink-600 hover:bg-ink-100 hover:text-ink-900",
+                            )}
+                          >
+                            {child.label}
+                          </Link>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                ) : null}
+              </div>
             );
           })}
         </div>
