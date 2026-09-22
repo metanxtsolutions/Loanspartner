@@ -568,3 +568,54 @@ model PasswordResetToken {
 
   @@index([userId])
 }
+
+// Submissions from the public marketing forms (loan enquiry, partner
+// interest, callback, contact). Written by the lead pipeline in
+// src/lib/leads/store.ts as one more sink alongside the notification email,
+// and worked from /console/leads. "Website" in the name keeps it distinct
+// from the outreach CRM's Lender/Contact models above, which are about
+// recruiting lenders, not inbound enquiries.
+
+enum WebsiteLeadKind {
+  LOAN_ENQUIRY
+  PARTNER_INTEREST
+  CALLBACK
+  CONTACT
+}
+
+enum WebsiteLeadStatus {
+  NEW
+  CONTACTED
+  QUALIFIED
+  CONVERTED
+  CLOSED
+}
+
+model WebsiteLead {
+  id                     String            @id @default(cuid())
+  leadId                 String            @unique // the pipeline's uuid; links /apply step 1 and step 2
+  kind                   WebsiteLeadKind
+  status                 WebsiteLeadStatus @default(NEW)
+  name                   String?
+  phone                  String?
+  email                  String?
+  city                   String?
+  productSlug            String?
+  amount                 Float?
+  source                 String?
+  page                   String?
+  data                   Json // every field the form captured, merged across events
+  qualifiedAt            DateTime?
+  assignedAdminId        String?
+  internalNote           String?
+  convertedUserId        String?
+  convertedApplicationId String?
+  createdAt              DateTime          @default(now())
+  updatedAt              DateTime          @updatedAt
+
+  @@index([kind])
+  @@index([status])
+  @@index([createdAt])
+  @@index([phone])
+  @@index([email])
+}
