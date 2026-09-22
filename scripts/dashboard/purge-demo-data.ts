@@ -54,6 +54,8 @@ async function main() {
     return;
   }
 
+  // Eight round-trips through Neon's pooler comfortably exceed Prisma's
+  // default 5 s interactive-transaction timeout.
   const result = await prisma.$transaction(async (tx) => ({
     commissions: (await tx.commissionEntry.deleteMany({ where: { OR: [{ partnerId: { in: userIds } }, { applicationId: { in: appIds } }, { payoutId: { in: payoutIds } }] } })).count,
     payouts: (await tx.payout.deleteMany({ where: { id: { in: payoutIds } } })).count,
@@ -64,7 +66,7 @@ async function main() {
     auditLogs: (await tx.auditLog.deleteMany({ where: { OR: [{ actorUserId: { in: userIds } }, { entityId: { in: [...userIds, ...appIds, ...docIds, ...payoutIds] } }] } })).count,
     // Profiles, notifications and tokens cascade from the user row.
     users: (await tx.user.deleteMany({ where: { id: { in: userIds } } })).count,
-  }));
+  }), { timeout: 60_000 });
 
   console.log("\nDeleted:", result);
   console.log("Remaining:", {
