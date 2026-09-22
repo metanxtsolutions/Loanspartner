@@ -1,4 +1,4 @@
-import type { ApplicationStatus, CommissionStatus, DocumentStatus, PartnerKycStatus, PayoutStatus } from "@prisma/client";
+import type { ApplicationStatus, CommissionStatus, DocumentStatus, PartnerKycStatus, PayoutStatus, WebsiteLeadKind, WebsiteLeadStatus } from "@prisma/client";
 
 export type StatusTone = "neutral" | "info" | "warning" | "success" | "danger";
 
@@ -79,6 +79,21 @@ export const PAYOUT_STATUS_META: StatusMeta<PayoutStatus> = {
   PROCESSING: { label: "Processing", tone: "warning" },
   PAID: { label: "Paid", tone: "success" },
   FAILED: { label: "Failed", tone: "danger" },
+};
+
+export const WEBSITE_LEAD_KIND_META: StatusMeta<WebsiteLeadKind> = {
+  LOAN_ENQUIRY: { label: "Loan enquiry", tone: "info" },
+  PARTNER_INTEREST: { label: "Partner interest", tone: "success" },
+  CALLBACK: { label: "Callback", tone: "warning" },
+  CONTACT: { label: "Contact", tone: "neutral" },
+};
+
+export const WEBSITE_LEAD_STATUS_META: StatusMeta<WebsiteLeadStatus> = {
+  NEW: { label: "New", tone: "warning" },
+  CONTACTED: { label: "Contacted", tone: "info" },
+  QUALIFIED: { label: "Qualified", tone: "info" },
+  CONVERTED: { label: "Converted", tone: "success" },
+  CLOSED: { label: "Closed", tone: "neutral" },
 };
 
 export const DOCUMENT_TYPE_LABELS: Record<string, string> = {

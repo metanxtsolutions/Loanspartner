@@ -122,6 +122,28 @@ export const adminRoleChangeSchema = z.object({
   adminRole: z.enum(["SUPER_ADMIN", "OPS", "FINANCE", "SUPPORT"]),
 });
 
+export const leadStatusChangeSchema = z.object({
+  leadId: z.string().min(1),
+  status: z.enum(["NEW", "CONTACTED", "QUALIFIED", "CONVERTED", "CLOSED"]),
+});
+
+export const leadNoteSchema = z.object({
+  leadId: z.string().min(1),
+  internalNote: z.string().trim().max(2000),
+});
+
+export const leadConvertCustomerSchema = z.object({
+  leadId: z.string().min(1),
+  email: z.string().trim().toLowerCase().email("Enter a valid email for the customer").max(120),
+  product: productSlug,
+  requestedAmount: z.coerce.number().int().min(10_000, "Minimum ₹10,000").max(500_000_000, "Please call us for amounts above ₹50 crore"),
+  city: z.string().trim().min(2, "Enter the customer's city").max(60),
+});
+
+export const leadConvertPartnerSchema = z.object({
+  leadId: z.string().min(1),
+});
+
 export const profileUpdateSchema = z.object({
   name: z.string().trim().min(2, "Enter your full name").max(80),
   phone,

@@ -2,6 +2,8 @@ import "server-only";
 import { randomUUID } from "node:crypto";
 import { appendFile, mkdir } from "node:fs/promises";
 import path from "node:path";
+import type { Prisma, WebsiteLeadKind } from "@prisma/client";
+import { prisma } from "@/server/db";
 
 /**
  * Event-sourced lead store with pluggable sinks. Every submission appends an
@@ -34,7 +36,7 @@ export type RecordResult = { event: LeadEvent; delivered: number; failures: stri
  */
 export async function recordEvent(input: Omit<LeadEvent, "id" | "at">): Promise<RecordResult> {
   const event: LeadEvent = { id: randomUUID(), at: new Date().toISOString(), ...input };
-  const results = await Promise.allSettled([persistLocal(event), sendWebhook(event), sendEmail(event)]);
+  const results = await Promise.allSettled([persistDatabase(event), persistLocal(event), sendWebhook(event), sendEmail(event)]);
 
   const delivered = results.filter((r) => r.status === "fulfilled" && r.value).length;
   const failures = results
@@ -51,6 +53,59 @@ export async function recordEvent(input: Omit<LeadEvent, "id" | "at">): Promise<
 }
 
 export const newLeadId = () => randomUUID();
+
+const KIND_FOR_TYPE: Record<LeadEvent["type"], WebsiteLeadKind> = {
+  "lead.created": "LOAN_ENQUIRY",
+  "lead.qualified": "LOAN_ENQUIRY",
+  "callback.requested": "CALLBACK",
+  "partner.applied": "PARTNER_INTEREST",
+  "contact.sent": "CONTACT",
+};
+
+const str = (v: unknown) => (typeof v === "string" && v.trim() ? v.trim() : undefined);
+const num = (v: unknown) => (typeof v === "number" && Number.isFinite(v) ? v : undefined);
+
+/**
+ * Postgres row per lead, worked from /console/leads. Keyed on the pipeline's
+ * leadId so the two /apply events (step 1, then qualification) land on one
+ * row: step 2 fills in the fields step 1 didn't have and merges its answers
+ * into `data`. Any other event type is a fresh row. A failure here throws so
+ * it is counted and logged like any other sink; the email still goes out.
+ */
+async function persistDatabase(event: LeadEvent): Promise<boolean> {
+  if (!process.env.DATABASE_URL) return false;
+  const d = event.data;
+  const fields = {
+    name: str(d.name),
+    phone: str(d.phone),
+    email: str(d.email),
+    city: str(d.city),
+    productSlug: str(d.product),
+    amount: num(d.amount),
+    source: str(d.source),
+    page: event.page,
+  };
+  const meta = { ip: event.ip, userAgent: event.userAgent };
+
+  if (event.type === "lead.qualified") {
+    const existing = await prisma.websiteLead.findUnique({ where: { leadId: event.leadId } });
+    const merged = { ...((existing?.data as Record<string, unknown> | null) ?? {}), ...d, ...meta } as Prisma.InputJsonValue;
+    const known = Object.fromEntries(Object.entries(fields).filter(([, v]) => v !== undefined));
+    await prisma.websiteLead.upsert({
+      where: { leadId: event.leadId },
+      update: { ...known, data: merged, qualifiedAt: new Date(event.at) },
+      create: { leadId: event.leadId, kind: "LOAN_ENQUIRY", ...fields, data: merged, qualifiedAt: new Date(event.at) },
+    });
+    return true;
+  }
+
+  await prisma.websiteLead.upsert({
+    where: { leadId: event.leadId },
+    update: {},
+    create: { leadId: event.leadId, kind: KIND_FOR_TYPE[event.type], ...fields, data: { ...d, ...meta } as Prisma.InputJsonValue },
+  });
+  return true;
+}
 
 /** Local JSONL file in development or when LEADS_FILE is set. Read-only filesystems are skipped. */
 async function persistLocal(event: LeadEvent): Promise<boolean> {

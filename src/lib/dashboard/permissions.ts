@@ -11,6 +11,7 @@ export const PERMISSIONS = [
   "partners.review_kyc",
   "applications.manage",
   "applications.change_status",
+  "leads.manage",
   "documents.review",
   "lenders.manage",
   "commissions.manage",
@@ -30,6 +31,7 @@ const MATRIX: Record<AdminRole, readonly Permission[]> = {
     "partners.review_kyc",
     "applications.manage",
     "applications.change_status",
+    "leads.manage",
     "documents.review",
     "lenders.manage",
     "notifications.broadcast",
@@ -37,7 +39,7 @@ const MATRIX: Record<AdminRole, readonly Permission[]> = {
     "activity_log.view",
   ],
   FINANCE: ["commissions.manage", "payouts.manage", "reports.view", "activity_log.view"],
-  SUPPORT: ["applications.change_status", "documents.review", "reports.view"],
+  SUPPORT: ["applications.change_status", "leads.manage", "documents.review", "reports.view"],
 };
 
 export function adminRoleHasPermission(adminRole: AdminRole | null, permission: Permission) {

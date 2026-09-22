@@ -1,6 +1,7 @@
-import { Users, UserCheck, FileText, FileCheck2, Banknote, Clock } from "lucide-react";
+import { Users, UserCheck, FileText, FileCheck2, Banknote, Clock, Inbox } from "lucide-react";
 import { requireAdmin } from "@/server/dashboard/access";
 import { platformOverviewCounts } from "@/server/dashboard/users";
+import { newWebsiteLeadCount } from "@/server/dashboard/leads";
 import { adminRoleHasPermission } from "@/lib/dashboard/permissions";
 import { PageHeader } from "@/components/dashboard/page-header";
 import { StatCard } from "@/components/dashboard/stat-card";
@@ -8,16 +9,20 @@ import { ButtonLink } from "@/components/shared/button";
 
 export default async function ConsoleOverviewPage() {
   const actor = await requireAdmin();
-  const counts = await platformOverviewCounts();
+  const [counts, newLeads] = await Promise.all([platformOverviewCounts(), newWebsiteLeadCount()]);
 
   const canReviewKyc = adminRoleHasPermission(actor.adminRole, "partners.review_kyc");
   const canReviewDocuments = adminRoleHasPermission(actor.adminRole, "documents.review");
+  const canManageLeads = adminRoleHasPermission(actor.adminRole, "leads.manage");
 
   return (
     <div>
       <PageHeader title="Overview" subtitle="Platform-wide snapshot across customers, partners and applications." />
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {canManageLeads ? (
+          <StatCard label="New website leads" value={newLeads} icon={<Inbox className="size-4" />} tone={newLeads > 0 ? "brass" : "default"} hint="Unworked form submissions" />
+        ) : null}
         <StatCard label="Customers" value={counts.customers} icon={<Users className="size-4" />} />
         <StatCard label="Partners" value={counts.partners} icon={<UserCheck className="size-4" />} />
         <StatCard label="Pending KYC" value={counts.pendingKyc} icon={<Clock className="size-4" />} tone={counts.pendingKyc > 0 ? "brass" : "default"} />
@@ -32,10 +37,15 @@ export default async function ConsoleOverviewPage() {
         />
       </div>
 
-      {(canReviewKyc && counts.pendingKyc > 0) || (canReviewDocuments && counts.pendingDocuments > 0) ? (
+      {(canManageLeads && newLeads > 0) || (canReviewKyc && counts.pendingKyc > 0) || (canReviewDocuments && counts.pendingDocuments > 0) ? (
         <div className="mt-8">
           <h2 className="text-ink-950 mb-3 text-sm font-bold tracking-wide uppercase">Needs attention</h2>
           <div className="flex flex-wrap gap-3">
+            {canManageLeads && newLeads > 0 ? (
+              <ButtonLink href="/console/leads?status=NEW" variant="brass" size="sm">
+                {newLeads} new website {newLeads === 1 ? "lead" : "leads"}
+              </ButtonLink>
+            ) : null}
             {canReviewKyc && counts.pendingKyc > 0 ? (
               <ButtonLink href="/console/partners" variant="brass" size="sm">
                 {counts.pendingKyc} partner KYC {counts.pendingKyc === 1 ? "review" : "reviews"} pending
