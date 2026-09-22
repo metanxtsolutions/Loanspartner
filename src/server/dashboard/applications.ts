@@ -56,10 +56,13 @@ export async function listApplicationsForPartner(partnerId: string) {
   });
 }
 
-export async function listApplicationsForAdmin(filter?: { status?: ApplicationStatus; search?: string }) {
+export type ApplicationSource = "direct" | "partner";
+
+export async function listApplicationsForAdmin(filter?: { status?: ApplicationStatus; source?: ApplicationSource; search?: string }) {
   return prisma.loanApplication.findMany({
     where: {
       status: filter?.status,
+      ...(filter?.source === "direct" ? { partnerId: null } : filter?.source === "partner" ? { partnerId: { not: null } } : {}),
       ...(filter?.search
         ? {
             OR: [

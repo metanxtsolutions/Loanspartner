@@ -37,7 +37,16 @@ const NAV: { href: string; label: string; icon: ReactNode; permission?: Permissi
   { href: "/console", label: "Overview", icon: <LayoutDashboard className="size-4" /> },
   { href: "/console/users", label: "Users", icon: <Users className="size-4" />, permission: "users.manage" },
   { href: "/console/partners", label: "Partners", icon: <UserCheck className="size-4" />, permission: "partners.review_kyc" },
-  { href: "/console/applications", label: "Applications", icon: <FileText className="size-4" />, permission: "applications.manage" },
+  {
+    href: "/console/applications",
+    label: "Applications",
+    icon: <FileText className="size-4" />,
+    permission: "applications.manage",
+    children: [
+      { href: "/console/applications?source=direct", label: "Direct" },
+      { href: "/console/applications?source=partner", label: "By partner" },
+    ],
+  },
   { href: "/console/leads", label: "Website leads", icon: <Inbox className="size-4" />, permission: "leads.manage", children: LEAD_KINDS },
   { href: "/console/lenders", label: "Lenders", icon: <Landmark className="size-4" />, permission: "lenders.manage" },
   { href: "/console/products", label: "Products", icon: <Package className="size-4" /> },
