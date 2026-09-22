@@ -4,7 +4,10 @@ import { cibilBands, employmentTypes } from "@/lib/leads/options";
 
 export const INDIAN_MOBILE = /^(\+?91[-\s]?)?[6-9]\d{9}$/;
 
-export const normalisePhone = (v: string) => v.replace(/[\s-]/g, "").replace(/^\+?91/, "");
+// Only treat a leading 91 as the country code when a full 10-digit mobile
+// follows it; otherwise numbers that simply start with 91 (9172560701) lose
+// their first two digits.
+export const normalisePhone = (v: string) => v.replace(/[\s-]/g, "").replace(/^\+?91(?=[6-9]\d{9}$)/, "");
 
 const phone = z
   .string()
