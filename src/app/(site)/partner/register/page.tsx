@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { pageMetadata } from "@/lib/seo";
 import { JsonLd } from "@/components/shared/json-ld";
 import { webPageSchema } from "@/lib/schema";
@@ -41,6 +42,13 @@ export default function PartnerRegisterPage() {
             <p className="text-mute mt-4 text-lg">
               Free, with no obligation. A partner manager calls within one working day to walk you through the
               programme.
+            </p>
+            <p className="text-mute mt-3 text-sm">
+              Already a partner?{" "}
+              <Link href="/partners/login" className="text-brass-600 font-bold underline underline-offset-4">
+                Sign in to the partner portal
+              </Link>
+              .
             </p>
             <Card className="mt-8 p-6 sm:p-8">
               <PartnerForm products={productOptions} audiences={audienceOptions} cities={cityOptions} />

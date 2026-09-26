@@ -11,6 +11,7 @@ import { FaqList } from "@/components/shared/faq";
 import { GuideCard } from "@/components/shared/guide-card";
 import { CtaBand } from "@/components/shared/cta-band";
 import { ButtonLink } from "@/components/shared/button";
+import { AudiencePaths } from "@/components/shared/audience-paths";
 import { JsonLd } from "@/components/shared/json-ld";
 import { faqPageSchema, webPageSchema, itemListSchema } from "@/lib/schema";
 import { products, popularProducts } from "@/data/products";
@@ -18,26 +19,8 @@ import { cities } from "@/data/cities";
 import { partnerAudiences } from "@/data/partner";
 import { featuredGuides } from "@/data/guides";
 import { globalFaqs } from "@/data/faqs";
+import { borrowerSteps } from "@/data/borrowers";
 import { siteConfig } from "@/data/site-config";
-
-const homeSteps = [
-  {
-    name: "Tell us what you need",
-    text: "Loan type, amount and a little about your income. Two minutes, no documents yet.",
-  },
-  {
-    name: "We pre-screen without a bureau hit",
-    text: "Our credit desk checks your profile against current lender policies and calls with a shortlist and indicative rates.",
-  },
-  {
-    name: "One complete file to the right lender",
-    text: "We collect documents digitally and submit a file that answers the underwriter's questions before they ask.",
-  },
-  {
-    name: "Sanction, KFS, disbursal",
-    text: "You review the Key Fact Statement, sign, and funds land. We stay on call for everything after.",
-  },
-];
 
 const tools = [
   {
@@ -84,6 +67,7 @@ export default function HomePage() {
 
       <Section tone="paper" className="!py-14">
         <ProofStrip />
+        <AudiencePaths className="mt-12" />
       </Section>
 
       <Section tone="cream" id="loans">
@@ -130,7 +114,7 @@ export default function HomePage() {
               Start with a two-minute check <ArrowRight className="size-4" />
             </ButtonLink>
           </div>
-          <Steps steps={homeSteps} />
+          <Steps steps={borrowerSteps} />
         </div>
       </Section>
 
