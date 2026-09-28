@@ -28,7 +28,18 @@ export default function ContactPage() {
         crumbs={[{ name: "Contact", path: "/contact" }]}
         eyebrow="Contact"
         title="Talk to a person."
-        lede="Borrowers, partners, lenders and media: one desk, one working day to reply."
+        lede={
+          <>
+            <Link href="/borrowers" className="text-brass-600 font-bold underline underline-offset-4">
+              Borrowers
+            </Link>
+            ,{" "}
+            <Link href="/partner" className="text-brass-600 font-bold underline underline-offset-4">
+              partners
+            </Link>
+            , lenders and media: one desk, one working day to reply.
+          </>
+        }
       />
       <Section tone="cream">
         <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr]">

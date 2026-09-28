@@ -46,6 +46,7 @@ const staticPages: { path: string; file: string; updated: string; priority: numb
   { path: "/", file: "src/app/(site)/page.tsx", updated: "2026-09-01", priority: 1, changeFrequency: "weekly" },
   { path: "/loans", file: "src/app/(site)/loans/page.tsx", updated: "2026-09-01", priority: 0.9, changeFrequency: "weekly" },
   { path: "/apply", file: "src/app/(site)/apply/page.tsx", updated: "2026-09-01", priority: 0.9, changeFrequency: "monthly" },
+  { path: "/borrowers", file: "src/data/borrowers.ts", updated: "2026-09-25", priority: 0.9, changeFrequency: "monthly" },
   { path: "/partner", file: "src/app/(site)/partner/page.tsx", updated: "2026-09-01", priority: 0.9, changeFrequency: "weekly" },
   { path: "/partner/register", file: "src/app/(site)/partner/register/page.tsx", updated: "2026-09-01", priority: 0.8, changeFrequency: "monthly" },
   { path: "/partner/commission", file: "src/app/(site)/partner/commission/page.tsx", updated: "2026-09-01", priority: 0.8, changeFrequency: "monthly" },

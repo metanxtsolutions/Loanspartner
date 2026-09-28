@@ -250,6 +250,9 @@ export function Header({ nav, phone, phoneDisplay }: { nav: NavData; phone: stri
             <Link href="/loans" className="text-brass-600 mt-1 block px-3 py-2 text-sm font-bold">
               All loan products
             </Link>
+            <Link href="/borrowers" className="text-brass-600 block px-3 py-2 text-sm font-bold">
+              How it works for borrowers
+            </Link>
           </MobileGroup>
           <MobileGroup title="Partner with us">
             {partnerLinks.map((l) => (
@@ -266,6 +269,9 @@ export function Header({ nav, phone, phoneDisplay }: { nav: NavData; phone: stri
                 For {a.name.toLowerCase()}
               </Link>
             ))}
+            <Link href="/partners/login" className="text-mute hover:bg-sand block px-3 py-2 text-sm">
+              Partner portal sign in
+            </Link>
           </MobileGroup>
           <MobileGroup title="Tools and resources">
             {tools.map((t) => (
@@ -420,6 +426,14 @@ function LoansMenu({
           <ButtonLink href="/apply" size="sm" className="mt-3">
             Check eligibility <ArrowRight className="size-3.5" aria-hidden />
           </ButtonLink>
+          <p className="mt-3">
+            <Link
+              href="/borrowers"
+              className="text-brass-400 hover:text-brass-300 inline-flex items-center gap-1 text-sm font-bold"
+            >
+              How it works for borrowers <ArrowRight className="size-3.5" aria-hidden />
+            </Link>
+          </p>
         </div>
       </div>
     </div>
@@ -463,6 +477,12 @@ function PartnerMenu({ audiences }: { audiences: AudienceLite[] }) {
         <ButtonLink href="/partner/register" variant="light" size="sm" className="mt-4">
           Register free <ArrowRight className="size-3.5" aria-hidden />
         </ButtonLink>
+        <p className="mt-3 text-sm text-white/70">
+          Already a partner?{" "}
+          <Link href="/partners/login" className="font-bold text-white underline underline-offset-4">
+            Sign in
+          </Link>
+        </p>
       </div>
     </div>
   );

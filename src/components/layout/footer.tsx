@@ -19,6 +19,7 @@ const resourceLinks = [
 ];
 
 const companyLinks = [
+  { label: "For borrowers", href: "/borrowers" },
   { label: "About LoansPartner", href: "/about" },
   { label: "Lending partners", href: "/lenders" },
   { label: "Cities we serve", href: "/cities" },
@@ -77,6 +78,7 @@ export function Footer() {
             <FooterLink href="/partner">Become a channel partner</FooterLink>
             <FooterLink href="/partner/commission">DSA commission</FooterLink>
             <FooterLink href="/partner/register">Register free</FooterLink>
+            <FooterLink href="/partners/login">Partner portal sign in</FooterLink>
             {partnerAudiences.map((x) => (
               <FooterLink key={x.slug} href={`/partner/for/${x.slug}`}>
                 For {x.short}

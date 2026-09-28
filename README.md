@@ -25,6 +25,7 @@ pnpm start
 | Product × city (5 core × 16 cities) | `/loans/[product]/[city]` | `src/data/cities-batch-*.ts` |
 | City hubs | `/cities`, `/cities/[city]` | `src/data/cities.ts` |
 | Partner programme | `/partner`, `/partner/register`, `/partner/commission`, `/partner/[product]-dsa`, `/partner/for/[audience]` | `src/data/partner.ts`, `products.ts` |
+| Borrower hub | `/borrowers` (who it is for, what you can do, how it works, support, FAQs) | `src/data/borrowers.ts`, `site-config.ts` |
 | Lenders (26) | `/lenders`, `/lenders/[slug]` | `src/data/lenders.ts` |
 | Tools | `/tools/*` (EMI, eligibility, balance transfer, DSA income) | `src/components/tools/*` |
 | Guides (13) | `/guides`, `/guides/[slug]` | `src/data/guides-batch-*.ts` |

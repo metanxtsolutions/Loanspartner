@@ -92,6 +92,17 @@ export default function PartnerPage() {
             Commission slabs
           </ButtonLink>
         </div>
+        <p className="mt-5 text-sm text-white/75">
+          Already a partner?{" "}
+          <Link href="/partners/login" className="font-bold text-white underline underline-offset-4">
+            Sign in to the partner portal
+          </Link>
+          . Looking for a loan instead?{" "}
+          <Link href="/borrowers" className="font-bold text-white underline underline-offset-4">
+            See how it works for borrowers
+          </Link>
+          .
+        </p>
       </PageHero>
 
       <Section tone="cream">
