@@ -5,7 +5,12 @@ import { getActor, dashboardPathFor } from "@/server/dashboard/access";
 import { Logo } from "@/components/shared/logo";
 import { LoginForm } from "./login-form";
 
-export const metadata: Metadata = { title: "Sign in", robots: { index: false, follow: false } };
+export const metadata: Metadata = {
+  title: "Sign in",
+  description:
+    "Sign in to your LoansPartner account to track your loan applications, documents and updates from our credit desk.",
+  robots: { index: false, follow: false },
+};
 
 export default async function LoginPage() {
   const actor = await getActor();

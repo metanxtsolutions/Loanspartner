@@ -43,7 +43,7 @@ export function EmiCalculator({
   }, [amount, rate, months]);
 
   return (
-    <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
+    <div className="grid grid-cols-1 gap-6 lg:grid-cols-[1.1fr_0.9fr]">
       <Panel className="space-y-7">
         <SliderField
           label="Loan amount"

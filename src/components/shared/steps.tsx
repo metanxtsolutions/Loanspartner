@@ -5,7 +5,7 @@ export function Steps({
   tone = "light",
   columns = false,
 }: {
-  steps: readonly (string | { name: string; text: string })[];
+  steps: readonly (string | { name: string; text: React.ReactNode })[];
   tone?: "light" | "dark";
   columns?: boolean;
 }) {

@@ -231,7 +231,11 @@ export default function HomePage() {
               >
                 read this
               </Link>{" "}
-              and call 1930.
+              and call{" "}
+              <a href="tel:1930" className="text-brass-600 font-bold underline underline-offset-4">
+                1930
+              </a>
+              .
             </p>
           </div>
           <Pill tone="brass" className="shrink-0">

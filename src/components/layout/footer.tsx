@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Mail, MapPin, Phone, ShieldAlert } from "lucide-react";
 import { Logo } from "@/components/shared/logo";
 import { SocialLinks } from "@/components/shared/social-links";
+import { CurrentYear } from "@/components/layout/current-year";
 import { products } from "@/data/products";
 import { cities } from "@/data/cities";
 import { partnerAudiences } from "@/data/partner";
@@ -114,7 +115,7 @@ export function Footer() {
             approval in our name.
           </p>
           <p>
-            © {year} {siteConfig.legalName}. All rights reserved.
+            © <CurrentYear buildYear={year} /> {siteConfig.legalName}. All rights reserved.
           </p>
         </div>
       </div>

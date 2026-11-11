@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { requirePartner } from "@/server/dashboard/access";
 import { listCommissionsForPartner, listPayoutsForPartner } from "@/server/dashboard/commissions";
 import { PageHeader } from "@/components/dashboard/page-header";
@@ -6,6 +7,8 @@ import { StatusPill } from "@/components/dashboard/status-pill";
 import { ButtonLink } from "@/components/shared/button";
 import { formatINR, readableDate } from "@/lib/utils";
 import { COMMISSION_STATUS_META, PAYOUT_STATUS_META } from "@/lib/dashboard/statuses";
+
+export const metadata: Metadata = { title: "Earnings" };
 
 type CommissionRow = Awaited<ReturnType<typeof listCommissionsForPartner>>[number];
 type PayoutRow = Awaited<ReturnType<typeof listPayoutsForPartner>>[number];

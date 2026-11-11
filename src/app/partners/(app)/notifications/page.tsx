@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { requirePartner } from "@/server/dashboard/access";
 import { listNotifications } from "@/server/dashboard/notifications";
@@ -5,6 +6,8 @@ import { markNotificationsReadAction } from "@/actions/partner/leads";
 import { PageHeader } from "@/components/dashboard/page-header";
 import { EmptyState } from "@/components/dashboard/empty-state";
 import { cn, readableDate } from "@/lib/utils";
+
+export const metadata: Metadata = { title: "Partner notifications" };
 
 export default async function PartnerNotificationsPage() {
   const user = await requirePartner();

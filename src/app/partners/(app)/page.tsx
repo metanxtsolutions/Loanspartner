@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { ClipboardList, Wallet, TrendingUp } from "lucide-react";
 import { requirePartner } from "@/server/dashboard/access";
@@ -12,6 +13,8 @@ import { EmptyState } from "@/components/dashboard/empty-state";
 import { ButtonLink } from "@/components/shared/button";
 import { formatINR, readableDate } from "@/lib/utils";
 import { APPLICATION_STATUS_META } from "@/lib/dashboard/statuses";
+
+export const metadata: Metadata = { title: "Partner dashboard" };
 
 const TERMINAL_STATUSES = new Set(["DISBURSED", "REJECTED", "WITHDRAWN"]);
 

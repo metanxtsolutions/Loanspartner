@@ -72,7 +72,7 @@ export default async function TermPage({ params }: PageProps<"/glossary/[term]">
         lede={t.short}
       />
       <Section tone="cream">
-        <div className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_18rem]">
+        <div className="grid grid-cols-1 gap-12 lg:grid-cols-[minmax(0,1fr)_18rem]">
           <div className="prose-lp max-w-3xl" data-reveal>
             <h2>What it means</h2>
             {t.definition.map((p, i) => (

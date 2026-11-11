@@ -5,7 +5,12 @@ import { getActor, dashboardPathFor } from "@/server/dashboard/access";
 import { Logo } from "@/components/shared/logo";
 import { RegisterForm } from "./register-form";
 
-export const metadata: Metadata = { title: "Create an account", robots: { index: false, follow: false } };
+export const metadata: Metadata = {
+  title: "Create an account",
+  description:
+    "Create a free LoansPartner account to apply for a loan, upload documents and track your application in one place.",
+  robots: { index: false, follow: false },
+};
 
 export default async function RegisterPage() {
   const actor = await getActor();

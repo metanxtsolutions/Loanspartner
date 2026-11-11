@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import type { LoanApplication } from "@prisma/client";
 import { requireCustomer } from "@/server/dashboard/access";
 import { listApplicationsForCustomer } from "@/server/dashboard/applications";
@@ -8,6 +9,8 @@ import { ButtonLink } from "@/components/shared/button";
 import { APPLICATION_STATUS_META } from "@/lib/dashboard/statuses";
 import { productOption } from "@/data/lite";
 import { formatINR, readableDate } from "@/lib/utils";
+
+export const metadata: Metadata = { title: "My applications" };
 
 export default async function ApplicationsPage() {
   const actor = await requireCustomer();

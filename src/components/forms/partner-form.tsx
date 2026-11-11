@@ -165,7 +165,7 @@ export function PartnerForm({
           {state.errors.consent}
         </p>
       )}
-      <FormError message={state.message} />
+      <FormError message={state.message} errors={state.errors} />
       <SubmitButton pending={pending}>
         Submit application <ArrowRight className="size-4" aria-hidden />
       </SubmitButton>

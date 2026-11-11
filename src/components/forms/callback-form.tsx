@@ -59,7 +59,7 @@ export function CallbackForm({
           )}
         </Field>
       )}
-      <FormError message={state.message} />
+      <FormError message={state.message} errors={state.errors} />
       <SubmitButton pending={pending}>
         <PhoneCall className="size-4" aria-hidden /> Request a callback
       </SubmitButton>

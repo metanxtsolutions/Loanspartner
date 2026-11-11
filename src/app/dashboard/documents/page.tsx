@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import type { Document } from "@prisma/client";
 import { requireCustomer } from "@/server/dashboard/access";
 import { listDocumentsForOwner } from "@/server/dashboard/documents";
@@ -8,6 +9,8 @@ import { StatusPill } from "@/components/dashboard/status-pill";
 import { FileUploader } from "@/components/dashboard/file-uploader";
 import { DOCUMENT_STATUS_META, DOCUMENT_TYPE_LABELS } from "@/lib/dashboard/statuses";
 import { readableDate } from "@/lib/utils";
+
+export const metadata: Metadata = { title: "My documents" };
 
 export default async function DocumentsPage() {
   const actor = await requireCustomer();

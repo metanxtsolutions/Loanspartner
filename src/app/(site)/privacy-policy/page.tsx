@@ -10,6 +10,8 @@ export const metadata: Metadata = pageMetadata({ title, description, path: "/pri
 
 export default function Page() {
   const c = siteConfig.contact;
+  const email = <a href={`mailto:${c.email}`}>{c.email}</a>;
+  const grievanceEmail = <a href={`mailto:${c.grievanceEmail}`}>{c.grievanceEmail}</a>;
   return (
     <LegalPage title={title} description={description} path="/privacy-policy" updated="2026-09-01">
       <p>
@@ -54,8 +56,8 @@ export default function Page() {
       <h2>Consent and withdrawal</h2>
       <p>
         We rely on your consent, given when you submit a form, to contact you and to process your enquiry. You can
-        withdraw consent at any time by writing to {c.email}; we will stop processing except where a lender application
-        is already in progress or the law requires retention.
+        withdraw consent at any time by writing to {email}; we will stop processing except where a lender application is
+        already in progress or the law requires retention.
       </p>
       <h2>Retention</h2>
       <p>
@@ -66,8 +68,8 @@ export default function Page() {
       <h2>Your rights</h2>
       <p>
         You may request access to, correction of, or erasure of your personal data, nominate a person to exercise your
-        rights, and raise a grievance. Write to {c.grievanceEmail}. We respond within 15 working days. If unresolved,
-        you may approach the Data Protection Board of India.
+        rights, and raise a grievance. Write to {grievanceEmail}. We respond within 15 working days. If unresolved, you
+        may approach the Data Protection Board of India.
       </p>
       <h2>Security</h2>
       <p>
@@ -88,8 +90,8 @@ export default function Page() {
       </p>
       <h2>Changes and contact</h2>
       <p>
-        We update this policy when our practices or the law change and show the date above. Questions: {c.email}.
-        Grievances: {c.grievanceEmail}.
+        We update this policy when our practices or the law change and show the date above. Questions: {email}.
+        Grievances: {grievanceEmail}.
       </p>
     </LegalPage>
   );

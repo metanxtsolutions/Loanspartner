@@ -37,7 +37,7 @@ export function ContactForm({ defaultSubject = "loan" }: { defaultSubject?: stri
       <Field label="Message" name="message" error={state.errors?.message}>
         {(a) => <textarea {...a} name="message" rows={5} className="field" required />}
       </Field>
-      <FormError message={state.message} />
+      <FormError message={state.message} errors={state.errors} />
       <SubmitButton pending={pending}>
         <Send className="size-4" aria-hidden /> Send message
       </SubmitButton>

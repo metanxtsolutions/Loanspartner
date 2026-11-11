@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, FileClock, FileText } from "lucide-react";
 import { requireCustomer } from "@/server/dashboard/access";
@@ -12,6 +13,8 @@ import { ButtonLink } from "@/components/shared/button";
 import { APPLICATION_STATUS_META } from "@/lib/dashboard/statuses";
 import { productOption } from "@/data/lite";
 import { formatINR, readableDate } from "@/lib/utils";
+
+export const metadata: Metadata = { title: "My dashboard" };
 
 const TERMINAL_STATUSES = new Set(["DISBURSED", "REJECTED", "WITHDRAWN"]);
 

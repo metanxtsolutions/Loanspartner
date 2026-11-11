@@ -24,7 +24,7 @@ function Mark({ v }: { v: 0 | 1 | 2 }) {
 
 export function CompareTable() {
   return (
-    <div className="rounded-card border-line shadow-soft overflow-x-auto border bg-white" data-reveal>
+    <div className="rounded-card border-line shadow-soft relative overflow-x-auto border bg-white" data-reveal>
       <table className="w-full min-w-[640px] text-sm">
         <caption className="sr-only">What a bank branch, an aggregator portal and LoansPartner each give you</caption>
         <thead>

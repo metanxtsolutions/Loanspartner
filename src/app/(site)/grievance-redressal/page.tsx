@@ -8,6 +8,13 @@ import { Steps } from "@/components/shared/steps";
 import { ContactForm } from "@/components/forms/contact-form";
 import { siteConfig } from "@/data/site-config";
 
+const link = "text-brass-600 font-semibold underline underline-offset-4";
+const grievanceMail = (
+  <a href={`mailto:${siteConfig.contact.grievanceEmail}`} className={link}>
+    {siteConfig.contact.grievanceEmail}
+  </a>
+);
+
 const title = "Grievance Redressal";
 const description =
   "LoansPartner's complaint process: acknowledgement within 2 working days, resolution within 15, escalation to the lender's grievance officer and the RBI Integrated Ombudsman Scheme.";
@@ -22,7 +29,12 @@ export const metadata: Metadata = pageMetadata({
 const steps = [
   {
     name: "Level 1: write to the desk",
-    text: `Email ${siteConfig.contact.grievanceEmail} or use the form below with your name, mobile number, the loan or partner reference and what went wrong. We acknowledge within 2 working days and resolve within 15.`,
+    text: (
+      <>
+        Email {grievanceMail} or use the form below with your name, mobile number, the loan or partner reference and
+        what went wrong. We acknowledge within 2 working days and resolve within 15.
+      </>
+    ),
   },
   {
     name: "Level 2: grievance officer",
@@ -34,7 +46,20 @@ const steps = [
   },
   {
     name: "Level 4: RBI Integrated Ombudsman",
-    text: "If a complaint against a bank, NBFC or HFC is not resolved within 30 days, you can file with the RBI's Integrated Ombudsman Scheme at cms.rbi.org.in or by calling 14448. The scheme is free.",
+    text: (
+      <>
+        If a complaint against a bank, NBFC or HFC is not resolved within 30 days, you can file with the RBI&rsquo;s
+        Integrated Ombudsman Scheme at{" "}
+        <a href="https://cms.rbi.org.in" target="_blank" rel="noopener noreferrer" className={link}>
+          cms.rbi.org.in
+        </a>{" "}
+        or by calling{" "}
+        <a href="tel:14448" className={link}>
+          14448
+        </a>
+        . The scheme is free.
+      </>
+    ),
   },
 ];
 
@@ -56,8 +81,15 @@ export default function GrievancePage() {
               <p className="text-ink-900 font-bold">Fraud in our name</p>
               <p className="text-mute mt-2 text-sm">
                 If anyone has asked you for money claiming to represent LoansPartner, do not pay. Report it to us at{" "}
-                {siteConfig.contact.grievanceEmail} and to the national cybercrime helpline 1930 or cybercrime.gov.in.{" "}
-                {siteConfig.compliance.feeDisclosure}
+                {grievanceMail} and to the national cybercrime helpline{" "}
+                <a href="tel:1930" className={link}>
+                  1930
+                </a>{" "}
+                or{" "}
+                <a href="https://cybercrime.gov.in" target="_blank" rel="noopener noreferrer" className={link}>
+                  cybercrime.gov.in
+                </a>
+                . {siteConfig.compliance.feeDisclosure}
               </p>
             </Card>
           </div>

@@ -68,7 +68,7 @@ export default function RatesPage() {
         lede="Ranges across public sector banks, private banks, housing finance companies and NBFCs on our panel. Where your rate lands inside a range depends on your profile; we tell you before you apply."
       />
       <Section tone="cream">
-        <div className="rounded-card border-line shadow-soft overflow-x-auto border bg-white" data-reveal>
+        <div className="rounded-card border-line shadow-soft relative overflow-x-auto border bg-white" data-reveal>
           <table className="w-full min-w-[860px] text-sm">
             <caption className="sr-only">
               Indicative interest rate, amount, tenure and processing fee for each loan product

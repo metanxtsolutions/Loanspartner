@@ -2,7 +2,11 @@ import type { Metadata } from "next";
 import { Logo } from "@/components/shared/logo";
 import { ClaimAccountForm } from "./claim-account-form";
 
-export const metadata: Metadata = { title: "Set up your account", robots: { index: false, follow: false } };
+export const metadata: Metadata = {
+  title: "Set up your account",
+  description: "Set up your LoansPartner account to follow the loan application our team has started for you.",
+  robots: { index: false, follow: false },
+};
 
 export default async function ClaimAccountPage({ searchParams }: { searchParams: Promise<{ token?: string }> }) {
   const { token } = await searchParams;

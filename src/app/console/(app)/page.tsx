@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { Users, UserCheck, FileText, FileCheck2, Banknote, Clock, Inbox } from "lucide-react";
 import { requireAdmin } from "@/server/dashboard/access";
 import { platformOverviewCounts } from "@/server/dashboard/users";
@@ -6,6 +7,8 @@ import { adminRoleHasPermission } from "@/lib/dashboard/permissions";
 import { PageHeader } from "@/components/dashboard/page-header";
 import { StatCard } from "@/components/dashboard/stat-card";
 import { ButtonLink } from "@/components/shared/button";
+
+export const metadata: Metadata = { title: "Console overview" };
 
 export default async function ConsoleOverviewPage() {
   const actor = await requireAdmin();

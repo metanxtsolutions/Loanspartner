@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { requirePartner } from "@/server/dashboard/access";
 import { listApplicationsForPartner } from "@/server/dashboard/applications";
 import { PageHeader } from "@/components/dashboard/page-header";
@@ -7,6 +8,8 @@ import { ButtonLink } from "@/components/shared/button";
 import { formatINR, readableDate } from "@/lib/utils";
 import { APPLICATION_STATUS_META } from "@/lib/dashboard/statuses";
 import { productOption } from "@/data/lite";
+
+export const metadata: Metadata = { title: "My leads" };
 
 type Row = Awaited<ReturnType<typeof listApplicationsForPartner>>[number];
 

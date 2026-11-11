@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { requirePartner } from "@/server/dashboard/access";
 import { listDocumentsForOwner } from "@/server/dashboard/documents";
@@ -8,6 +9,8 @@ import { StatusPill } from "@/components/dashboard/status-pill";
 import { uploadPartnerDocumentAction } from "@/actions/partner/leads";
 import { DOCUMENT_STATUS_META, DOCUMENT_TYPE_LABELS } from "@/lib/dashboard/statuses";
 import { readableDate } from "@/lib/utils";
+
+export const metadata: Metadata = { title: "Partner documents" };
 
 const PARTNER_KYC_DOCUMENT_TYPES = ["PAN", "AADHAAR", "PHOTO", "GST_CERTIFICATE", "BANK_STATEMENT", "BUSINESS_PROOF", "OTHER"];
 

@@ -1,5 +1,6 @@
 /**
- * Single source of truth for brand, contact (NAP), navigation and claims.
+ * Single source of truth for brand, contact (NAP) and claims. Navigation lives in
+ * the header and footer components.
  * Do not add numbers here that the business cannot substantiate.
  *
  * Every NEXT_PUBLIC_* variable below is read as a literal property access.
@@ -75,16 +76,6 @@ export const siteConfig = {
       "Interest rates, fees and eligibility shown on this site are indicative, vary by lender and borrower profile, and are subject to change without notice. Always read the lender's Key Fact Statement (KFS) before signing.",
   },
 } as const;
-
-export type NavItem = { label: string; href: string; description?: string };
-
-export const mainNav: { label: string; href: string; children?: NavItem[] }[] = [
-  { label: "Loans", href: "/loans" },
-  { label: "Partner with us", href: "/partner" },
-  { label: "Tools", href: "/tools" },
-  { label: "Guides", href: "/guides" },
-  { label: "About", href: "/about" },
-];
 
 export const SITE_URL = siteConfig.url;
 /** The root is written without a trailing slash so canonicals, breadcrumbs and the sitemap agree. */

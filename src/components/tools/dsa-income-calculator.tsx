@@ -47,8 +47,8 @@ export function DsaIncomeCalculator({ products }: { products: ProductLite[] }) {
   }, [rows, products]);
 
   return (
-    <div className="grid gap-6 lg:grid-cols-[1.25fr_0.75fr]">
-      <Panel className="overflow-x-auto !p-0">
+    <div className="grid grid-cols-1 gap-6 lg:grid-cols-[1.25fr_0.75fr]">
+      <Panel className="relative overflow-x-auto !p-0">
         <table className="w-full min-w-[640px] text-sm">
           <caption className="text-mute px-4 pt-4 text-left text-xs">
             Set the files you expect to close each month, the average ticket and your payout slab.

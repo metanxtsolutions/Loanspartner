@@ -73,7 +73,7 @@ export default function CommissionPage() {
         lede="Payouts are a percentage of the disbursed amount. Unsecured products pay the highest percentage; secured products pay less on much larger amounts. The table shows indicative ranges and what a typical file pays at the mid-point."
       />
       <Section tone="cream">
-        <div className="rounded-card border-line shadow-soft overflow-x-auto border bg-white" data-reveal>
+        <div className="rounded-card border-line shadow-soft relative overflow-x-auto border bg-white" data-reveal>
           <table className="w-full min-w-[760px] text-sm">
             <caption className="sr-only">
               Indicative partner payout, typical ticket size and audience for each loan product

@@ -70,7 +70,7 @@ export default function LoansHubPage() {
         );
       })}
       <Section tone="ink" className="!py-14">
-        <div className="overflow-x-auto">
+        <div className="relative overflow-x-auto">
           <table className="w-full min-w-[720px] text-sm">
             <caption className="font-display pb-4 text-left text-2xl text-white">At a glance</caption>
             <thead className="text-left text-xs tracking-wide text-white/50 uppercase">

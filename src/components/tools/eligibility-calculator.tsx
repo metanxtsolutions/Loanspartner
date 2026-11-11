@@ -6,6 +6,7 @@ import { ArrowRight } from "lucide-react";
 import { Panel, Result, SliderField, inr, inrCompact } from "@/components/tools/calc-bits";
 import type { ProductLite } from "@/data/lite-types";
 import { calcEMI, principalForEMI } from "@/lib/utils";
+import { productNoun } from "@/lib/product-noun";
 
 /** Representative FOIR caps: lenders allow a larger share of income as income rises. */
 function foirCap(income: number, product: string) {
@@ -47,7 +48,7 @@ export function EligibilityCalculator({
   };
 
   return (
-    <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
+    <div className="grid grid-cols-1 gap-6 lg:grid-cols-[1.1fr_0.9fr]">
       <Panel className="space-y-7">
         <div>
           <label htmlFor="elig-product" className="label">
@@ -115,8 +116,8 @@ export function EligibilityCalculator({
         </p>
         {r.belowMin && (
           <p className="bg-brass-50 text-brass-600 mt-3 px-4 py-3 text-sm">
-            This is below the usual minimum of {inrCompact(p.amountMin)} for a {p.name.toLowerCase()}. A longer tenure,
-            a co-applicant or a different product would suit better; our desk can advise.
+            This is below the usual minimum of {inrCompact(p.amountMin)} for a {productNoun(p.name)}. A longer tenure, a
+            co-applicant or a different product would suit better; our desk can advise.
           </p>
         )}
         <Link
