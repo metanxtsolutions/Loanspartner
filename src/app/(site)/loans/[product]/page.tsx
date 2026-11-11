@@ -27,6 +27,7 @@ import { lendersForProduct } from "@/data/lenders";
 import { guidesForProduct } from "@/data/guides";
 import { siteConfig } from "@/data/site-config";
 import { formatINR } from "@/lib/utils";
+import { midSentence, productNoun } from "@/lib/product-noun";
 
 export const dynamicParams = false;
 
@@ -40,7 +41,7 @@ export async function generateMetadata({ params }: PageProps<"/loans/[product]">
   if (!p) return {};
   return pageMetadata({
     title: `${p.seoName ?? p.name} Rates from ${p.rate.from.toFixed(2)}%`,
-    description: `${p.summary} Compare ${p.name.toLowerCase()} offers from our lender panel with LoansPartner. Zero fee to borrowers.`,
+    description: `${p.summary} Compare ${productNoun(p.name)} offers from our lender panel with LoansPartner. Zero fee to borrowers.`,
     path: `/loans/${p.slug}`,
     keywords: p.keywords,
   });
@@ -102,7 +103,7 @@ export default async function ProductPage({ params }: PageProps<"/loans/[product
         }
         aside={
           <div className="rounded-panel border-line shadow-lift border bg-white p-6">
-            <p className="font-display text-2xl">Check {p.shortName.toLowerCase()} loan eligibility</p>
+            <p className="font-display text-2xl">Check {midSentence(p.shortName)} loan eligibility</p>
             <p className="text-mute mt-1 text-sm">Free pre-screen across our lender panel. No bureau enquiry.</p>
             <div className="mt-5">
               <HeroForm products={productOptions} defaultProduct={p.slug} source={`product:${p.slug}`} />
@@ -127,10 +128,10 @@ export default async function ProductPage({ params }: PageProps<"/loans/[product
       </PageHero>
 
       <Section tone="cream">
-        <div className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_18rem]">
+        <div className="grid grid-cols-1 gap-12 lg:grid-cols-[minmax(0,1fr)_18rem]">
           <div className="space-y-16">
             <div id="overview" className="prose-lp max-w-3xl" data-reveal>
-              <h2>About {p.name.toLowerCase()}s</h2>
+              <h2>About {productNoun(p.name, "plural")}</h2>
               {p.intro.map((para, i) => (
                 <p key={i}>{para}</p>
               ))}
@@ -142,7 +143,7 @@ export default async function ProductPage({ params }: PageProps<"/loans/[product
             <div id="benefits">
               <SectionHeader
                 eyebrow="Why borrowers choose it"
-                title={`What a ${p.name.toLowerCase()} through LoansPartner gets you`}
+                title={`What a ${productNoun(p.name)} through LoansPartner gets you`}
               />
               <ul className="mt-8 grid gap-4 sm:grid-cols-2">
                 {p.benefits.map((b, i) => (
@@ -242,7 +243,7 @@ export default async function ProductPage({ params }: PageProps<"/loans/[product
               <div id="lenders">
                 <SectionHeader
                   eyebrow="Lenders"
-                  title={`Where we place ${p.name.toLowerCase()} files`}
+                  title={`Where we place ${productNoun(p.name)} files`}
                   lede="A selection from our panel. The best lender for you depends on your profile, city and the property or asset involved."
                 />
                 <div className="mt-8">
@@ -291,7 +292,8 @@ export default async function ProductPage({ params }: PageProps<"/loans/[product
             <Card className="p-5">
               <p className="eyebrow text-mute">For partners</p>
               <p className="text-ink-800 mt-2 text-sm">
-                Distribute {p.name.toLowerCase()}s and earn {p.dsa.payoutFrom}% to {p.dsa.payoutTo}% of every disbursal.
+                Distribute {productNoun(p.name, "plural")} and earn {p.dsa.payoutFrom}% to {p.dsa.payoutTo}% of every
+                disbursal.
               </p>
               <Link
                 href={`/partner/${p.slug}-dsa`}
@@ -333,7 +335,7 @@ export default async function ProductPage({ params }: PageProps<"/loans/[product
       )}
 
       <CtaBand
-        title={`Get your ${p.name.toLowerCase()} shortlist.`}
+        title={`Get your ${productNoun(p.name)} shortlist.`}
         lede="Share your requirement in two minutes. Our credit desk pre-screens your profile and calls with lenders, rates and next steps. No fee, no bureau enquiry."
         primary={{ label: "Check eligibility", href: `/apply?product=${p.slug}` }}
       />

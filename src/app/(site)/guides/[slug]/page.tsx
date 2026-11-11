@@ -98,7 +98,7 @@ export default async function GuidePage({ params }: PageProps<"/guides/[slug]">)
         </header>
 
         <Section tone="cream">
-          <div className="grid gap-12 lg:grid-cols-[16rem_minmax(0,1fr)_18rem]">
+          <div className="grid grid-cols-1 gap-12 lg:grid-cols-[16rem_minmax(0,1fr)_18rem]">
             <aside className="hidden lg:sticky lg:top-28 lg:block lg:self-start">
               <Toc items={toc} />
             </aside>
@@ -122,7 +122,7 @@ export default async function GuidePage({ params }: PageProps<"/guides/[slug]">)
                     </ul>
                   )}
                   {s.table && (
-                    <div className="border-line overflow-x-auto border bg-white">
+                    <div className="border-line relative overflow-x-auto border bg-white">
                       <table>
                         <thead>
                           <tr>

@@ -107,7 +107,7 @@ export default async function CityPage({ params }: PageProps<"/cities/[city]">) 
       </Section>
 
       <Section tone="paper">
-        <div className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_20rem]">
+        <div className="grid grid-cols-1 gap-12 lg:grid-cols-[minmax(0,1fr)_20rem]">
           <div className="prose-lp max-w-3xl" data-reveal>
             <h2>The {c.name} credit market</h2>
             {c.overview.map((para, i) => (

@@ -69,7 +69,7 @@ export function HeroForm({
           />
         )}
       </Field>
-      <FormError message={state.message} />
+      <FormError message={state.message} errors={state.errors} />
       <SubmitButton pending={pending}>
         Check my eligibility <ArrowRight className="size-4" aria-hidden />
       </SubmitButton>

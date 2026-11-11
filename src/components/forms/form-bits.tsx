@@ -128,11 +128,29 @@ export function SuccessNote({ message }: { message?: string }) {
   );
 }
 
-export function FormError({ message }: { message?: string }) {
-  if (!message) return null;
+/**
+ * The form-level error. Pass `errors` too: on a validation failure it adds a
+ * summary beside the submit button and moves focus to the first invalid
+ * field, which on a phone is usually scrolled out of view above the button.
+ */
+export function FormError({ message, errors }: { message?: string; errors?: Record<string, string | undefined> }) {
+  const ref = useRef<HTMLParagraphElement>(null);
+  const hasFieldErrors = !!errors && Object.values(errors).some(Boolean);
+  useEffect(() => {
+    if (!hasFieldErrors) return;
+    const field = ref.current?.closest("form")?.querySelector<HTMLElement>('[aria-invalid="true"]');
+    if (!field) return;
+    // Scroll explicitly: focus() does not scroll a field that is already
+    // focused from the previous attempt, and centring keeps it clear of the
+    // sticky header.
+    field.scrollIntoView({ block: "center" });
+    field.focus({ preventScroll: true });
+  }, [errors, hasFieldErrors]);
+  const text = message ?? (hasFieldErrors ? "Please check the highlighted fields and try again." : undefined);
+  if (!text) return null;
   return (
-    <p className="bg-danger-50 text-danger px-3 py-2 text-sm font-semibold" role="alert">
-      {message}
+    <p ref={ref} className="bg-danger-50 text-danger px-3 py-2 text-sm font-semibold" role="alert">
+      {text}
     </p>
   );
 }

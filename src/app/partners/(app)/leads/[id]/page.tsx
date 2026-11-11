@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { requirePartner, AccessDeniedError } from "@/server/dashboard/access";
@@ -10,6 +11,8 @@ import { LeadNoteForm } from "@/components/partner/lead-note-form";
 import { uploadPartnerDocumentAction } from "@/actions/partner/leads";
 import { formatINR, readableDate } from "@/lib/utils";
 import { APPLICATION_STATUS_META, DOCUMENT_STATUS_META, DOCUMENT_TYPE_LABELS } from "@/lib/dashboard/statuses";
+
+export const metadata: Metadata = { title: "Lead details" };
 
 export default async function LeadDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;

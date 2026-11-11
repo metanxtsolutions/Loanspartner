@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { pageMetadata } from "@/lib/seo";
+import { lenderTypeNoun } from "@/lib/product-noun";
 import { JsonLd } from "@/components/shared/json-ld";
 import { itemListSchema, webPageSchema } from "@/lib/schema";
 import { PageHero } from "@/components/shared/page-hero";
@@ -55,10 +56,7 @@ export default function LendersPage() {
         if (!list.length) return null;
         return (
           <Section key={t} tone={i % 2 === 0 ? "cream" : "paper"} className="!py-12 lg:!py-16">
-            <SectionHeader
-              eyebrow={t}
-              title={`${list.length} ${t.toLowerCase()}${list.length > 1 ? "s" : ""} on the panel`}
-            />
+            <SectionHeader eyebrow={t} title={`${list.length} ${lenderTypeNoun(t, list.length)} on the panel`} />
             <div className="mt-8">
               <LenderCards lenders={list} />
             </div>

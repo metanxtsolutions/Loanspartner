@@ -2,7 +2,11 @@ import type { Metadata } from "next";
 import { Logo } from "@/components/shared/logo";
 import { ResetPasswordForm } from "./reset-password-form";
 
-export const metadata: Metadata = { title: "Set a new password", robots: { index: false, follow: false } };
+export const metadata: Metadata = {
+  title: "Set a new password",
+  description: "Set a new password for your LoansPartner account using the secure link we emailed you.",
+  robots: { index: false, follow: false },
+};
 
 export default async function ResetPasswordPage({ searchParams }: { searchParams: Promise<{ token?: string }> }) {
   const { token } = await searchParams;

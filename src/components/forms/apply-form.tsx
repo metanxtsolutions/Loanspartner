@@ -253,7 +253,7 @@ function StepOne({
           </>
         )}
       </Field>
-      <FormError message={state.message} />
+      <FormError message={state.message} errors={state.errors} />
       <SubmitButton pending={pending}>
         Continue <ArrowRight className="size-4" aria-hidden />
       </SubmitButton>
@@ -411,7 +411,7 @@ function StepTwo({
           {state.errors.consent}
         </p>
       )}
-      <FormError message={state.message} />
+      <FormError message={state.message} errors={state.errors} />
       <SubmitButton pending={pending}>
         Get my lender shortlist <ArrowRight className="size-4" aria-hidden />
       </SubmitButton>

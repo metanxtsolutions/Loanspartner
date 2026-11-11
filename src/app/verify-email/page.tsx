@@ -3,7 +3,11 @@ import Link from "next/link";
 import { verifyEmailAction } from "@/actions/auth/shared";
 import { Logo } from "@/components/shared/logo";
 
-export const metadata: Metadata = { title: "Verify your email", robots: { index: false, follow: false } };
+export const metadata: Metadata = {
+  title: "Verify your email",
+  description: "Confirm the email address on your LoansPartner account so we can keep you posted on your applications.",
+  robots: { index: false, follow: false },
+};
 
 export default async function VerifyEmailPage({ searchParams }: { searchParams: Promise<{ token?: string }> }) {
   const { token } = await searchParams;

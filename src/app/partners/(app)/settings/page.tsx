@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { requirePartner } from "@/server/dashboard/access";
 import { prisma } from "@/server/db";
@@ -6,6 +7,8 @@ import { StatusPill } from "@/components/dashboard/status-pill";
 import { ProfileForm } from "@/components/partner/profile-form";
 import { PasswordForm } from "@/components/partner/password-form";
 import { PARTNER_KYC_STATUS_META } from "@/lib/dashboard/statuses";
+
+export const metadata: Metadata = { title: "Partner settings" };
 
 export default async function PartnerSettingsPage() {
   const user = await requirePartner();

@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { AccessDeniedError, requireCustomer } from "@/server/dashboard/access";
 import { getApplicationForActor } from "@/server/dashboard/applications";
@@ -9,6 +10,8 @@ import { FileUploader } from "@/components/dashboard/file-uploader";
 import { EmptyState } from "@/components/dashboard/empty-state";
 import { APPLICATION_STATUS_META, DOCUMENT_STATUS_META, DOCUMENT_TYPE_LABELS } from "@/lib/dashboard/statuses";
 import { formatINR, readableDate } from "@/lib/utils";
+
+export const metadata: Metadata = { title: "Application details" };
 
 export default async function ApplicationDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const actor = await requireCustomer();

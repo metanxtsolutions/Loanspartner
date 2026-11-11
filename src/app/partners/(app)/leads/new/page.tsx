@@ -1,7 +1,10 @@
+import type { Metadata } from "next";
 import { requirePartner } from "@/server/dashboard/access";
 import { PageHeader } from "@/components/dashboard/page-header";
 import { LeadForm } from "@/components/partner/lead-form";
 import { productOptions, cityOptions } from "@/data/lite";
+
+export const metadata: Metadata = { title: "Submit a lead" };
 
 export default async function NewLeadPage() {
   await requirePartner();

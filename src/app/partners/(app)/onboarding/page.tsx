@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { requirePartner } from "@/server/dashboard/access";
 import { prisma } from "@/server/db";
 import { PageHeader } from "@/components/dashboard/page-header";
@@ -5,6 +6,8 @@ import { StatusPill } from "@/components/dashboard/status-pill";
 import { Banner } from "@/components/dashboard/banner";
 import { KycForm } from "@/components/partner/kyc-form";
 import { PARTNER_KYC_STATUS_META } from "@/lib/dashboard/statuses";
+
+export const metadata: Metadata = { title: "Partner onboarding" };
 
 export default async function PartnerOnboardingPage() {
   const user = await requirePartner();

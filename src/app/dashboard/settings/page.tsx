@@ -1,8 +1,11 @@
+import type { Metadata } from "next";
 import { requireCustomer } from "@/server/dashboard/access";
 import { prisma } from "@/server/db";
 import { PageHeader } from "@/components/dashboard/page-header";
 import { ProfileForm } from "@/components/customer/profile-form";
 import { PasswordForm } from "@/components/customer/password-form";
+
+export const metadata: Metadata = { title: "Account settings" };
 
 export default async function SettingsPage() {
   const actor = await requireCustomer();

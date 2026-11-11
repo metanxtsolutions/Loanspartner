@@ -3,7 +3,11 @@ import Link from "next/link";
 import { Logo } from "@/components/shared/logo";
 import { ForgotPasswordForm } from "./forgot-password-form";
 
-export const metadata: Metadata = { title: "Forgot password", robots: { index: false, follow: false } };
+export const metadata: Metadata = {
+  title: "Forgot password",
+  description: "Reset the password for your LoansPartner account. We email you a secure link to set a new one.",
+  robots: { index: false, follow: false },
+};
 
 export default function ForgotPasswordPage() {
   return (

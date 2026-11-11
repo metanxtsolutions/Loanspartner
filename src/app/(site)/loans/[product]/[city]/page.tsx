@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowRight, Building2, Landmark, MapPin } from "lucide-react";
 import { pageMetadata } from "@/lib/seo";
+import { productNoun } from "@/lib/product-noun";
 import { JsonLd } from "@/components/shared/json-ld";
 import { faqPageSchema, loanProductSchema, localServiceSchema, webPageSchema } from "@/lib/schema";
 import { PageHero } from "@/components/shared/page-hero";
@@ -42,13 +43,13 @@ export async function generateMetadata({ params }: PageProps<"/loans/[product]/[
   const { p, c } = data;
   return pageMetadata({
     title: `${p.seoName ?? p.name} in ${c.name}: Rates`,
-    description: `Get a ${p.name.toLowerCase()} in ${c.name} from banks and NBFCs on our panel. ${c.tagline} Zero fee, local documentation support, lender shortlist within one working day.`,
+    description: `Get a ${productNoun(p.name)} in ${c.name} from banks and NBFCs on our panel. ${c.tagline} Zero fee, local documentation support, lender shortlist within one working day.`,
     path: `/loans/${p.slug}/${c.slug}`,
     keywords: [
-      `${p.name.toLowerCase()} in ${c.name}`,
-      `${p.name.toLowerCase()} ${c.name}`,
-      `best ${p.name.toLowerCase()} ${c.name}`,
-      `${p.name.toLowerCase()} agent ${c.name}`,
+      `${productNoun(p.name)} in ${c.name}`,
+      `${productNoun(p.name)} ${c.name}`,
+      `best ${productNoun(p.name)} ${c.name}`,
+      `${productNoun(p.name)} agent ${c.name}`,
       ...p.keywords.slice(0, 3),
       ...c.keywords.slice(0, 2),
     ],
@@ -132,11 +133,11 @@ export default async function ProductCityPage({ params }: PageProps<"/loans/[pro
       </PageHero>
 
       <Section tone="cream">
-        <div className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_18rem]">
+        <div className="grid grid-cols-1 gap-12 lg:grid-cols-[minmax(0,1fr)_18rem]">
           <div className="space-y-16">
             <div className="prose-lp max-w-3xl" data-reveal>
               <h2>
-                The {c.name} market for {p.name.toLowerCase()}s
+                The {c.name} market for {productNoun(p.name, "plural")}
               </h2>
               {c.overview.map((para, i) => (
                 <p key={i}>{para}</p>
@@ -168,7 +169,7 @@ export default async function ProductCityPage({ params }: PageProps<"/loans/[pro
             </div>
 
             <div>
-              <SectionHeader eyebrow="How it works" title={`Getting a ${p.name.toLowerCase()} in ${c.name}`} />
+              <SectionHeader eyebrow="How it works" title={`Getting a ${productNoun(p.name)} in ${c.name}`} />
               <div className="mt-8">
                 <Steps steps={p.howItWorks} />
               </div>
@@ -301,7 +302,7 @@ export default async function ProductCityPage({ params }: PageProps<"/loans/[pro
       </Section>
 
       <CtaBand
-        title={`Your ${p.name.toLowerCase()} in ${c.name}, handled.`}
+        title={`Your ${productNoun(p.name)} in ${c.name}, handled.`}
         lede={`Share your requirement and our ${c.name} desk will call with a lender shortlist and the documents to keep ready. No fee, no bureau enquiry.`}
         primary={{ label: "Check eligibility", href: `/apply?product=${p.slug}&city=${encodeURIComponent(c.name)}` }}
       />

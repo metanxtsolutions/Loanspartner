@@ -18,6 +18,7 @@ import { products, getProduct } from "@/data/products";
 import { partnerFaqs, partnerSteps, partnerEligibility } from "@/data/partner";
 import { audienceOptions, cityOptions, productOptions } from "@/data/lite";
 import { formatINR } from "@/lib/utils";
+import { productNoun } from "@/lib/product-noun";
 
 export const dynamicParams = false;
 
@@ -33,13 +34,13 @@ export async function generateMetadata({ params }: PageProps<"/partner/[slug]">)
   if (!p) return {};
   return pageMetadata({
     title: `${p.seoName ?? p.name} DSA: Payouts`,
-    description: `Become a ${p.name.toLowerCase()} DSA with LoansPartner. Distribute ${p.name.toLowerCase()}s from our lender panel, typical tickets of ${p.dsa.ticketSize}, payouts of ${p.dsa.payoutFrom}% to ${p.dsa.payoutTo}%, processing handled by our credit desk. Free registration.`,
+    description: `Become a ${productNoun(p.name)} DSA with LoansPartner. Distribute ${productNoun(p.name, "plural")} from our lender panel, typical tickets of ${p.dsa.ticketSize}, payouts of ${p.dsa.payoutFrom}% to ${p.dsa.payoutTo}%, processing handled by our credit desk. Free registration.`,
     path: `/partner/${slug}`,
     keywords: [
-      `${p.name.toLowerCase()} DSA`,
-      `${p.name.toLowerCase()} DSA registration`,
-      `${p.name.toLowerCase()} DSA commission`,
-      `${p.name.toLowerCase()} agent`,
+      `${productNoun(p.name)} DSA`,
+      `${productNoun(p.name)} DSA registration`,
+      `${productNoun(p.name)} DSA commission`,
+      `${productNoun(p.name)} agent`,
       "loan DSA",
       "DSA partner program",
     ],
@@ -52,13 +53,16 @@ export default async function ProductDsaPage({ params }: PageProps<"/partner/[sl
   if (!p) notFound();
   const path = `/partner/${slug}`;
   const title = `${p.name} DSA programme`;
-  const description = `Distribute ${p.name.toLowerCase()}s from our lender panel and earn ${p.dsa.payoutFrom}% to ${p.dsa.payoutTo}% of every disbursal.`;
+  const description = `Distribute ${productNoun(p.name, "plural")} from our lender panel and earn ${p.dsa.payoutFrom}% to ${p.dsa.payoutTo}% of every disbursal.`;
   const faqs = [
     {
-      question: `How much does a ${p.name.toLowerCase()} DSA earn per file?`,
+      question: `How much does a ${productNoun(p.name)} DSA earn per file?`,
       answer: `Indicatively ${p.dsa.payoutFrom}% to ${p.dsa.payoutTo}% of the disbursed amount. On a typical ticket of ${p.dsa.ticketSize}, that is a meaningful payout per file. Your slab is stated in your agreement and reviewed quarterly.`,
     },
-    { question: `Who are the best prospects for ${p.name.toLowerCase()}s?`, answer: p.dsa.sellsTo.join("; ") + "." },
+    {
+      question: `Who are the best prospects for ${productNoun(p.name, "plural")}?`,
+      answer: p.dsa.sellsTo.join("; ") + ".",
+    },
     ...partnerFaqs.slice(1, 5),
   ];
   const others = products.filter((x) => x.slug !== p.slug);
@@ -109,7 +113,7 @@ export default async function ProductDsaPage({ params }: PageProps<"/partner/[sl
       <Section tone="cream">
         <div className="grid gap-10 lg:grid-cols-2">
           <div>
-            <SectionHeader eyebrow="Who to sell to" title={`Where ${p.name.toLowerCase()} demand comes from`} />
+            <SectionHeader eyebrow="Who to sell to" title={`Where ${productNoun(p.name)} demand comes from`} />
             <Card className="mt-6 p-6">
               <CheckList items={p.dsa.sellsTo} />
             </Card>
@@ -167,7 +171,7 @@ export default async function ProductDsaPage({ params }: PageProps<"/partner/[sl
           <div>
             <SectionHeader
               eyebrow="Apply"
-              title={`Register as a ${p.name.toLowerCase()} DSA`}
+              title={`Register as a ${productNoun(p.name)} DSA`}
               lede="Free, with no obligation. Pick the products you want to distribute; you can add more later."
             />
             <Card className="mt-8 p-6 sm:p-8">
@@ -193,7 +197,7 @@ export default async function ProductDsaPage({ params }: PageProps<"/partner/[sl
       </Section>
 
       <CtaBand
-        title={`Start distributing ${p.name.toLowerCase()}s.`}
+        title={`Start distributing ${productNoun(p.name, "plural")}.`}
         lede="Free registration, one code for our whole lender panel, and a credit desk that processes every file."
         primary={{ label: "Register as a partner", href: "/partner/register" }}
         secondary={{ label: "Commission slabs", href: "/partner/commission" }}

@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowRight, ExternalLink } from "lucide-react";
 import { pageMetadata } from "@/lib/seo";
+import { lenderTypeNoun } from "@/lib/product-noun";
 import { JsonLd } from "@/components/shared/json-ld";
 import { webPageSchema, faqPageSchema } from "@/lib/schema";
 import { PageHero } from "@/components/shared/page-hero";
@@ -150,7 +151,7 @@ export default async function LenderPage({ params }: PageProps<"/lenders/[slug]"
         <Section tone="paper">
           <SectionHeader
             eyebrow="Compare"
-            title={`Other ${l.type.toLowerCase()}s on the panel`}
+            title={`Other ${lenderTypeNoun(l.type)} on the panel`}
             lede="The best lender for you depends on your profile. We compare before you apply."
           />
           <div className="mt-8">
